@@ -1,0 +1,25 @@
+# Project-related settings
+PROJECT_NAME           = "My C Project"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = ./src
+FILE_PATTERNS          = *.c *.h
+RECURSIVE              = YES
+
+# Build options
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+EXTRACT_PRIVATE        = YES
+
+# Graphical options
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_IMAGE_FORMAT       = svg
+DOT_CLEANUP            = YES
+
+# HTML output
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+
+# Disable stuff we don't need right now
+GENERATE_LATEX         = NO

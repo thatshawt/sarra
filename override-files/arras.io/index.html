@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang=en-US>
+    <title>arras.io</title>
+    <meta charset=utf-8>
+    <meta name=description content="Level up and gain score by shooting at other players and bosses while keeping yourself alive! Play the game at https://arras.io/.">
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <meta name=robots content="index, follow">
+    <meta name=theme-color content=#8abc3f>
+    <meta property=og:image content=/favicon/128x128.png>
+    <meta property=og:image:width content=54>
+    <meta property=og:image:height content=54>
+    <link rel=preconnect href=https://fonts.googleapis.com>
+    <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+    <link rel=preconnect href=https://config.playwire.com crossorigin>
+    <link rel=preconnect href=https://cdn.intergi.com crossorigin>
+    <link rel=preconnect href=https://cdn.intergient.com crossorigin>
+    <link rel=preconnect href=https://securepubads.g.doubleclick.net crossorigin>
+    <link rel=preconnect href=https://cdn.playwire.com crossorigin>
+    <link rel=preconnect href=https://cdn.video.playwire.com crossorigin>
+    <link rel=preconnect href=https://z.moatads.com crossorigin>
+    <link rel=apple-touch-icon sizes=60x60 href=/favicon/60x60.png>
+    <link rel=apple-touch-icon sizes=120x120 href=/favicon/120x120.png>
+    <link rel=apple-touch-icon sizes=180x180 href=/favicon/180x180.png>
+    <link rel=icon type=image/png sizes=16x16 href=/favicon/16x16.png>
+    <link rel=icon type=image/png sizes=32x32 href=/favicon/32x32.png>
+    <link rel=icon type=image/png sizes=64x64 href=/favicon/64x64.png>
+    <link rel=icon type=image/png sizes=96x96 href=/favicon/96x96.png>
+    <link rel=icon type=image/png sizes=128x128 href=/favicon/128x128.png>
+    <link rel=icon type=image/png sizes=192x192 href=/favicon/192x192.png>
+    <link rel=icon type=image/png sizes=256x256 href=/favicon/256x256.png>
+    <link rel=icon type=image/png sizes=512x512 href=/favicon/512x512.png>
+    <link rel=icon type=image/png sizes=1024x1024 href=/favicon/1024x1024.png>
+    <link rel=icon type=image/png sizes=2048x2048 href=/favicon/2048x2048.png>
+    <link rel=icon type=image/svg+xml sizes=400x400 href=/favicon/base.svg>
+    <link rel=manifest href=/favicon/manifest.json>
+    <link rel=canonical href=https://arras.io/>
+    <link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700">
+    <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-120544149-1"></script>
+    <style>
+        html,body,#canvas,canvas {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            user-select: none
+        }
+
+        canvas {
+            background: #000;
+            pointer-events: none
+        }
+    </style>
+    <body>
+        <script>
+            (async () => {
+                if (!window.WebAssembly) {
+                    let e = document.createElement("div");
+                    e.textContent = "WebAssembly is not supported on your browser! Please upgrade your browser to the latest version.",
+                    e.style.position = "absolute",
+                    e.style.top = "0",
+                    e.style.width = "100%",
+                    e.style.padding = "20px",
+                    e.style.background = "red",
+                    e.style.color = "white",
+                    e.style.font = "bold 20px sans-serif",
+                    document.body.appendChild(e);
+                    return
+                }
+                let e = [null, Function]
+                  , t = (t, a) => {
+                    e[t] = a
+                }
+                  , a = null
+                  , r = () => ((null == a || 0 === a.byteLength) && (a = new Uint8Array(g.g.buffer)),
+                a)
+                  , o = null
+                  , n = () => ((null == o || 0 === o.byteLength) && (o = new Int32Array(g.g.buffer)),
+                o)
+                  , l = null
+                  , s = () => ((null == l || 0 === l.byteLength) && (l = new Float64Array(g.g.buffer)),
+                l)
+                  , d = new TextEncoder("utf-8")
+                  , i = new TextDecoder("utf-8",{
+                    ignoreBOM: !0
+                });
+                i.decode();
+                let c = /^[\x00-\x7f]*$/
+                  , u = (e, t) => {
+                    if (c.test(t)) {
+                        let a = g.d(t.length, 1)
+                          , o = r();
+                        for (let e = 0; e < t.length; e++)
+                            o[a + e] = t.charCodeAt(e);
+                        n().set([a, t.length], e >> 2)
+                    } else
+                        y(e, d.encode(t))
+                }
+                  , b = (e, t) => {
+                    null != t && u(e, t)
+                }
+                  , y = (e, t) => {
+                    let a = g.d(t.length, 1);
+                    r().set(t, a),
+                    n().set([a, t.length], e >> 2)
+                }
+                  , h = (e, t) => {
+                    let a = g.d(t.length << 3, 8);
+                    s().set(t, a >> 3),
+                    n().set([a, t.length], e >> 2)
+                }
+                  , f = [[ (t, a, o) => {
+                    e[t].value = i.decode(r().subarray(a, a + o))
+                }
+                , t => e[t].length, (t, a) => e[t](e[a]), t => {
+                    window.removeEventListener("beforeunload", e[t])
+                }
+                , e => u(e, location.hostname), (a, r) => t(a, e[r].createProgram()), (t, a, r, o, n) => {
+                    e[t].scissor(a, r, o, n)
+                }
+                , t => {
+                    e[t].stroke()
+                }
+                , (t, a) => {
+                    e[t].activeTexture(a >>> 0)
+                }
+                , (t, a) => {
+                    t = e[t],
+                    a >>>= 0,
+                    t.strokeStyle = `rgb(${a >> 16},${a >> 8 & 255},${255 & a})`
+                }
+                , (a, o, n, l, s) => t(a, e[o](e[n], i.decode(r().subarray(l, l + s)))), () => {
+                    try {
+                        location.reload()
+                    } catch (e) {}
+                }
+                , () => navigator.hardwareConcurrency || -1, () => !!navigator.serviceWorker, (t, a) => y(t, e[a].shift()), (t, a, r) => u(t, e[a][r].code), t => e[t].readyState, (t, a) => u(t, e[a].protocol), t => {
+                    (t = e[t]).addEventListener("focus", () => t.select())
+                }
+                , (t, a) => {
+                    e[t].useProgram(e[a])
+                }
+                , (t, a, o, n) => {
+                    e[t].shaderSource(e[a], i.decode(r().subarray(o, o + n)))
+                }
+                , (e, t) => {
+                    open(i.decode(r().subarray(e, e + t)), "_blank", "noopener")
+                }
+                , (t, a, r) => {
+                    e[t].attachShader(e[a], e[r])
+                }
+                , (e, t) => {
+                    console.log(i.decode(r().subarray(e, e + t)))
+                }
+                , (t, a) => e[t][a].maxClients || 0, t => {
+                    e[t].lineCap = "round"
+                }
+                , (t, a) => {
+                    e[t].disable(a >>> 0)
+                }
+                , (t, a, r, o, n) => {
+                    e[t].rect(a, r, o, n)
+                }
+                , () => Date.now(), () => !!navigator.gpu, t => {
+                    e[t].close()
+                }
+                , (e, t, a, o) => {
+                    //console.log(i.decode(r().subarray(e, e + t)), i.decode(r().subarray(a, a + o)))
+                }
+                , (t, a) => {
+                    e[t].globalAlpha = a
+                }
+                , e => t(e, document.createElement("canvas")), t => e[t].shift(), (t, a, r, o, n) => {
+                    e[t].drawElements(a >>> 0, r, o >>> 0, n)
+                }
+                , (t, a) => u(t, e[a][0].ip), (t, a) => {
+                    t = e[t],
+                    a >>>= 0,
+                    t.fillStyle = `rgb(${a >> 16},${a >> 8 & 255},${255 & a})`
+                }
+                , (t, a, o) => e[t].measureText(i.decode(r().subarray(a, a + o))).width, t => {
+                    e[t] = null
+                }
+                , t => {
+                    e[t].closePath()
+                }
+                , (t, a) => u(t, e[a].shift().signature), (a, r) => (r = e[r],
+                t(a, new Promise(e => r.toBlob(e)))), e => t(e, null), (t, a, o, n) => e[t].getAttribLocation(e[a], i.decode(r().subarray(o, o + n))), (e, t) => WebAssembly.validate(r().subarray(e, e + t)), (e, t) => !!WebAssembly[i.decode(r().subarray(e, e + t))], (t, a, r) => {
+                    t = e[t],
+                    a >>>= 0,
+                    t.strokeStyle = `rgba(${a >> 16},${a >> 8 & 255},${255 & a},${r})`
+                }
+                , (t, a, r, o) => {
+                    e[t].texParameteri(a >>> 0, r >>> 0, o)
+                }
+                , (a, r) => t(a, e[r].createBuffer()), (t, a) => {
+                    e[t].appendChild(e[a])
+                }
+                , e => t(e, window), (t, a, r, o, n) => {
+                    e[t].fillRect(a, r, o, n)
+                }
+                , (a, r, o, n) => t(a, e[r].getProgramParameter(e[o], n >>> 0)), t => e[t](), (t, a, o) => {
+                    e[t].lastValue = i.decode(r().subarray(a, a + o))
+                }
+                , () => crypto.getRandomValues(new Uint32Array(1))[0], (t, a, o, n, l) => e[t](r().subarray(a, a + o), i.decode(r().subarray(n, n + l))), t => e[t].shift() || 0, (t, a, r, o, n, l, s) => e[t](e[a], r, o, n, l, s), (t, a, r) => {
+                    e[t].lineTo(a, r)
+                }
+                , () => !!window.RTCPeerConnection, t => !e[t], (t, a) => {
+                    e[t].replaceWith(e[a])
+                }
+                , (t, a, r) => {
+                    e[t].moveTo(a, r)
+                }
+                , t => {
+                    e[t].style.clipPath = "none"
+                }
+                , () => window.innerWidth, () => parent !== top, e => u(e, navigator.userAgent || ""), (t, a, r) => h(t, e[a](e[r])), () => window.innerHeight, t => e[t].isContextLost(), (t, a, r) => {
+                    e[t].pixelStorei(a >>> 0, r)
+                }
+                , (t, a, r, o, n) => {
+                    e[t].blendFuncSeparate(a >>> 0, r >>> 0, o >>> 0, n >>> 0)
+                }
+                , (a, r, o, n) => t(a, e[r](e[o], n > 0)), (t, a) => {
+                    e[t].lineWidth = a
+                }
+                , (t, a) => e[t][a].mspt, e => u(e, location.hash), (a, o, n, l, s, d, c) => t(a, e[o](i.decode(r().subarray(n, n + l)), i.decode(r().subarray(s, s + d)), e[c])), () => !!window.RTCDataChannel, t => e[t][0].timestamp, (t, a, r) => u(t, e[a][r].name), () => "boolean" == typeof window.crossOriginIsolated, e => t(e, document.createElement("div")), (a, r) => t(a, e[r][1]), () => !!window.WebTransport, t => {
+                    e[t].style.textAlign = "center"
+                }
+                , (t, a) => u(t, e[a].value), (t, a) => {
+                    e[t].enable(a >>> 0)
+                }
+                , (t, a, r) => {
+                    e[t].bindBuffer(a >>> 0, e[r])
+                }
+                , t => "number" == typeof e[t], t => 0 === (t = e[t]).length ? -1 : t.shift(), (t, a, r, o, n, l, s) => {
+                    e[t].vertexAttribPointer(a >>> 0, r, o >>> 0, n > 0, l, s)
+                }
+                , t => document.activeElement === e[t], (t, a) => b(t, e[a].pop()), (t, a, r, o, n, l, s) => {
+                    e[t].texImage2D(a >>> 0, r, o >>> 0, n >>> 0, l >>> 0, e[s])
+                }
+                , (a, r, o) => t(a, e[r].getContext("2d", {
+                    alpha: o > 0
+                })), (t, a) => e[t][a].uptime, (t, a, r, o, n) => {
+                    e[t].clearRect(a, r, o, n)
+                }
+                , t => e[t], (t, a) => e[t][a].hidden, (t, a) => y(t, e[a]), (t, a, r) => u(t, e[a][r].host), (t, a) => e[t][a].online, (t, a, o, n, l) => {
+                    e[t].bufferData(a >>> 0, r().subarray(o, o + n), l >>> 0)
+                }
+                , t => {
+                    e[t].clip()
+                }
+                , t => {
+                    e[t].lineJoin = "miter"
+                }
+                , (t, a, r) => {
+                    e[t].translate(a, r)
+                }
+                , () => performance.now(), (a, r) => t(a, Object.values(e[r].shift().status)), () => null != document.fullscreenElement, (t, a) => {
+                    e[t].clear(a >>> 0)
+                }
+                , t => {
+                    e[t].save()
+                }
+                , (t, a, r, o, n, l) => {
+                    try {
+                        e[t].drawImage(e[a], r, o, n, l)
+                    } catch (e) {}
+                }
+                , t => "boolean" == typeof e[t], () => new Date(new Date().getFullYear(),0,1).getTimezoneOffset(), (t, a, r) => {
+                    e[t].blendFunc(a >>> 0, r >>> 0)
+                }
+                , (t, a, r, o, n) => {
+                    e[t].strokeRect(a, r, o, n)
+                }
+                , (t, a, o, n) => {
+                    e[t](new Blob([e[a]],{
+                        type: i.decode(r().subarray(o, o + n))
+                    }))
+                }
+                , (t, a, o, n, l) => {
+                    e[t](new Blob([r().subarray(a, a + o)],{
+                        type: i.decode(r().subarray(n, n + l))
+                    }))
+                }
+                , t => {
+                    e[t][1] = !0
+                }
+                , (e, t) => {
+                    location.hash = i.decode(r().subarray(e, e + t))
+                }
+                , () => "boolean" == typeof window.credentialless, (t, a, r, o, n) => {
+                    e[t].blendColor(a, r, o, n)
+                }
+                , (t, a, r) => {
+                    t = e[t],
+                    a >>>= 0,
+                    t.fillStyle = `rgba(${a >> 16},${a >> 8 & 255},${255 & a},${r})`
+                }
+                , t => {
+                    window.addEventListener("beforeunload", e[t])
+                }
+                , (t, a) => {
+                    e[t].compileShader(e[a])
+                }
+                , (a, o, n, l, s) => t(a, e[o].getUniformLocation(e[n], i.decode(r().subarray(l, l + s)))), t => {
+                    e[t].remove()
+                }
+                , (t, a) => {
+                    t = e[t],
+                    a = e[a],
+                    t.then(e => a(e))
+                }
+                , (t, a, r, o) => {
+                    e[t].uniform2f(e[a], r, o)
+                }
+                , (t, a) => u(t, e[a]), (t, a, r, o) => {
+                    try {
+                        e[t].drawImage(e[a], r, o)
+                    } catch (e) {}
+                }
+                , t => {
+                    e[t].restore()
+                }
+                , (t, a) => {
+                    e[t].font = `${a}px Ubuntu`
+                }
+                , (a, o, n, l, s, d) => t(a, e[o](i.decode(r().subarray(n, n + l)), i.decode(r().subarray(s, s + d)))), e => u(e, document.referrer), (t, a) => u(t, e[a].shift()), (t, a, o) => e[t](i.decode(r().subarray(a, a + o))), (t, a, r, o, n, l, s, d, i, c) => y(t, e[a](r >>> 0, e[o], n, l, s, d, i >>> 0, c >>> 0)), (t, a, r, o) => {
+                    e[t].drawArrays(a >>> 0, r, o)
+                }
+                , (t, a, o, n, l) => {
+                    e[t].fillText(i.decode(r().subarray(a, a + o)), n, l)
+                }
+                , (t, a, r, o, n, l, s, d, i, c) => {
+                    try {
+                        e[t].drawImage(e[a], r, o, n, l, s, d, i, c)
+                    } catch (e) {}
+                }
+                , (e, t) => {
+                    location.hash = `#${i.decode(r().subarray(e, e + t))}`
+                }
+                , (t, a, o, n) => u(t, e[a](i.decode(r().subarray(o, o + n)))), (a, r) => t(a, e[r]()), t => 0 === (t = e[t]).length ? 0 : t[0].status ? 1 : t[0].signature ? 2 : 3, (t, a) => u(t, e[a]()), (t, a, o) => e[t](r().subarray(a, a + o)), (t, a) => {
+                    e[t].font = `${a}px Trebuchet MS`
+                }
+                , e => t(e, []), t => {
+                    e[t].fill()
+                }
+                , t => e[t].shift().clients, (a, r, o) => t(a, e[r](e[o])), (t, a) => {
+                    e[t].depthFunc(a >>> 0)
+                }
+                , (t, a, r, o, n, l) => {
+                    e[t].arc(a, r, o, n, l)
+                }
+                , (a, r, o) => t(a, e[r].createShader(o >>> 0)), (t, a, r) => {
+                    e[t].bindTexture(a >>> 0, e[r])
+                }
+                , (t, a, o, n, l) => {
+                    e[t].strokeText(i.decode(r().subarray(a, a + o)), n, l)
+                }
+                , (t, a) => {
+                    e[t].enableVertexAttribArray(a >>> 0)
+                }
+                , (t, a) => u(t, e[a].lastValue), (t, a, r) => u(t, e[a](e[r])), (t, a, r, o) => e[t](e[a], r, o), t => {
+                    e[t].focus()
+                }
+                , (t, a, r, o, n) => {
+                    e[t].style.clipPath = `xywh(${a}px ${r}px ${o}px ${n}px)`
+                }
+                , (a, r, o) => t(a, e[r](e[o], m)), (t, a, o) => {
+                    e[t].style.cursor = i.decode(r().subarray(a, a + o))
+                }
+                , t => {
+                    e[t].beginPath()
+                }
+                , (t, a) => e[t][a].featured, (t, a, o) => {
+                    t = e[t],
+                    a = r().subarray(a, a + o),
+                    1 === t.readyState && t.send(a)
+                }
+                , (a, o, n, l) => t(a, e[o](i.decode(r().subarray(n, n + l)))), (t, a) => e[t][a].clients, (t, a, r, o, n) => {
+                    e[t].uniform3f(e[a], r, o, n)
+                }
+                , t => e[t][0], () => window.devicePixelRatio, (a, r, o) => t(a, e[r].getParameter(o >>> 0)), (t, a) => {
+                    e[t].linkProgram(e[a])
+                }
+                , (e, t) => {
+                    try {
+                        localStorage.setItem("arras.io", i.decode(r().subarray(e, e + t)))
+                    } catch (e) {}
+                }
+                , (a, r) => t(a, e[r].createTexture()), (t, a, r, o, n, l, s, d, i, c, u, b) => e[t](e[a], r, o, n, l, s, d >>> 0, i, c, u > 0, b > 0), (a, r) => t(a, e[r](m)), t => "string" == typeof e[t], (t, a, r) => {
+                    e[t].uniform1i(e[a], r)
+                }
+                , (t, a, o, n) => e[t](i.decode(r().subarray(a, a + o)), e[n], m), t => e[t].complete, (t, a, o, n, l) => e[t](i.decode(r().subarray(a, a + o)), e[n], l >>> 0), () => window.arrasAdDone, t => {
+                    e[t].lineJoin = "round"
+                }
+                , t => {
+                    e[t].lineCap = "butt"
+                }
+                , (t, a, r, o, n) => {
+                    e[t].viewport(a, r, o, n)
+                }
+                , (t, a) => {
+                    e[t].font = `bold ${a}px Ubuntu`
+                }
+                , t => e[t].pop()]]
+                  , p = fetch("./app.wasm")
+                  , g = (await (WebAssembly.instantiateStreaming ? WebAssembly.instantiateStreaming(p, f) : WebAssembly.instantiate(await (await p).arrayBuffer(), f))).instance.exports
+                  , m = g.c;
+                window.f = f;
+                g.b();
+            }
+            )()
+        </script>
