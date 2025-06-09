@@ -406,8 +406,7 @@
                   , p = fetch("./app.wasm")
                   , g = (await (WebAssembly.instantiateStreaming ? WebAssembly.instantiateStreaming(p, f) : WebAssembly.instantiate(await (await p).arrayBuffer(), f))).instance.exports
                   , m = g.c;
-                window.f = f;
-                g.b();
+                g.b()
             }
             )()
         </script>
