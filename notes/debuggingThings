@@ -1,0 +1,9 @@
+step 1:
+find websocket message event listener:
+to find the websocket message listener just pause execution a
+few times and follow the call stack until you find it.
+
+
+
+
+
