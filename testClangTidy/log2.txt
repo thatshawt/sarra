@@ -1,0 +1,34 @@
+63 warnings and 4 errors generated.
+Error while processing /mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c.
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:1:1: warning: included header stdbool.h is not used directly [misc-include-cleaner]
+    1 | #include "stdbool.h"
+      | ^~~~~~~~~~~~~~~~~~~~
+    2 | #include "__stdarg_va_list.h"
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:2:1: warning: included header __stdarg_va_list.h is not used directly [misc-include-cleaner]
+    2 | #include "__stdarg_va_list.h"
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    3 | 
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:62:14: error: call to undeclared function 'i32_load_default32'; ISO C99 and later do not support implicit function declarations [clang-diagnostic-implicit-function-declaration]
+   62 |     var_i0 = i32_load_default32(&instance->w2c_g, (u64)(var_i0) + 444U);
+      |              ^
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:62:34: error: use of undeclared identifier 'instance' [clang-diagnostic-error]
+   62 |     var_i0 = i32_load_default32(&instance->w2c_g, (u64)(var_i0) + 444U);
+      |                                  ^
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:62:67: warning: 444U is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   62 |     var_i0 = i32_load_default32(&instance->w2c_g, (u64)(var_i0) + 444U);
+      |                                                                   ^
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:64:14: warning: 56U is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   64 |     var_i2 = 56U;
+      |              ^
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:69:5: error: call to undeclared function 'i64_store_default32'; ISO C99 and later do not support implicit function declarations [clang-diagnostic-implicit-function-declaration]
+   69 |     i64_store_default32(&instance->w2c_g, (u64)(var_i0) + 48, var_j1);
+      |     ^
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:69:26: error: use of undeclared identifier 'instance' [clang-diagnostic-error]
+   69 |     i64_store_default32(&instance->w2c_g, (u64)(var_i0) + 48, var_j1);
+      |                          ^
+/mnt/c/Users/david/OneDrive/Documents/sarra/testClangTidy/test1.c:69:59: warning: 48 is a magic number; consider replacing it with a named constant [readability-magic-numbers]
+   69 |     i64_store_default32(&instance->w2c_g, (u64)(var_i0) + 48, var_j1);
+      |                                                           ^
+Suppressed 58 warnings (58 in non-user code).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+Found compiler error(s).

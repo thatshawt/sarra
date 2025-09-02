@@ -3,7 +3,9 @@ wget https://arras.io
 wget https://arras.io/app.wasm
 
 wasm2c app.wasm > app.c
+wasm-decompile app.wasm > app.decomp
 
-cd ..
+sha256sum app.wasm > app.wasm.sha256checksum
 
-doxygen Doxygen
+# cd ..
+# doxygen Doxygen

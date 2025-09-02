@@ -1,0 +1,2 @@
+# clang-tidy --fix --fix-errors --quiet --checks='modernize-*,readability-*,misc-*' test1.c -- -Wno-return-mismatch &> log2.txt
+clang-tidy --checks='modernize-*,readability-*,misc-*' test1.c -- -Wno-return-mismatch &> log2.txt
