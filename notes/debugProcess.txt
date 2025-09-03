@@ -1,16 +1,20 @@
-discovery phase:
-    1. set a breakpoint in the index.html script where it says:
-    "1 === t.readyState && t.send"
+1. set a breakpoint in the index.html script where it says:
+"1 === t.readyState && t.send"
 
-    2. go into a game and resume the script a few times until you see in the call stack an anonymous function under $c. Its gonna look like this:
-    (function anonymous(e, n) {
-        let r = [];
-        return e.addEventListener("open", () => {
-            r.push(1),
-            n()
-        }
-        ),
-        e.addEventListener("message", e => {
-            r.push(2, new Uint8Array(e.data)),
-            n()
-            ...
+2. go into a game and resume the script a few times until you see in the call stack an anonymous function under $c. Its gonna look like this:
+(function anonymous(e, n) {
+    let r = [];
+    return e.addEventListener("open", () => {
+        r.push(1),
+        n()
+    }
+    ),
+    e.addEventListener("message", e => {
+        r.push(2, new Uint8Array(e.data)),
+        n()
+        ...
+
+3. set a breakpoint for sent packets length 70.
+    send a maximum length chat message.
+
+

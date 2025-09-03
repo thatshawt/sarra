@@ -1,0 +1,13 @@
+in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
+
+
+// NOTES.CODE.MAX.CHAT.SWITCH.FUNC
+// this is when you type a chat message of full length and follow the call stack from index.html 1 === t.readyState && t.send;
+// inside the big switch function where it follows C->func1->func2.
+// where func1 is the code snippet below and func2 eventually ends up
+// calling to send a packet all the way back to the index.html t.send().
+// the variable names will probably be different, and numbers the same maybe...
+v = i32_wrap_i64(ud);
+g = g - 32;
+ud = g[0]:long;
+call_indirect(g[2]:int, g[4]:int, g[6]:int, v);
