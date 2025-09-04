@@ -1,13 +1,52 @@
 in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
 
+index.html first things to do:
+    1.
+        change this near the beginning:
+        let e = [null, Function],
+            t = (t, a) => {
+            e[t] = a;
+        },
+        to this:
+        let e = [null, Function],
+            t = (t, a) => {
+            console.log("e[",t,"] = ",a);
+            e[t] = a;
+        },window.e = e,
 
-// NOTES.CODE.MAX.CHAT.SWITCH.FUNC
-// this is when you type a chat message of full length and follow the call stack from index.html 1 === t.readyState && t.send;
-// inside the big switch function where it follows C->func1->func2.
-// where func1 is the code snippet below and func2 eventually ends up
-// calling to send a packet all the way back to the index.html t.send().
-// the variable names will probably be different, and numbers the same maybe...
+    2.
+        change this:
+        (t, a, o) => {
+            (t = e[t]),
+                (a = r().subarray(a, a + o)),
+                1 === t.readyState && t.send(a);
+            },
+        to this:
+        (t, a, o) => {
+            console.log("before send, a=",a,"o=",o);
+            if(o == 70){// max chat message
+                console.log("hi there");
+            }
+            t = e[t],
+            a = r().subarray(a, a + o),
+            1 === t.readyState && t.send(a);
+            // console.log("t.send(", a,")", ", "length:",o);
+        },
+
+    3.
+        change:
+            d.decode();
+            let i = /^[\x00-\x7f]*$/,
+        to:
+            d.decode();
+            window.e_thing = e;
+            let i = /^[\x00-\x7f]*$/,
+
+// max_chat_send is when you send a chat message of maximum length.
+// max_chat_send in big_switch_func:
+// call stack: c->big_switch_func->func2->index.html@t.send().
+// code snippet, app.decomp:
 v = i32_wrap_i64(ud);
 g = g - 32;
 ud = g[0]:long;
-call_indirect(g[2]:int, g[4]:int, g[6]:int, v);
+call_indirect(g[2]:int, g[4]:int, g[6]:int, v); // call stack goes into func2

@@ -68,10 +68,11 @@
                     return
                 }
                 let e = [null, Function],
-                  t = (t, a) => {
-                    e[t] = a
-                }
-                  , a = null
+                    t = (t, a) => {
+                    console.log("e[",t,"] = ",a);
+                    e[t] = a;
+                },
+                a = null
                   , r = () => ((null == a || 0 === a.byteLength) && (a = new Uint8Array(h.g.buffer)),
                 a)
                   , o = null
@@ -83,6 +84,7 @@
                     ignoreBOM: !0
                 });
                 d.decode();
+                window.e_thing = e;
                 let i = /^[\x00-\x7f]*$/
                   , c = (e, t) => {
                     if (i.test(t)) {
@@ -144,13 +146,14 @@
                 }
                 , t => "boolean" == typeof e[t], (t, a, o) => e[t](d.decode(r().subarray(a, a + o))), (e, t) => WebAssembly.validate(r().subarray(e, e + t)), t => e[t].shift() || 0,
                 (t, a, o) => {
-                    console.log("send", a, o);
-                    if(o == 70){
+                    // console.log("before send, a=",a,"o=",o);
+                    if(o == 70){// max chat message
                         console.log("hi there");
                     }
                     t = e[t],
                     a = r().subarray(a, a + o),
-                    1 === t.readyState && t.send(a)
+                    1 === t.readyState && t.send(a);
+                    // console.log("t.send(", a,")", ", "length:",o);
                 }
                 , (a, r) => t(a, Object.values(e[r].shift().status)), () => performance.now(), (t, a) => {
                     e[t].linkProgram(e[a])
@@ -410,8 +413,7 @@
                   , y = fetch("./app.wasm")
                   , h = (await (WebAssembly.instantiateStreaming ? WebAssembly.instantiateStreaming(y, b) : WebAssembly.instantiate(await (await y).arrayBuffer(), b))).instance.exports
                   , f = h.c;
-                    console.log(b);
-                    console.log(h);
+                    console.log(h, b);
                 h.b()
             }
             )()

@@ -56834,7 +56834,7 @@ export function b() { // func275
     }
     bigdata[142972]:long = d;
   }
-  f_ao();
+  f_ao(); //function f_ao
   if (bigdata[977336]:ubyte != 3) {
     bigdata[386735]:byte = 1;
     br_table[B_j, B_f, B_e, ..B_k](
@@ -74626,7 +74626,7 @@ function f_xk(a:int) { // func309
     label B_ap: 
     v = i32_wrap_i64(ud);
     g = g - 32;
-    ud = g[0]:long; // NOTES.CODE.MAX.CHAT.SWITCH.FUNC
+    ud = g[0]:long; // max_chat_send in big_switch_func
     call_indirect(g[2]:int, g[4]:int, g[6]:int, v);
     continue L_b;
     label B_zo:
@@ -100819,7 +100819,7 @@ function f_ao() { // func390
   e = a[2];
   a = bigdata[233679]:int;
   if (eqz(a)) {
-    a = f_bi();
+    a = f_bi(); // function f_bi
     0_23(
       select_if(a, 549304, bigdata[1036062]:ubyte),
       1,
@@ -113622,7 +113622,7 @@ function f_sq(a:int, b:int, c:int) { // func460
   j[0] = o + 1L;
   a[4]:short@1 = bigdata[1112516]:ushort@1;
   a[0]:int@1 = bigdata[1112512]:int@1;
-  0_32(n, b, c + 6);
+  0_32(n, b, c + 6); // this is index.html@t.send()
   e = 
     (select_if(b, h, bigdata[1036062]:ubyte) - 4)[0]:int;
   a = e & -8;
