@@ -3,16 +3,81 @@ in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
 index.html first things to do:
     1.
         change this near the beginning:
-        let e = [null, Function],
-            t = (t, a) => {
-            e[t] = a;
-        },
+            let e = [null, Function],
+                t = (t, a) => {
+                e[t] = a;
+            },
         to this:
-        let e = [null, Function],
-            t = (t, a) => {
-            console.log("e[",t,"] = ",a);
-            e[t] = a;
-        },window.e = e,
+            function isWebGLProgram(thing){
+                return thing != null && thing.constructor != null && thing.constructor.name == 'WebGLProgram';
+            }
+
+            function isWebGLGeneric(thing){
+                return thing != null && thing.constructor != null && thing.constructor.name.startsWith('WebGL');
+            }
+
+            function isNode(thing){
+                return thing != null && thing.nodeName != null;
+            }
+
+            function isCanvas(thing){
+                return thing != null && thing.nodeName == 'CANVAS';
+            }
+
+            function isCanvasRenderingContext2D(thing){
+                return thing != null && thing.fillStyle != null && thing.wordSpacing != null;
+            }
+
+            function isWebGLRenderingContext(thing){
+                return thing != null && thing.drawingBufferColorSpace != null && thing.unpackColorSpace != null;
+            }
+
+            var bigArrayLength = 100;
+            var bigArraysMaxContinuous = 10;
+            var bigArrayCounter = 0;
+
+            //return false to filter out
+            function filterEStuff(value){
+                //is big array
+                if(value != null && value.length > bigArrayLength){
+                    bigArrayCounter += 1;
+                    if(bigArrayCounter >= bigArraysMaxContinuous)
+                        return false;
+                }else{
+                    bigArrayCounter = 0;
+                }
+                return !isCanvasRenderingContext2D(value) && !isNode(value) && !isWebGLRenderingContext(value) && !isWebGLGeneric(value);
+            }
+
+
+            const e = new Proxy([null, Function], {
+                get: function(obj, prop, rec) {
+                    const value = Reflect.get(...arguments);
+                    if(filterEStuff(value)){
+                        console.info("get e[",prop,"], ", value);
+                    }
+                    return Reflect.get(...arguments);
+                },
+                set: function(obj, prop, rec) {
+                    // const value = Reflect.get(...arguments);
+                    if(filterEStuff(rec)){
+                        console.info("set e[",prop,"] = ", rec);
+                    }
+                    return Reflect.set(...arguments);
+                },
+                apply: function (target, thisArg, argumentsList) {
+                    // if(filterEStuff(rec)){
+                        console.info("call e[",thisArg,"], ", argumentsList);
+                    // }
+                    return Reflect.apply(...arguments);
+                },
+                });
+            
+            let //e = [null, Function],
+                t = (t, a) => {
+                // console.log("e[",t,"] = ",a);
+                e[t] = a;
+            },
 
     2.
         change this:
@@ -41,6 +106,14 @@ index.html first things to do:
             d.decode();
             window.e_thing = e;
             let i = /^[\x00-\x7f]*$/,
+
+    4. change:
+            (t) => e[t](),
+        to:
+            (t) => {
+                console.log("called e[",t,"] which is ",e[t]);
+                e[t]();
+            },
 
 // max_chat_send is when you send a chat message of maximum length.
 // max_chat_send in big_switch_func:

@@ -67,9 +67,119 @@
                     document.body.appendChild(e);
                     return
                 }
-                let e = [null, Function],
+                
+                function isWebGLProgram(thing){
+                    return thing != null && thing.constructor != null && thing.constructor.name == 'WebGLProgram';
+                }
+
+                function isWebGLGeneric(thing){
+                    return thing != null && thing.constructor != null && thing.constructor.name.startsWith('WebGL');
+                }
+
+                function isNode(thing){
+                    return thing != null && thing.nodeName != null;
+                }
+
+                function isCanvas(thing){
+                    return thing != null && thing.nodeName == 'CANVAS';
+                }
+
+                function isCanvasRenderingContext2D(thing){
+                    return thing != null && thing.fillStyle != null && thing.wordSpacing != null;
+                }
+
+                function isWebGLRenderingContext(thing){
+                    return thing != null && thing.drawingBufferColorSpace != null && thing.unpackColorSpace != null;
+                }
+
+
+
+                var bigArrayLength = 100;
+                var bigArraysMaxContinuous = 10;
+                var bigArrayCounter = 0;
+
+                //return false to filter out
+                function filterEStuff(value){
+                    //is big array
+                    if(value != null && value.length > bigArrayLength){
+                        bigArrayCounter += 1;
+                        if(bigArrayCounter >= bigArraysMaxContinuous)
+                            return false;
+                    }else{
+                        bigArrayCounter = 0;
+                    }
+                    // console.info(dbgC(),value);
+                    return !isCanvasRenderingContext2D(value) && !isNode(value) && !isWebGLRenderingContext(value) && !isWebGLGeneric(value);
+                }
+
+                var count = 0;
+                function dbgC(){
+                    return Date.now() + ":::";
+                }
+
+                window.dbgc = dbgC;
+
+                const e = new Proxy([null, Function], {
+                    get: function(obj, prop, rec) {
+                        const value = Reflect.get(...arguments);
+                        if(filterEStuff(value)){
+                            console.info(dbgC(),"get e[",prop,"], ", value);
+                        }
+                        if(value != null && value[0] != null && value[0].buffer != null){
+                            console.info(Array.from(value[0]));
+                        }
+                        // if(value != null && value.buffer != null){
+                        //     console.info(dbgC(),"get e[",prop,"] ", Array.from(value));
+                        // }
+                        if(typeof value == 'function'){
+                            //o yea
+                            return new Proxy(value, {
+                                apply: function (target, thisArg, argumentsList) {
+                                    const result = Reflect.apply(...arguments);
+                                    // if(filterEStuff(rec)){
+                                        console.info(dbgC(),"called",target,argumentsList,result);
+                                    // }
+
+                                    if(result != null && result.buffer != null){
+                                        console.info(dbgC(),Array.from(value));
+                                    }
+                                    return result;
+                                }
+                            });
+                        }
+                        return value;
+                    },
+                    set: function(obj, prop, rec) {
+                        // const value = Reflect.get(...arguments);
+                        if(filterEStuff(rec)){
+                            console.info(dbgC(),"set e[",prop,"] = ", rec);
+                        }
+                        if(typeof rec == 'function'){
+                            console.info("function thingy thingy",rec);
+                            if(rec.toString().includes("e.addEventListener(\"message\",e=>{r.push")){
+                                const funcStr = rec.toString();
+                                const removedAnon = funcStr.substring(19);
+                                const parametersStr = removedAnon.substring(0,removedAnon.indexOf("\n"));
+                                const funcBodyStr = funcStr.substring(funcStr.indexOf("{"));
+                                const newBodyStr = funcBodyStr.replaceAll("e.addEventListener(\"message\",e=>{r.push", "e.addEventListener(\"message\",e=>{console.info(window.dbgc(),\"received packet\",Array.from(new Uint8Array(e.data)));r.push");
+                                console.log(parametersStr,newBodyStr);
+                                const newValue = new Function(parametersStr, newBodyStr);
+                                return Reflect.set(obj, prop, newValue);
+                            }
+                        }
+                        return Reflect.set(...arguments);
+                    },
+                    apply: function (target, thisArg, argumentsList) {
+                        // if(filterEStuff(rec)){
+                            console.info(dbgC(),"call e[",thisArg,"], ", argumentsList);
+                        // }
+                        return Reflect.apply(...arguments);
+                    },
+                    });
+                    
+                let //e = [null, Function],
                     t = (t, a) => {
-                    console.log("e[",t,"] = ",a);
+                    // console.info(dbgC(),"e[",t,"] = ",a);
                     e[t] = a;
                 },
                 a = null
@@ -108,12 +218,12 @@
                     e[t].compileShader(e[a])
                 }
                 , (e, t) => {
-                    console.log(d.decode(r().subarray(e, e + t)))
+                    console.info(dbgC(),d.decode(r().subarray(e, e + t)))
                 }
                 , (a, r, o) => t(a, e[r].getContext("2d", {
                     alpha: o > 0
                 })), (e, t, a, o) => {
-                    console.log(d.decode(r().subarray(e, e + t)), d.decode(r().subarray(a, a + o)))
+                    console.info(dbgC(),d.decode(r().subarray(e, e + t)), d.decode(r().subarray(a, a + o)))
                 }
                 , t => e[t][0], t => e[t].shift(), (t, a, r) => c(t, e[a][r].host), t => {
                     window.addEventListener("beforeunload", e[t])
@@ -146,14 +256,14 @@
                 }
                 , t => "boolean" == typeof e[t], (t, a, o) => e[t](d.decode(r().subarray(a, a + o))), (e, t) => WebAssembly.validate(r().subarray(e, e + t)), t => e[t].shift() || 0,
                 (t, a, o) => {
-                    // console.log("before send, a=",a,"o=",o);
-                    if(o == 70){// max chat message
-                        console.log("hi there");
-                    }
+                    console.info(dbgC(),"before send, a=",a,"o=",o);
                     t = e[t],
                     a = r().subarray(a, a + o),
                     1 === t.readyState && t.send(a);
-                    // console.log("t.send(", a,")", ", "length:",o);
+                    console.info(dbgC(),"packet t.send(", a,")", "length:",o);
+                    if(o == 70){// max chat message
+                        console.info(dbgC(),"hi there");
+                    }
                 }
                 , (a, r) => t(a, Object.values(e[r].shift().status)), () => performance.now(), (t, a) => {
                     e[t].linkProgram(e[a])
@@ -170,7 +280,10 @@
                 , (t, a, o) => {
                     e[t].value = d.decode(r().subarray(a, a + o))
                 }
-                , t => e[t](), (t, a, r) => {
+                , (t) => {
+                    console.info(dbgC(),"called e[",t,"] which is ",e[t]);
+                    e[t]();
+                    }, (t, a, r) => {
                     e[t].uniform1i(e[a], r)
                 }
                 , t => {
@@ -413,7 +526,7 @@
                   , y = fetch("./app.wasm")
                   , h = (await (WebAssembly.instantiateStreaming ? WebAssembly.instantiateStreaming(y, b) : WebAssembly.instantiate(await (await y).arrayBuffer(), b))).instance.exports
                   , f = h.c;
-                    console.log(h, b);
+                    console.info(dbgC(),h, b);
                 h.b()
             }
             )()
