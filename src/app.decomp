@@ -74531,7 +74531,7 @@ function f_xk(a:int) { // func309
     v = i32_wrap_i64(ud);
     g = g - 16;
     ud = g[0]:long;
-    call_indirect(g[2]:int, v);
+    call_indirect(g[2]:int, v); // SWITCH.PACKET.INPUT?
     continue L_b;
     label B_kp:
     ca = i32_wrap_i64(ud);
@@ -74626,8 +74626,8 @@ function f_xk(a:int) { // func309
     label B_ap: 
     v = i32_wrap_i64(ud);
     g = g - 32;
-    ud = g[0]:long; // max_chat_send in big_switch_func
-    call_indirect(g[2]:int, g[4]:int, g[6]:int, v);
+    ud = g[0]:long; 
+    call_indirect(g[2]:int, g[4]:int, g[6]:int, v); // SWITCH.PACKET.TYPE1
     continue L_b;
     label B_zo:
     yc = i32_wrap_i64(ud);
@@ -113515,6 +113515,7 @@ function f_sq(a:int, b:int, c:int) { // func460
         unreachable;
       }
       if (c) {
+        //TODO what does this call, test on different packets.
         call_indirect(1, b, c, bigdata[180490]:int)
       }
       j = a + 8;
@@ -113525,6 +113526,7 @@ function f_sq(a:int, b:int, c:int) { // func460
       goto B_g;
       label B_h:
       if (c) {
+        //TODO what is this, what parameters does it pass what does it do
         f_lt(h, b, c)
       }
       j = a + 8;
@@ -113546,26 +113548,18 @@ function f_sq(a:int, b:int, c:int) { // func460
         bigdata[1112472]:long@1 = d[8];
         bigdata[278127]:int = m;
         bigdata[278125]:int = 0;
-        select_if(1177984, m, bigdata[1036062]:ubyte)[0]:long@4 =
-          3684054920433006693L;
+        select_if(1177984, m, bigdata[1036062]:ubyte)[0]:long@4 = 3684054920433006693L;
+        //TODO what does this do, it probably has to do with encoding packets
         f_ds(1177984); // function f_ds(
-        select_if(1178060, k, bigdata[1036062]:ubyte)[14]:long@4 =
-          bigdata[278126]:long@4;
+        select_if(1178060, k, bigdata[1036062]:ubyte)[14]:long@4 = bigdata[278126]:long@4;
         bigdata[278143]:long@4 = a[0]:long@4;
-        bigdata[278141]:long@4 =
-          bigdata[278122]:long@4;
-        bigdata[278139]:long@4 =
-          bigdata[278120]:long@4;
-        bigdata[278137]:long@4 =
-          bigdata[278118]:long@4;
-        bigdata[278135]:long@4 =
-          bigdata[278116]:long@4;
-        bigdata[278133]:long@4 =
-          bigdata[278114]:long@4;
-        bigdata[278131]:long@4 =
-          bigdata[278112]:long@4;
-        bigdata[278150]:int =
-          (a = bigdata[278131]:int);
+        bigdata[278141]:long@4 = bigdata[278122]:long@4;
+        bigdata[278139]:long@4 = bigdata[278120]:long@4;
+        bigdata[278137]:long@4 = bigdata[278118]:long@4;
+        bigdata[278135]:long@4 = bigdata[278116]:long@4;
+        bigdata[278133]:long@4 = bigdata[278114]:long@4;
+        bigdata[278131]:long@4 = bigdata[278112]:long@4;
+        bigdata[278150]:int = (a = bigdata[278131]:int);
         e[0]:byte = a ^ e[0]:ubyte;
         b = e + 1;
         l = l + 1;

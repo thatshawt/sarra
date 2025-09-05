@@ -1,1 +1,5 @@
-observe the length 7 packets. cus they follow a tighter pattern and is probably easier to analyze for the packet decoding/encoding in the wasm code.
+*read packetFunc1() more.
+
+*maybe see how the length 1 packets are handled in packetFunc1()
+
+*localstorage 10kb thing?

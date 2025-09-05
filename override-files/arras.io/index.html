@@ -92,8 +92,6 @@
                     return thing != null && thing.drawingBufferColorSpace != null && thing.unpackColorSpace != null;
                 }
 
-
-
                 var bigArrayLength = 100;
                 var bigArraysMaxContinuous = 10;
                 var bigArrayCounter = 0;
@@ -108,40 +106,61 @@
                     }else{
                         bigArrayCounter = 0;
                     }
-                    // console.info(dbgC(),value);
                     return !isCanvasRenderingContext2D(value) && !isNode(value) && !isWebGLRenderingContext(value) && !isWebGLGeneric(value);
                 }
 
-                var count = 0;
-                function dbgC(){
-                    return Date.now() + ":::";
+                var debugFlags = {};
+                function debugprint(category, ...args){
+                    // if(debugFlags[category] == true)
+                        // console.info(Date.now(), category, ...args);
                 }
 
-                window.dbgc = dbgC;
+                window.debugprint_ = debugprint;
 
-                const e = new Proxy([null, Function], {
+                const e_OLD = new Proxy([null, Function], {
                     get: function(obj, prop, rec) {
                         const value = Reflect.get(...arguments);
+                        if(value == null)return value;
                         if(filterEStuff(value)){
-                            console.info(dbgC(),"get e[",prop,"], ", value);
+                            debugprint("eget","get e[",prop,"], ", value);
                         }
-                        if(value != null && value[0] != null && value[0].buffer != null){
-                            console.info(Array.from(value[0]));
+                        else{
+                            return value;
                         }
-                        // if(value != null && value.buffer != null){
-                        //     console.info(dbgC(),"get e[",prop,"] ", Array.from(value));
+                        // if(value.fill != null){
+                        //     debugprint("eget.arraylike",value);
                         // }
+                        if(value[0] != null && value[0].buffer != null){
+                            debugprint("eget.array0",Array.from(value[0]));
+                        }
                         if(typeof value == 'function'){
+                            // console.info("FUNCTIONTHING",value.toString());
+                            return value;
                             //o yea
                             return new Proxy(value, {
                                 apply: function (target, thisArg, argumentsList) {
                                     const result = Reflect.apply(...arguments);
+                                    const debugArgs = Array.from(argumentsList, (arg) => {
+                                        //array like
+                                        if(arg != null && arg.fill != null && arg.slice != null){
+                                            debugprint("ecall.proxy.arraylikeArg", arg.length, arg, Array.from(arg),arg[0]);
+                                            return Array.from(arg);
+                                        }
+                                        return arg;
+                                    });
                                     // if(filterEStuff(rec)){
-                                        console.info(dbgC(),"called",target,argumentsList,result);
+                                        debugprint("ecall.proxy","called",target,debugArgs,argumentsList.length,result);
                                     // }
+                                    if(result == null)return result;
 
-                                    if(result != null && result.buffer != null){
-                                        console.info(dbgC(),Array.from(value));
+                                    const arrayedResult = Array.from(result);
+
+                                    if(arrayedResult != null && arrayedResult.buffer != null){
+                                        debugprint("ecall.proxy.arrayresult2",Array.from(arrayedResult));
+                                    }
+
+                                    if(result.buffer != null){
+                                        debugprint("ecall.proxy.arrayresult",arrayedResult);
                                     }
                                     return result;
                                 }
@@ -152,17 +171,27 @@
                     set: function(obj, prop, rec) {
                         // const value = Reflect.get(...arguments);
                         if(filterEStuff(rec)){
-                            console.info(dbgC(),"set e[",prop,"] = ", rec);
+                            debugprint("eset","set e[",prop,"] = ", rec);
                         }
                         if(typeof rec == 'function'){
-                            console.info("function thingy thingy",rec);
+                            debugprint("eset.func","function thingy thingy",rec);
                             if(rec.toString().includes("e.addEventListener(\"message\",e=>{r.push")){
                                 const funcStr = rec.toString();
                                 const removedAnon = funcStr.substring(19);
                                 const parametersStr = removedAnon.substring(0,removedAnon.indexOf("\n"));
                                 const funcBodyStr = funcStr.substring(funcStr.indexOf("{"));
-                                const newBodyStr = funcBodyStr.replaceAll("e.addEventListener(\"message\",e=>{r.push", "e.addEventListener(\"message\",e=>{console.info(window.dbgc(),\"received packet\",Array.from(new Uint8Array(e.data)));r.push");
-                                console.log(parametersStr,newBodyStr);
+                                const newBodyStr = funcBodyStr.replaceAll("e.addEventListener(\"message\",e=>{r.push", "e.addEventListener(\"message\",e=>{window.debugprint_(\"proxy.packet\",\"received packet\",Array.from(new Uint8Array(e.data)));r.push");
+                                debugprint("eset.func.packetreceive",parametersStr,newBodyStr);
+                                const newValue = new Function(parametersStr, newBodyStr);
+                                return Reflect.set(obj, prop, newValue);
+                            }
+                            if(rec.toString().includes("let r=new Int32Array(n);return n.length=0,r")){
+                                const funcStr = rec.toString();
+                                const removedAnon = funcStr.substring(19);
+                                const parametersStr = removedAnon.substring(0,removedAnon.indexOf("\n"));
+                                const funcBodyStr = funcStr.substring(funcStr.indexOf("{"));
+                                const newBodyStr = funcBodyStr.replaceAll("let r=new Int32Array(n);return n.length=0,r", "let r=new Int32Array(n);window.debugprint_(\"proxy.int32weird\",Array.from(r),n,Array.from(n));return n.length=0,r");
+                                debugprint("eset.func.int32weird",parametersStr,newBodyStr);
                                 const newValue = new Function(parametersStr, newBodyStr);
                                 return Reflect.set(obj, prop, newValue);
                             }
@@ -171,15 +200,14 @@
                     },
                     apply: function (target, thisArg, argumentsList) {
                         // if(filterEStuff(rec)){
-                            console.info(dbgC(),"call e[",thisArg,"], ", argumentsList);
+                            debugprint("eapply","call e[",thisArg,"], ", argumentsList);
                         // }
                         return Reflect.apply(...arguments);
                     },
                     });
                     
-                let //e = [null, Function],
+                let e = [null, Function],
                     t = (t, a) => {
-                    // console.info(dbgC(),"e[",t,"] = ",a);
                     e[t] = a;
                 },
                 a = null
@@ -194,7 +222,7 @@
                     ignoreBOM: !0
                 });
                 d.decode();
-                window.e_thing = e;
+                // window.e_thing = e;
                 let i = /^[\x00-\x7f]*$/
                   , c = (e, t) => {
                     if (i.test(t)) {
@@ -218,12 +246,12 @@
                     e[t].compileShader(e[a])
                 }
                 , (e, t) => {
-                    console.info(dbgC(),d.decode(r().subarray(e, e + t)))
+                    debugprint("consolelog",d.decode(r().subarray(e, e + t)))
                 }
                 , (a, r, o) => t(a, e[r].getContext("2d", {
                     alpha: o > 0
                 })), (e, t, a, o) => {
-                    console.info(dbgC(),d.decode(r().subarray(e, e + t)), d.decode(r().subarray(a, a + o)))
+                    debugprint("consolelog",d.decode(r().subarray(e, e + t)), d.decode(r().subarray(a, a + o)))
                 }
                 , t => e[t][0], t => e[t].shift(), (t, a, r) => c(t, e[a][r].host), t => {
                     window.addEventListener("beforeunload", e[t])
@@ -256,13 +284,16 @@
                 }
                 , t => "boolean" == typeof e[t], (t, a, o) => e[t](d.decode(r().subarray(a, a + o))), (e, t) => WebAssembly.validate(r().subarray(e, e + t)), t => e[t].shift() || 0,
                 (t, a, o) => {
-                    console.info(dbgC(),"before send, a=",a,"o=",o);
+                    // debugprint("packet","before send, a=",a,"o=",o);
                     t = e[t],
                     a = r().subarray(a, a + o),
                     1 === t.readyState && t.send(a);
-                    console.info(dbgC(),"packet t.send(", a,")", "length:",o);
+                    debugprint("packet","packet t.send(", a,")", "length:",o);
                     if(o == 70){// max chat message
-                        console.info(dbgC(),"hi there");
+                        debugprint("packet","length 70 packet");
+                    }
+                    if(o == 7){
+                        debugprint("packet", "length 7 packet interseitng...");
                     }
                 }
                 , (a, r) => t(a, Object.values(e[r].shift().status)), () => performance.now(), (t, a) => {
@@ -281,7 +312,7 @@
                     e[t].value = d.decode(r().subarray(a, a + o))
                 }
                 , (t) => {
-                    console.info(dbgC(),"called e[",t,"] which is ",e[t]);
+                    // debugprint("ecall.other","called e[",t,"] which is ",e[t]);
                     e[t]();
                     }, (t, a, r) => {
                     e[t].uniform1i(e[a], r)
@@ -410,6 +441,7 @@
                 }
                 , (e, t) => {
                     try {
+                        // debugprint("localstorage","localstorage.setitem('arras.io')",d.decode(r().subarray(e, e + t)));
                         localStorage.setItem("arras.io", d.decode(r().subarray(e, e + t)))
                     } catch (e) {}
                 }
@@ -523,10 +555,40 @@
                     e[t].remove()
                 }
                 ]]
-                  , y = fetch("./app.wasm")
+                ;
+                {
+                    const blacklist_functions = [];
+                    for(var index=0;index<b[0].length;index++){
+                        break;
+                        if(index < 200){
+                            continue;
+                        }
+                        const rec = b[0][index];
+                        const funcStr = rec.toString();//.replaceAll("\n",'');
+                        const arrowIndex = funcStr.indexOf("=>");
+                        const parametersStr = funcStr.substring(0,arrowIndex).replaceAll("(","").replaceAll(")","").replaceAll(" ","");
+                        const funcBodyStr = funcStr.substring(arrowIndex+2,funcStr.length);
+                        for(var index2=0;index2<funcBodyStr.length;index2++){
+                            const theChar = funcBodyStr[index2];
+                            if(theChar.trim() == '')continue;
+                            var newBodyStr = null;
+                            const injectCode = "debugprint(\"0_"+ index +"\", \"call\", "+ parametersStr + ");";
+                            if(theChar == '{'){
+                                newBodyStr = '{'+injectCode+funcBodyStr.substring(index2+1,funcBodyStr.length);
+                            }else{
+                                newBodyStr = '{'+injectCode+funcBodyStr.substring(index2,funcBodyStr.length)+'}';
+                            }
+                            debugprint("b.inject",funcStr,parametersStr,newBodyStr);
+                            const newValue = eval('('+parametersStr+ ') =>' + newBodyStr);
+                            b[0][index] = newValue;
+                            break;
+                        }
+                    }
+                }
+                  let y = fetch("./app.wasm")
                   , h = (await (WebAssembly.instantiateStreaming ? WebAssembly.instantiateStreaming(y, b) : WebAssembly.instantiate(await (await y).arrayBuffer(), b))).instance.exports
                   , f = h.c;
-                    console.info(dbgC(),h, b);
+                    // console.log(Date.now(),h, b);
                 h.b()
             }
             )()
