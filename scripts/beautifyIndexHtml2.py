@@ -1,0 +1,11 @@
+index = open("index.html")
+contents = index.read()
+# print("contents: ",contents)
+index.close()
+
+index = open("index.html", "w")
+contents = contents.replace("<!--<meta", "<meta")
+contents = contents.replace("\"> -->","\">")
+index.write(contents)
+# print("wrote ", contents)
+index.close()

@@ -1,0 +1,11 @@
+
+app.wasm:	file format wasm 0x1
+
+Section Details:
+
+Export[5]:
+ - func[310] <a> -> "a"
+ - func[395] <d> -> "d"
+ - func[444] <b> -> "b"
+ - func[501] <c> -> "c"
+ - memory[0] -> "g"

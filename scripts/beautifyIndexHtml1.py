@@ -1,0 +1,11 @@
+index = open("index.html")
+contents = index.read()
+# print("contents: ",contents)
+index.close()
+
+index = open("index.html", "w")
+contents = contents.replace("</title>", "</title> <!--")
+contents = contents.replace("wght@400;700\">","wght@400;700\"> -->")
+index.write(contents)
+# print("wrote ", contents)
+index.close()
