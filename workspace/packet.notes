@@ -1,3 +1,6 @@
+after 15 seconds of not responding with a length 7 packet the server kicks you even though it kept sending packets throughout the time it was waiting for you to send the response packet.
+the client stops accepting packets(?) after moving your mouse after not sending a length 7 packet for a while.
+
 joining a server:
     1. send length 12 @1757021802353:
         examples:

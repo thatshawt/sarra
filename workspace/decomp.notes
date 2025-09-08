@@ -116,7 +116,7 @@ index.html first things to do:
             },
 
 SEND PACKETS
-    ///////note///////
+    ///////length 7 packet send///////
     it seems that all length 7 packets and the chat packets follow this path.
     C() -> big_switch_func() -> packetFunc1() -> index.html.t.send()
     -------code snippet view-------
