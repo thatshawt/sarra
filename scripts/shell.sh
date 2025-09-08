@@ -1,1 +1,1 @@
-nix-shell -p wabt curl wget doxygen graphviz bc prettierd creduce binaryen clang-tools clang git
+nix-shell -p wabt curl wget doxygen graphviz bc prettierd creduce binaryen clang-tools clang git mitmproxy emscripten

@@ -1,5 +1,5 @@
 # Project-related settings
-PROJECT_NAME           = "My C Project"
+PROJECT_NAME           = "arrasio wasm code"
 OUTPUT_DIRECTORY       = docs
 INPUT                  = ./src
 FILE_PATTERNS          = *.c *.h
@@ -14,7 +14,7 @@ EXTRACT_PRIVATE        = YES
 HAVE_DOT               = YES
 CALL_GRAPH             = YES
 CALLER_GRAPH           = YES
-DOT_IMAGE_FORMAT       = svg
+DOT_IMAGE_FORMAT       = png
 DOT_CLEANUP            = YES
 
 # HTML output

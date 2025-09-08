@@ -7,5 +7,5 @@ wasm-decompile app.wasm > app.decomp
 
 sha256sum app.wasm > app.wasm.sha256checksum
 
-# cd ..
-# doxygen Doxygen
+cd ..
+doxygen Doxygen
