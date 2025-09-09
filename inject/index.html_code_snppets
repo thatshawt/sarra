@@ -2,7 +2,7 @@ window.saveArrayBuffer = (bufferThing) => {
     const link = document.createElement( 'a' );
     link.style.display = 'none';
     document.body.appendChild( link );
-    new Uint8Array(bufferThing.byteLength);
+    //new Uint8Array(bufferThing.byteLength);
     const blob = new Blob([new Uint8Array(bufferThing)], { type: 'application/octet-stream' } );
     const objectURL = URL.createObjectURL( blob );
 

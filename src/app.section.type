@@ -3,7 +3,7 @@ app.wasm:	file format wasm 0x1
 
 Section Details:
 
-Type[71]:
+Type[70]:
  - type[0] (i32, i32) -> nil
  - type[1] (i32) -> nil
  - type[2] (i32, i32, i32) -> nil
@@ -12,66 +12,65 @@ Type[71]:
  - type[5] (i32) -> i32
  - type[6] (i32, i32, i32, i32) -> nil
  - type[7] (i32, i32, i32, i32, i32) -> nil
- - type[8] () -> i32
- - type[9] (i32, i32, i32, i32) -> i32
- - type[10] (i32, i32, i32, i32, i32, i32, i32) -> nil
- - type[11] () -> nil
- - type[12] (i32, i32, i32, i32, i32, i32) -> nil
+ - type[8] (i32, i32, i32, i32, i32, i32, i32) -> nil
+ - type[9] () -> i32
+ - type[10] (i32, i32, i32, i32) -> i32
+ - type[11] (i32, i32, i32, i32, i32, i32) -> nil
+ - type[12] () -> nil
  - type[13] (i32, f64) -> nil
  - type[14] (f64) -> f64
- - type[15] (i32, f64, f64, f64, f64) -> nil
- - type[16] (i32, i32, i32, i32, i32) -> i32
- - type[17] (f64, f64) -> f64
- - type[18] (i32, f64, f64) -> nil
- - type[19] () -> f64
- - type[20] (i64, i64, i32) -> i64
- - type[21] (i32, i32, i32, i32, i32, i32, i32, i32) -> nil
+ - type[15] (f64, f64) -> f64
+ - type[16] (i32, f64, f64) -> nil
+ - type[17] (i32, i32, i32, i32, i32) -> i32
+ - type[18] (i64, i64, i32) -> i64
+ - type[19] (i32, f64, f64, f64, f64) -> nil
+ - type[20] () -> f64
+ - type[21] (i32, i32, f64) -> nil
  - type[22] (i32, i32, i32, f64, f64) -> nil
- - type[23] (i32, i32, f64) -> nil
- - type[24] (i32) -> f64
- - type[25] (i32, f64, f64, f64, f64, f64) -> nil
- - type[26] (i32, i32, f64, f64, f64, f64) -> nil
- - type[27] (i32, f64, i32, i32) -> i32
- - type[28] (f64) -> i32
- - type[29] (i32, f64, f64, f64, f64, f64, i32, f32, f32, i32, i32) -> nil
- - type[30] (i32, f64, f64, f64, f64, f64, i32, f32, f32, i32) -> nil
- - type[31] (i32, i32, f64, f64, f64, f64, f64) -> nil
- - type[32] (i32, i32, f64, f64) -> nil
- - type[33] (i32, i32, f32, f32) -> nil
+ - type[23] (i32, i32, i32, i32, i32, i32, i32, i32) -> nil
+ - type[24] (i32, f64, i32, i32) -> i32
+ - type[25] (i32) -> f64
+ - type[26] (i32, i32, f64, f64) -> nil
+ - type[27] (i32, f64, f64, f64, f64, f64) -> nil
+ - type[28] (i32, i64) -> i32
+ - type[29] (f64) -> i32
+ - type[30] (i32, f64, f64, f64, f64, f64, i32, f32, f32, i32, i32) -> nil
+ - type[31] (i32, f64, f64, f64, f64, f64, i32, f32, f32, i32) -> nil
+ - type[32] (i32, i32, f64, f64, f64, f64, f64) -> nil
+ - type[33] (i32, i32, f64, f64, f64, f64, f64, f64, f64, f64) -> nil
  - type[34] (i32, i32) -> f64
  - type[35] (i32, i32, i32, i32, i32, i32, i32, i32, i32, i32) -> nil
- - type[36] (i32, i32, f64, f64, f64, f64, f64, f64, f64, f64) -> nil
- - type[37] (i32, f64, f64, f64, f64, i32, i32, i32, i32, i32, f32, f32) -> nil
- - type[38] (i32, i32, i32, f32, f32, i32, i32) -> nil
- - type[39] (i32, i32, i32, i32, i32, f64) -> nil
- - type[40] (f64, f64, f64) -> f64
- - type[41] (i32, f64, f64, i32) -> nil
- - type[42] (i32, i64) -> i32
- - type[43] (i32, f64, f64, i32, f64, i32, f64, i64) -> nil
- - type[44] (i64, i64, i32, i32) -> i64
+ - type[36] (i32, i32, f64, f64, f64, f64) -> nil
+ - type[37] (i64, i64, i64) -> i64
+ - type[38] (i32, i32, i32, i32, i32, i32) -> i32
+ - type[39] (i32, f64, f64, i32) -> nil
+ - type[40] (i32, i32, i32, f32, f32, i32) -> nil
+ - type[41] (i64, i64, i32, i32) -> i64
+ - type[42] (i32, f64, f64, f64, f64, i32) -> i64
+ - type[43] (i32, i64, i64, i64, i64) -> nil
+ - type[44] (f64, f64, f64) -> f64
  - type[45] (i32, i32, i64) -> nil
- - type[46] (i32, f64, f64, f64, f64, i32) -> i64
- - type[47] (i32, i32, i32, f32, f32, i32) -> nil
+ - type[46] (i32, i32, f32, f32, f32) -> nil
+ - type[47] (i32, f32, f32, f32, f32) -> nil
  - type[48] (i32, i32, i32) -> f64
- - type[49] (i32, f32, f32, f32, f32) -> nil
- - type[50] (i32, i32, f32, f32, f32) -> nil
- - type[51] (i32, i32, f64, f64, f64, f64, f64, i32, f64, i32, i32, i32) -> nil
+ - type[49] (i32, i32, f32, f32) -> nil
+ - type[50] (i32, i32, f64, f64, f64, f64, f64, i32, f64, i32, i32, i32) -> nil
+ - type[51] () -> i64
  - type[52] (i32, f64, f64, f64, i32, f32, f32, i32, i32) -> nil
- - type[53] (i32, f64, f64, f64, i32, i32) -> nil
- - type[54] (i32, i32, i32, i32, i32, i32) -> i32
- - type[55] (i32, f64, f64, f64, i32, i32, i32, f64, f64) -> nil
- - type[56] (i32, f64, f64, f64, f64, i32, i32, i32, i32, f32, f32) -> nil
- - type[57] (i32, i32, f64, f64) -> f64
- - type[58] (i32, i32, i32, f64, i32, i32) -> nil
- - type[59] (i32, f64, f64, f64, i32, f32, f32, i32) -> nil
- - type[60] () -> i64
- - type[61] (i32, i32, i32, i32, i32, i32, i64, i64, i64) -> nil
- - type[62] (i32, f64, i32) -> i32
- - type[63] (i32, i32, i64, i32) -> i32
- - type[64] (f64, i32, i32) -> f64
- - type[65] (i32, i64, i64) -> nil
- - type[66] (i32, i64, i32, i32, i32, i32) -> nil
- - type[67] (i32, i64, i32) -> nil
- - type[68] (i32, f64, f64, f64, i32, f64) -> nil
- - type[69] (i64, i64, i64) -> i64
- - type[70] (i32, i32, i32, i32, i32, i32, i32) -> i32
+ - type[53] (i32, f64, i32) -> i32
+ - type[54] (i32, f64, f64, f64, i32, i32, i32, f64, f64) -> nil
+ - type[55] (f64, i32, i32) -> f64
+ - type[56] (i32, f64, f64, f64, i32, f32, f32, i32) -> nil
+ - type[57] (i32, f64, f64, f64, i32, f64) -> nil
+ - type[58] (i32, f64, f64, f64, i32, i32) -> nil
+ - type[59] (i32, i32, i64, i32) -> i32
+ - type[60] (i32, i32, f64, f64) -> f64
+ - type[61] (i32, i32, i32, f64, i32, i32) -> nil
+ - type[62] (i32, f64, f64, f64, f64, i32, i32, i32, i32, i32, f32, f32) -> nil
+ - type[63] (i32, f64, f64, f64, f64, i32, i32, i32, i32, f32, f32) -> nil
+ - type[64] (i32, i64, i32) -> nil
+ - type[65] (i32, i32, i32, i32, i32, i32, i64, i64, i64) -> nil
+ - type[66] (i32, i32, i32, i32, i32, i32, i32) -> i32
+ - type[67] (i32, i64, i32, i32, i32, i32) -> nil
+ - type[68] (i32, i32, i32, f32, f32, i32, i32) -> nil
+ - type[69] (i32, f64, f64, i32, f64, i32, f64, i64) -> nil

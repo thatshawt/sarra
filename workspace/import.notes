@@ -1,4 +1,7 @@
 
-    there is only one function that uses the import:
-        (a, r, o) => t(a, e[r].getContext("2d", { alpha: o > 0 })),
-    and its probably just used for intializing the canvas.
+there is only one function that uses the import:
+    (a, r, o) => t(a, e[r].getContext("2d", { alpha: o > 0 })),
+and its probably just used for intializing the canvas.
+
+the d exported function is probably used only for memory allocation stuff.
+its used 

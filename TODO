@@ -1,2 +1,7 @@
 *put a breakpoint for when we receive a length 7 packet and follow until we end up sending a length 7 packet in return.
 in theory that should do mostly packet encoding stuff because the base packet is actually like 1 byte i believe from what i saw from packetFunc1()
+
+*make a script that generates the import header file?
+probably also a mapping between imports that have certain code in them and assingning them a specific name in the header file.
+
+*make wsl have a static ip for the eth0 interface so i dont have to keep switching it on the proxy settings on chrome

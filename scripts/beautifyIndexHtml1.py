@@ -4,6 +4,7 @@ contents = index.read()
 index.close()
 
 index = open("index.html", "w")
+contents = contents.replace("<title>arras.io</title>", "<title>Super Hi There</title>")
 contents = contents.replace("</title>", "</title> <!--")
 contents = contents.replace("wght@400;700\">","wght@400;700\"> -->")
 index.write(contents)

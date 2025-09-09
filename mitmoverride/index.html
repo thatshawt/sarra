@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en-US">
-  <title>arras.io</title>
+  <title>awdawdawd</title>
   <meta charset=utf-8><meta name=description content="Level up and gain score by shooting at other players and bosses while keeping yourself alive! Play the game at https://arras.io/."><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><meta name=robots content="index, follow"><meta name=theme-color content=#8abc3f><meta property=og:image content=/favicon/128x128.png><meta property=og:image:width content=54><meta property=og:image:height content=54><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preconnect href=https://config.playwire.com crossorigin><link rel=preconnect href=https://cdn.intergi.com crossorigin><link rel=preconnect href=https://cdn.intergient.com crossorigin><link rel=preconnect href=https://securepubads.g.doubleclick.net crossorigin><link rel=preconnect href=https://cdn.playwire.com crossorigin><link rel=preconnect href=https://cdn.video.playwire.com crossorigin><link rel=preconnect href=https://z.moatads.com crossorigin><link rel=apple-touch-icon sizes=60x60 href=/favicon/60x60.png><link rel=apple-touch-icon sizes=120x120 href=/favicon/120x120.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/180x180.png><link rel=icon type=image/png sizes=16x16 href=/favicon/16x16.png><link rel=icon type=image/png sizes=32x32 href=/favicon/32x32.png><link rel=icon type=image/png sizes=64x64 href=/favicon/64x64.png><link rel=icon type=image/png sizes=96x96 href=/favicon/96x96.png><link rel=icon type=image/png sizes=128x128 href=/favicon/128x128.png><link rel=icon type=image/png sizes=192x192 href=/favicon/192x192.png><link rel=icon type=image/png sizes=256x256 href=/favicon/256x256.png><link rel=icon type=image/png sizes=512x512 href=/favicon/512x512.png><link rel=icon type=image/png sizes=1024x1024 href=/favicon/1024x1024.png><link rel=icon type=image/png sizes=2048x2048 href=/favicon/2048x2048.png><link rel=icon type=image/svg+xml sizes=400x400 href=/favicon/base.svg><link rel=manifest href=/favicon/manifest.json><link rel=canonical href=https://arras.io/><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700">
   <script
     async
@@ -42,21 +42,157 @@
           return;
         }
 
-        window.saveArrayBuffer = (bufferThing) => {
-          const link = document.createElement( 'a' );
-          link.style.display = 'none';
-          document.body.appendChild( link );
-          new Uint8Array(bufferThing.byteLength);
-          const blob = new Blob([new Uint8Array(bufferThing)], { type: 'application/octet-stream' } );
-          const objectURL = URL.createObjectURL( blob );
+                function isWebGLProgram(thing){
+                    return thing != null && thing.constructor != null && thing.constructor.name == 'WebGLProgram';
+                }
 
-          link.href = objectURL;
-          link.href = URL.createObjectURL( blob );
-          link.download =  'data.arraybuffer';
-          link.click();
-      };
+                function isWebGLGeneric(thing){
+                    return thing != null && thing.constructor != null && thing.constructor.name.startsWith('WebGL');
+                }
 
-        let e = [null, Function],
+                function isNode(thing){
+                    return thing != null && thing.nodeName != null;
+                }
+
+                function isCanvas(thing){
+                    return thing != null && thing.nodeName == 'CANVAS';
+                }
+
+                function isCanvasRenderingContext2D(thing){
+                    return thing != null && thing.fillStyle != null && thing.wordSpacing != null;
+                }
+
+                function isWebGLRenderingContext(thing){
+                    return thing != null && thing.drawingBufferColorSpace != null && thing.unpackColorSpace != null;
+                }
+
+                var bigArrayLength = 100;
+                var bigArraysMaxContinuous = 10;
+                var bigArrayCounter = 0;
+
+                //return false to filter out
+                function filterEStuff(value){
+                    //is big array
+                    if(value != null && value.length > bigArrayLength){
+                        bigArrayCounter += 1;
+                        if(bigArrayCounter >= bigArraysMaxContinuous)
+                            return false;
+                    }else{
+                        bigArrayCounter = 0;
+                    }
+                    return !isCanvasRenderingContext2D(value) && !isNode(value) && !isWebGLRenderingContext(value) && !isWebGLGeneric(value);
+                }
+
+                function debugprint(category, ...args){
+                    // if(debugFlags[category] == true)
+                        // console.info(Date.now(), category, ...args);
+                }
+
+                window.debugprint_ = debugprint;
+
+                const e = new Proxy([null, Function], {
+                    get: function(obj, prop, rec) {
+                        const value = Reflect.get(...arguments);
+                        if(value == null)return value;
+                        if(filterEStuff(value)){
+                            // debugprint("eget","get e[",prop,"], ", value);
+                        }
+                        else{
+                            return value;
+                        }
+                        // if(value.fill != null){
+                        //     debugprint("eget.arraylike",value);
+                        // }
+                        if(value[0] != null && value[0].buffer != null){
+                            // debugprint("eget.array0",Array.from(value[0]));
+                        }
+                        if(typeof value == 'function'){
+                            // console.info("FUNCTIONTHING",value.toString());
+                            return value;
+                            //o yea
+                            return new Proxy(value, {
+                                apply: function (target, thisArg, argumentsList) {
+                                    const result = Reflect.apply(...arguments);
+                                    const debugArgs = Array.from(argumentsList, (arg) => {
+                                        //array like
+                                        if(arg != null && arg.fill != null && arg.slice != null){
+                                            debugprint("ecall.proxy.arraylikeArg", arg.length, arg, Array.from(arg),arg[0]);
+                                            return Array.from(arg);
+                                        }
+                                        return arg;
+                                    });
+                                    // if(filterEStuff(rec)){
+                                        debugprint("ecall.proxy","called",target,debugArgs,argumentsList.length,result);
+                                    // }
+                                    if(result == null)return result;
+
+                                    // const arrayedResult = Array.from(result);
+
+                                    // if(arrayedResult != null && arrayedResult.buffer != null){
+                                    //     debugprint("ecall.proxy.arrayresult2",Array.from(arrayedResult));
+                                    // }
+
+                                    // if(result.buffer != null){
+                                    //     debugprint("ecall.proxy.arrayresult",arrayedResult);
+                                    // }
+                                    return result;
+                                }
+                            });
+                        }
+                        return value;
+                    },
+                    set: function(obj, prop, rec) {
+                        // const value = Reflect.get(...arguments);
+                        if(filterEStuff(rec)){
+                            debugprint("eset","set e[",prop,"] = ", rec);
+                        }
+                        if(typeof rec == 'function'){
+                            debugprint("eset.func","function thingy thingy",rec);
+                            if(rec.toString().includes("e.addEventListener(\"message\",e=>{r.push")){
+                                const funcStr = rec.toString();
+                                const removedAnon = funcStr.substring(19);
+                                const parametersStr = removedAnon.substring(0,removedAnon.indexOf("\n"));
+                                const funcBodyStr = funcStr.substring(funcStr.indexOf("{"));
+                                const newBodyStr = funcBodyStr.replaceAll("e.addEventListener(\"message\",e=>{r.push", "e.addEventListener(\"message\",e=>{window.debugprint_(\"proxy.packet\",\"received packet\",Array.from(new Uint8Array(e.data)));r.push");
+                                debugprint("eset.func.packetreceive",parametersStr,newBodyStr);
+                                const newValue = new Function(parametersStr, newBodyStr);
+                                return Reflect.set(obj, prop, newValue);
+                            }
+                            if(rec.toString().includes("let r=new Int32Array(n);return n.length=0,r")){
+                                const funcStr = rec.toString();
+                                const removedAnon = funcStr.substring(19);
+                                const parametersStr = removedAnon.substring(0,removedAnon.indexOf("\n"));
+                                const funcBodyStr = funcStr.substring(funcStr.indexOf("{"));
+                                const newBodyStr = funcBodyStr.replaceAll("let r=new Int32Array(n);return n.length=0,r", "let r=new Int32Array(n);window.debugprint_(\"proxy.int32weird\",Array.from(r),n,Array.from(n));return n.length=0,r");
+                                debugprint("eset.func.int32weird",parametersStr,newBodyStr);
+                                const newValue = new Function(parametersStr, newBodyStr);
+                                return Reflect.set(obj, prop, newValue);
+                            }
+                            if(rec.toString().includes("ebAssembly.Module(e,{builtins:[n]})),!0}catc")){
+                                const funcStr = rec.toString();
+                                const removedAnon = funcStr.substring(19);
+                                const parametersStr = removedAnon.substring(0,removedAnon.indexOf("\n"));
+                                const funcBodyStr = funcStr.substring(funcStr.indexOf("{"));
+                                const newBodyStr = funcBodyStr.replaceAll(
+                                "try{return new WebA",
+                                "try{window.debugprint_(\"proxy.webassemblyweird\",Array.from(e),e,n);return new WebA");
+                                debugprint("eset.func.int32weird",parametersStr,newBodyStr);
+                                const newValue = new Function(parametersStr, newBodyStr);
+                                return Reflect.set(obj, prop, newValue);
+                            }
+                        }
+                        return Reflect.set(...arguments);
+                    },
+                    apply: function (target, thisArg, argumentsList) {
+                        // if(filterEStuff(rec)){
+                            debugprint("eapply","call e[",thisArg,"], ", argumentsList);
+                        // }
+                        return Reflect.apply(...arguments);
+                    },
+                    });
+
+        let 
+        // e = [null, Function],
           t = (t, a) => {
             e[t] = a;
           },
@@ -81,13 +217,29 @@
             if (i.test(t)) {
               let a = h.d(t.length, 1),
                 o = r();
-              for (let e = 0; e < t.length; e++) o[a + e] = t.charCodeAt(e);
+              var stuffityStuff = [];
+              for (let e = 0; e < t.length; e++){
+                stuffityStuff.push(t.charCodeAt(e));
+                o[a + e] = t.charCodeAt(e);
+              }
               n().set([a, t.length], e >> 2);
+              if(window.enableMemoryThing != null){
+                console.log("from C",stuffityStuff, t, [a, t.length], e >> 2);
+                if(t.length==7 && t[0] != '['){
+                  console.log("its 7 all right!");
+                }
+              }
             } else u(e, s.encode(t));
           },
           u = (e, t) => {
             let a = h.d(t.length, 1);
             r().set(t, a), n().set([a, t.length], e >> 2);
+            if(window.enableMemoryThing != null){
+                console.log("from U",t, [a, t.length], e >> 2);
+                if(t.length==7 && t[0] != '['){
+                  console.log("its 7 all right!");
+                }
+            }
           },
           b = [
             [
@@ -191,25 +343,24 @@
               (t, a, r, o, n, l, s) => {
                 e[t].texImage2D(a >>> 0, r, o >>> 0, n >>> 0, l >>> 0, e[s]);
               },
-                (t, a, o) => {
-                    if(window.stopPackets != null && o == 7)return;
-                    (t = e[t]),
-                    (a = r().subarray(a, a + o)),
-                    1 === t.readyState && t.send(a);
-                    // console.info("packet send",o,a);
-                    if(o == 70){// chat send, 60 characters
-                    // console.info("packet","length 70 packet");
+              (t, a, o) => {
+                  (t = e[t]),
+                  (a = r().subarray(a, a + o)),
+                  1 === t.readyState && t.send(a);
+                  console.info("packet send",o,a);
+                  if(o == 70){// chat send, 60 characters
+                  // console.info("packet","length 70 packet");
                     if(1==1){}
-                    }
-                    if(o == 18){// chat send, 10 characters
-                    // console.info("packet","length 70 packet");
+                  }
+                  if(o == 18){// chat send, 10 characters
+                  // console.info("packet","length 70 packet");
                     if(1==1){}
-                    }
-                    if(o == 7){
-                    // console.info("packet", "length 7 packet interseitng...");
+                  }
+                  if(o == 7){
+                  // console.info("packet", "length 7 packet interseitng...");
                     if(1==1){}
-                    }
-                },
+                  }
+              },
               (t) => document.activeElement === e[t],
               (t, a, r, o, n, l, s, d, i, c) =>
                 u(t, e[a](r >>> 0, e[o], n, l, s, d, i >>> 0, c >>> 0)),
@@ -521,10 +672,7 @@
               },
               () => performance.now(),
               (t, a, o, n, l) => {
-                var text = d.decode(r().subarray(a, a + o))
-                // console.log(text, typeof text);
-                if(text.includes("cum"))return;
-                e[t].fillText(text, n, l);
+                e[t].fillText(d.decode(r().subarray(a, a + o)), n, l);
               },
               (t) => "number" == typeof e[t],
               (t, a) => e[t][a].featured,
@@ -565,6 +713,7 @@
           ).instance.exports,
           f = h.c;
           console.log(h,b);
+          window.e_ = e;
         h.b();
       })();
     </script>
