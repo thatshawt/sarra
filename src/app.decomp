@@ -104841,7 +104841,7 @@ function f_ts(a:int) { // func513
       fa;
     y = 1;
     continue L_b;
-    label B_fea:
+    label B_fea: //send packet?!
     loop L_cha {
       if (h != 64) {
         if (h & 1) goto B_fha;
@@ -105123,7 +105123,7 @@ function f_ts(a:int) { // func513
           label B_qha:
           v = u & 255;
           if (v == 2) goto B_nha;
-          label B_oha:
+          label B_oha: //HERE start of packet xor stuff
           d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[629759]:byte = v ^ fc;
           ad = c[964]:int;
           ua = c[974]:int;
@@ -105261,7 +105261,7 @@ function f_ts(a:int) { // func513
             ((be = (re >> 25L) * 19L + (ve & 67108863L)) >> 26L);
           c[1574]:int = i32_wrap_i64(be) & 67108863;
           ec = c + 960;
-          f_eu(ec, f = c + 6176);
+          f_eu(ec, f = c + 6176); //HERE
           c[1584]:int =
             (z = 
                i32_wrap_i64(
@@ -105566,7 +105566,7 @@ function f_ts(a:int) { // func513
         c[956]:int = fc ^ ((qb ^ fc) & h);
         c[717]:byte = 0;
         qc = c + 960;
-        f_ek(qc, k);
+        f_ek(qc, k); //HERE
         ka = c + 5104;
         ka[4]:long = qc[8];
         ka[3]:long = (h = qc + 24)[0]:long@4;
@@ -105667,7 +105667,7 @@ function f_ts(a:int) { // func513
         ka = -2147483647;
         ua = 0;
         if (eqz(gc)) goto B_dha;
-        f_tl(gb, gc, 1);
+        f_tl(gb, gc, 1); //HERE
         ua = 1;
         goto B_dha;
         label B_kha:
@@ -105702,7 +105702,7 @@ function f_ts(a:int) { // func513
       label B_dha:
     }
     n = ((ua << 2) + n)[0]:int + fa;
-    y = 1;
+    y = 1; // HERE
     continue L_b;
     label B_eea:
     n = (({

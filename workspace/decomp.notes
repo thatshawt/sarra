@@ -1,5 +1,27 @@
 in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
 
+in the big switch func, there is a section that is probably related to packets encoding and sending packets.
+i think its for the length 32 packet that gets sent in the beginning of the thingy wingy... maybe its a proof you send to the server? idk.
+its about 400 lines under the big branch table(in app.decomp) and something like this:
+    label B_fea: //send packet?!
+    loop L_cha {
+      if (h != 64) {
+        if (h & 1) goto B_fha;
+        goto B_eha;
+      }
+      c[751]:long = ha[8]:long@4;
+      c[750]:long = ha[6]:long@4;
+      c[749]:long = ha[4]:long@4;
+      c[748]:long = ha[2]:long@4;
+      c[753]:long = q[2]:long@4;
+      c[754]:long = q[4]:long@4;
+      c[755]:long = q[6]:long@4;
+      c[756]:long = q[8]:long@4;
+      c[747]:long = ha[0]:long@4;
+      c[752]:long = q[0]:long@4;
+      m = c + 5936;
+i havent done enough research to find where the packet data lies in memory and any stuff like packet size and stuff like that yet...
+
 index.html first things to do:
     1.
         change this near the beginning:
