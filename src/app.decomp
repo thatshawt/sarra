@@ -107543,8 +107543,7 @@ function f_ts(a:int) { // func513
     xd = i64_extend_i32_u(nd);
     continue L_b;
     label B_aca:
-    xd = i32_wrap_i64(xd)[0]:ushort@1;
-    continue L_b;
+    xd = i32_wrap_i64(xd)[0]:ushort@1;B_gn    continue L_b;
     label B_zba:
     g = g + 8;
     (g - 8)[0]:long = xd;

@@ -20,7 +20,6 @@ its about 400 lines under the big branch table(in app.decomp) and something like
       c[747]:long = ha[0]:long@4;
       c[752]:long = q[0]:long@4;
       m = c + 5936;
-i havent done enough research to find where the packet data lies in memory and any stuff like packet size and stuff like that yet...
 
 index.html first things to do:
     1.
