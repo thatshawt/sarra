@@ -1,5 +1,12 @@
 in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
 
+its a good day today because i found out something >:)
+the function in the app.decomp that looks like this:
+function f_lj(a:{ a:int, b:int, c:int, d:int, e:int, f:int, g:int, h:int, i:int, j:int, k:int, l:int, m:int, n:int, o:int, p:int }) { // func271
+is proabbly related to encrpytion of packet data and uses an algorithm i think is chacha20 because i found a string in the memory called "expand 32-byte k" and i googled it and turns out its chacha20 so yea.
+the function code also looks like it does what chacha20 is explained to do so yea, lots of xor and shifting of 512 bits...
+so searching up what calls this function there is another function which also happens to call the index.html@t.send imported function... so yea that one's probably for sending packets and whatever is passed to that function might be unecrypted packet data so yea i hope thats true.
+
 in the big switch func, there is a section that is probably related to packets encoding and sending packets.
 i think its for the length 32 packet that gets sent in the beginning of the thingy wingy... maybe its a proof you send to the server? idk.
 its about 400 lines under the big branch table(in app.decomp) and something like this:
