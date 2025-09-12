@@ -46,22 +46,26 @@ with open(args.d) as f:
     line = f.readline()
     while line:
         if f"// func{largest_func_name}" in line:
-            large_func_pos = f.tell() - len(line)
+            large_func_pos = f.tell()# - len(line)
             break
         line = f.readline()
 
 
+# find the end pos of the large_func.
+# we find this by finding the matching opening curly brace.
+large_func_end_pos = -1
 with open(args.d) as f:
+    counter = 1 # offset by 1 to mean that we consumed the beginning {
     f.seek(large_func_pos)
     line = f.readline()
     while line:
-        if f"// func{largest_func_name}" in line:
-            large_func_pos = f.tell() - len(line)
+        for c in line:
+            if c == "{": counter = counter + 1
+            elif c == "}": counter = counter - 1
+        if counter == 0:
+            large_func_end_pos = f.tell()
             break
         line = f.readline()
-
-exit(0)
-  
 
 line_counter = 0
 MAX_LINES_NO_BRANCH = 500
