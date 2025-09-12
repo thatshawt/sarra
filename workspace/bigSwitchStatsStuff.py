@@ -34,6 +34,7 @@ file.close()
 total = 0
 freq = {}
 for line in contents.split("\n"):
+    line = line.split(" ")[0]
     if not line.isnumeric(): continue
     num = int(line)
 
