@@ -1,4 +1,4 @@
-*find out where exactly do the received packets go to get decoded...
+*make a script that grabs the code from app.decomp given a bigSwitchFunc switch index
 
 *put a breakpoint for when we receive a length 7 packet and follow until we end up sending a length 7 packet in return.
 in theory that should do mostly packet encoding stuff because the base packet is actually like 1 byte i believe from what i saw from packetFunc1()

@@ -20,7 +20,7 @@ step():
 391 # g = g - 8; xd = g[0]:long;
 629 # g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68);
 25  # zb = i32_wrap_i64(xd); g = g - 8; xd = g[0]:long; step(); (r << 2)[196252]:int = zb;
-747 # g = g + 8; (g - 8)[0]:long = xd; xd = i64_extend_i32_u(c); # g = g + 8; (g - 8)[0]:long = xd; xd = i64_extend_i32_u(c);
+747 # g = g + 8; (g - 8)[0]:long = xd; xd = i64_extend_i32_u(c);
 274 # step(); xd = xd + i64_extend_i32_u(r); # step(); xd = xd + i64_extend_i32_u(r);
 793 # xd = i32_wrap_i64(xd)[0]:uint;
 211 # h = i32_wrap_i64(xd); xd = i64_extend_i32_u(h);
@@ -217,6 +217,9 @@ step():
 274 # step(); xd = xd + i64_extend_i32_u(r);
 629 # g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68);
 757 # r = i32_wrap_i64(xd); g = g - 40; xd = g[0]:long; call_indirect(g[2]:int, g[4]:int, g[6]:int, g[8]:int, r);
+      c@ll_indirect(g[2]:int, g[4]:int, g[6]:int, g[8]:int, r);
+        func486();
+
 747 # g = g + 8; (g - 8)[0]:long = xd; xd = i64_extend_i32_u(c);
 352 # r = n[0] + fa; n = n + 4; xd = xd + i64_extend_i32_u(r);
 793 # xd = i32_wrap_i64(xd)[0]:uint;
@@ -323,6 +326,8 @@ step():
 211 # h = i32_wrap_i64(xd); xd = i64_extend_i32_u(h);
 629 # g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68);
 289 # r = i32_wrap_i64(xd); g = g - 32; xd = g[0]:long; call_indirect(g[2]:int, g[4]:int, g[6]:int, r);
+    c@ll_indirect(g[2]:int, g[4]:int, g[6]:int, r);
+      480();
 101 # g = g + 8; (g - 8)[0]:long = xd; xd = de;
 478 # g = g + 8; (g - 8)[0]:long = xd; xd = 4294967295L;
 663 # r = n[0] + fa; n = n + 4; xd = xd + (i64_extend_i32_u(r) << 32L);
@@ -408,6 +413,8 @@ step():
 455 # bc = i32_wrap_i64(xd); xd = i64_extend_i32_u(bc);
 383 # fa = n[0] + fa; n = n + 4;
 391 # g = g - 8; xd = g[0]:long;
+
+this probably encodes packets mayhaps?
 614 #     loop L_pde {
       sa[0]:long@1 = tb[0]:long@1;
       mb = u + 56;
@@ -707,6 +714,8 @@ step():
 632 # g = g + 8; (g - 8)[0]:long = xd; step(); xd = i64_extend_i32_u(r);
 629 # g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68);
 289 # r = i32_wrap_i64(xd); g = g - 32; xd = g[0]:long; call_indirect(g[2]:int, g[4]:int, g[6]:int, r);
+  423();  //decodes packet data here?
+          //packet id 89? @ 318600
 286 # L_b: step()?
 782 # g = g + 8; (g - 8)[0]:long = xd; xd = i64_reinterpret_f64(gg);
 708 # zd = xd;
