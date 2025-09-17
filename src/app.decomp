@@ -56019,8 +56019,7 @@ function f_lj(a:{ a:int, b:int, c:int, d:int, e:int, f:int, g:int, h:int, i:int,
   var b:int = ba;
   var ca:int = a.n;
   var m:int = ca;
-  var da:int = 
-    select_if(a, 0, d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[562411]:ubyte)[9]:int;
+  var da:int = select_if(a, 0, d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[562411]:ubyte)[9]:int;
   var n:int = da;
   var ea:int = a.c;
   var o:int = ea;
@@ -56102,11 +56101,9 @@ function f_lj(a:{ a:int, b:int, c:int, d:int, e:int, f:int, g:int, h:int, i:int,
   a.h = c + ia;
   a.j = n + da;
   a.k = k + ga;
-  select_if(v, a, d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[58224]:ubyte)[11]:int =
-    j + ka;
+  select_if(v, a, d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[58224]:ubyte)[11]:int = j + ka;
   a.m = a.m + y;
-  select_if(u, a, d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[58224]:ubyte)[13]:int =
-    a.n + ca;
+  select_if(u, a, d_xKFqc6hjIpABL5_h_gCTqp_IGkZw[58224]:ubyte)[13]:int = a.n + ca;
   a.o = a.o + u;
   a.p = a.p + ja;
 }

@@ -1,5 +1,9 @@
-*put a breakpoint for when we receive a length 7 packet and follow until we end up sending a length 7 packet in return.
-in theory that should do mostly packet encoding stuff because the base packet is actually like 1 byte i believe from what i saw from packetFunc1()
+*do a complete "transript" of the calls and call_indirects between receiving a length 7 packet and sending a length 7 packet with all the parameters passed and values returned.
+
+*try breaking on all the received packets and print out all the bigswitchfunc indexe files up to 500 lines or so, maybe i can pin point the decoding structure or something.
+
+*do the same for length 15 and 13 reciving packets? we dont send anything for those lengths only receive, so i need to find a better place for the breakpoint to stop the stuff...
+probably print out the first 1000 or something in the bigSwitchFunc.. gotta figure that one out...
 
 *make a script that generates the import header file?
 probably also a mapping between imports that have certain code in them and assingning them a specific name in the header file.
