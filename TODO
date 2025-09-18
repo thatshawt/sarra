@@ -1,4 +1,4 @@
-*do a complete "transript" of the calls and call_indirects between receiving a length 7 packet and sending a length 7 packet with all the parameters passed and values returned.
+*make a script to add conditional breakpoints to all the wasm functions with code that lets me choose which ones to print when they fire and with what arguments they got called with... this helps fill in more info into whats happening in the switch index files
 
 *try breaking on all the received packets and print out all the bigswitchfunc indexe files up to 500 lines or so, maybe i can pin point the decoding structure or something.
 

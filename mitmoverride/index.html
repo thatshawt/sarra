@@ -41,6 +41,9 @@
             document.body.appendChild(e);
           return;
         }
+
+        
+
         let e = [null, Function],
           t = (t, a) => {
             e[t] = a;
@@ -73,7 +76,7 @@
           u = (e, t) => {
             let a = h.d(t.length, 1);
             r().set(t, a), n().set([a, t.length], e >> 2);
-            if(window.enableMemoryThing == null){
+            if(window.enableMemoryThing != null){
                 console.log("from U",t, [a, t.length], e >> 2);
                 if(t.length==7 && t[0] != '['){
                   console.log("its 7 all right!");
