@@ -12,6 +12,10 @@ cd ../src
     wasm2wat app.wasm -o app.wat
     wasm-decompile app.wasm -o app.decomp
 
+    mkdir -p ~/sarra
+    wat2wasm -v app.wat 2> ~/sarra/app.watv
+    cp ~/sarra/app.watv ./app.watv
+
     wasm-objdump -h app.wasm > app.sections
     wasm-objdump -x -j import app.wasm > app.section.import
     wasm-objdump -x -j type app.wasm >  app.section.type

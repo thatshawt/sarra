@@ -1,0 +1,2 @@
+import function wasm_js_string_test(a:externref):int; // func0
+

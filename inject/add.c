@@ -1,22 +1,12 @@
-extern void arras_malloc(int a, int b);
+extern void js_special_debug(int funcNum);
 
-int add(int a, int b) {
-  return a*a + b;
-}
+// int add(int a, int b) {
+//   return a*a + b;
+// }
 
+static int poop = 42;
+
+// void stuff () asm ("HITHERE");
 void stuff(){
-  /*    i32.const 599468
-    i32.const 1886351216
-    i32.store
-
-    i32.const 165514
-    i32.const 1885693298
-    i32.store*/
-    int* loc1 = (int*)599468;
-    int* loc2 = (int*)165514;
-
-    loc1[0] = 1886351216;
-    loc2[0] = 1885693298;
-
-    arras_malloc(1,2);
+  js_special_debug(123456);
 }
