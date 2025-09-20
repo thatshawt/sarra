@@ -1,4 +1,6 @@
-*make a script to add conditional breakpoints to all the wasm functions with code that lets me choose which ones to print when they fire and with what arguments they got called with... this helps fill in more info into whats happening in the switch index files
+*try to add injected code to the beginning of one function, then add it to all of them.
+then try to inject code that has custom imports...
+then we make that debug inject code which calls an imported debug function from js.
 
 *try breaking on all the received packets and print out all the bigswitchfunc indexe files up to 500 lines or so, maybe i can pin point the decoding structure or something.
 
