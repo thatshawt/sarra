@@ -1,3 +1,5 @@
+mkdir -p ~/sarraworkspace
+
 cd ../src
     echo "Downloading index.html and app.wasm..."
     wget https://arras.io
@@ -8,13 +10,16 @@ cd ../src
     python3 ../scripts/beautifyIndexHtml2.py
 
     echo "Generating app stuff"
-    wasm2c app.wasm -o app.c
-    wasm2wat app.wasm -o app.wat
-    wasm-decompile app.wasm -o app.decomp
+    wasm2c app.wasm -o /tmp/app.c
+    wasm2wat app.wasm -o /tmp/app.wat
+    wasm-decompile app.wasm -o /tmp/app.decomp
 
-    mkdir -p ~/sarra
-    wat2wasm -v app.wat 2> ~/sarra/app.watv
-    cp ~/sarra/app.watv ./app.watv
+    cp /tmp/app.c ./app.c
+    cp /tmp/app.wat ./app.wat
+    cp /tmp/app.decomp ./app.decomp
+
+    wat2wasm -v app.wat 2> /tmp/app.watv
+    cp /tmp/app.watv ./app.watv
 
     wasm-objdump -h app.wasm > app.sections
     wasm-objdump -x -j import app.wasm > app.section.import
