@@ -1,11 +1,22 @@
 in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
 
-its a good day today because i found out something >:)
-the function in the app.decomp that looks like this:
-function f_lj(a:{ a:int, b:int, c:int, d:int, e:int, f:int, g:int, h:int, i:int, j:int, k:int, l:int, m:int, n:int, o:int, p:int }) { // func271
-is proabbly related to encrpytion of packet data and uses an algorithm i think is chacha20 because i found a string in the memory called "expand 32-byte k" and i googled it and turns out its chacha20 so yea.
-the function code also looks like it does what chacha20 is explained to do so yea, lots of xor and shifting of 512 bits...
-so searching up what calls this function there is another function which also happens to call the index.html@t.send imported function... so yea that one's probably for sending packets and whatever is passed to that function might be unecrypted packet data so yea i hope thats true.
+encryptFunc looks like this in app.decomp:
+    function f_lj(a:{ a:int, b:int, c:int, d:int, e:int, f:int, g:int, h:int, i:int, j:int, k:int, l:int, m:int, n:int, o:int, p:int }) { // func271
+you can find encryptFunc by going to the t.send imported function and seeing what its callees. go to the first one connected to it thats not the bigFunc. then, right next to the t.send function in the call graph will be the encryptFunc.
+after locating the encryptFunc search for its use in the bigFunc, it is only used twice. the further location is apparently used for decoding packets? the instruction that does xoring right after the encryptFunc call and a few loads is where the decrypted packet data lies. looks like this:
+      f_lj(u);
+      wa[14]:long@4 = mb[0]:long@4;
+      wa[12]:long@4 = eb[0]:long@4;
+      wa[10]:long@4 = u[10]:long@4;
+      wa[8]:long@4 = u[8]:long@4;
+      wa[6]:long@4 = u[6]:long@4;
+      wa[4]:long@4 = sa[0]:long@4;
+      wa[2]:long@4 = h[0]:long@4;
+      wa[0]:long@4 = u[0]:long@4;
+      u[38]:int = (h = u[19]:int);
+      d[0]:byte = h ^ d[0]:ubyte;
+      ^^^^^^^decrypted packet data header here o.O
+there are two locations that look just like this and different by just a few instructions... i need to investigate them both to see if the packet data really does get decoded here.
 
 in the big switch func, there is a section that is probably related to packets encoding and sending packets.
 i think its for the length 32 packet that gets sent in the beginning of the thingy wingy... maybe its a proof you send to the server? idk.

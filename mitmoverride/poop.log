@@ -1,3 +1,0 @@
-app.wat.patched:317642:4: error: imports must occur before all non-import definitions
-  (import "0" "192" (func $import_js_debug (type 0)))
-   ^^^^^^

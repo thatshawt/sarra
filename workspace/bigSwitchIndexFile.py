@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-# thisfile.py -i ./arras.io-1757563887084.log.2again -d ../src/app.decomp -c ../src/app.section.code
+# python3 bigSwitchIndexFile.py -d ../src/app.decomp -c ../src/app.section.code -i ./arras.io-1757563887084.log.2again 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", help="big switch index file path", required=True)
@@ -104,6 +104,8 @@ with open(args.i) as f:
         line = line.strip()
         if line.isnumeric():
             indexes.append(int(line))
+        else:
+            indexes.append(line)
 
         line = f.readline()
 
@@ -115,6 +117,8 @@ with open(args.d) as f:
     line = f.readline()
     while line and f.tell() <= large_func_end_pos:
         for index in indexes:
+            if type(index) is str: continue
+            
             branch_word = index_branch_mapping[index]
             branch_label_code = f"label {branch_word}:"
             loop_label_code = f"loop {branch_word} {{"
@@ -154,6 +158,6 @@ for index in indexes:
     if index in indexes_result.keys():
         print(f"{index} # {indexes_result[index]}")
     else:
-        print(f"{index} # could not find this one :P")
+        print(f"{index}")
 
 # print(len(indexes))
