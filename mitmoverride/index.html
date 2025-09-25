@@ -42,7 +42,12 @@
           return;
         }
 
-        
+        var hxh_state = {
+          microcode: [],
+          memory: new Map(),
+
+          // currentInstruction: -1,
+        };
 
         let e = [null, Function],
           t = (t, a) => {
@@ -156,7 +161,32 @@
               (t) => {
                 e[t].close();
               },
-              (t) => e[t],
+              (t) => {
+                let PARSE_NUM = 9999;
+                let MICROCODE_OFFSET = 10000;
+                if(t == PARSE_NUM){ // parse and "execute" microcode
+                  switch(hxh_state.microcode.shift()){
+                    case 0: // console.log the rest
+                      console.log(Array.from(hxh_state.microcode));
+                      hxh_state.microcode = [];
+                      break;
+                    case 1: // return memory[microcode[0]]
+                      let value = hxh_state.memory[hxh_state.microcode.shift()];
+                      hxh_state.microcode = [];
+                      return value || 0;
+                    case 2: // memory[microcode[0]] = microcode[1]
+                      hxh_state.memory[hxh_state.microcode[0]] = hxh_state.microcode[1];
+                      hxh_state.microcode = [];
+                      break;
+                  }
+                  hxh_state.microcode = []
+                }else if(t>=MICROCODE_OFFSET){
+                  let val = t-10000
+                  hxh_state.microcode.push(val);
+                }
+                
+                return e[t];
+              },
               (t) => e[t](),
               (t, a, r, o, n) => {
                 e[t].fillRect(a, r, o, n);

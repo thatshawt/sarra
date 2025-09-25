@@ -15,8 +15,10 @@ after locating the encryptFunc search for its use in the bigFunc, it is only use
       wa[0]:long@4 = u[0]:long@4;
       u[38]:int = (h = u[19]:int);
       d[0]:byte = h ^ d[0]:ubyte;
-      ^^^^^^^decrypted packet data header here o.O
+      ^^^^^^^decrypted packet data header here o.O probably
 there are two locations that look just like this and different by just a few instructions... i need to investigate them both to see if the packet data really does get decoded here.
+
+
 
 in the big switch func, there is a section that is probably related to packets encoding and sending packets.
 i think its for the length 32 packet that gets sent in the beginning of the thingy wingy... maybe its a proof you send to the server? idk.

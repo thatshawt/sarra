@@ -9,18 +9,20 @@ parser.add_argument("-i" ,help="inject.wat file path", required=True)
 parser.add_argument("-f" ,help="index.html file path", required=True)
 parser.add_argument("-o1" ,help="app.wat.patched file path", required=True)
 parser.add_argument("-o2" ,help="index.html.patched file path", required=True)
-# python3 scripts/generatePatchedAppWasm.py -w mitmoverride/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched -o mitmoverride/app.wasm
+# wasm2wat src/app.wasm -o /tmp/app.wat && cp /tmp/app.wat mitmoverride/app.wat && python3 scripts/generatePatchedAppWasm.py -w mitmoverride/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched -o mitmoverride/app.wasm
 args = parser.parse_args()
 
 index_html_content = ""
 with open(args.f) as f: index_html_content = f.read()
 
+# not used rn ;-;
 index_import_injects = [('import_js_debug', """(a)=>{
                          console.log("hi there?");
                          },\n"""),]
 
 index_imports_code_mapping = {
-    'import_e_t_get':'              (t) => e[t],',
+    # 'import_e_t_get':'              (t) => e[t],',
+    'import_e_t_get':'                let PARSE_NUM = 9999;',
     'import_e_t_call':'              (t) => e[t](),',
 }
 
@@ -29,7 +31,7 @@ index_imports_name_index_mapping = {}
 index_html_patched = []
 
 started = False
-index_html_import_counter = 0
+index_html_import_counter = -1
 
 def get_import_inject_index(importInjectCode):
     counter = 0 
@@ -43,9 +45,13 @@ def get_import_inject_index(importInjectCode):
     return None
 
 for line in index_html_content.split("\n"):
+    if started and line[:len("              (")] == "              (":
+        index_html_import_counter = index_html_import_counter+1
+
     for (import_name, import_code) in index_imports_code_mapping.items():
         if line.startswith(import_code):
             index_imports_name_index_mapping[import_name] = str(index_html_import_counter)
+            # print(line, index_html_import_counter)
     
     if line.startswith("            ["):
         started = True
@@ -53,8 +59,6 @@ for line in index_html_content.split("\n"):
         started = False
         index_html_patched.append(index_import_injects[0][1])
 
-    if started and line[:len("              (")] == "              (":
-        index_html_import_counter = index_html_import_counter+1
     
     index_html_patched.append(line)
 
@@ -85,17 +89,46 @@ class ImportThing:
         self.num = num
         self.full_string = full_string
 
+class TypeThing:
+    def __init__(self, num, param_string, full_string):
+        self.num = num
+        self.param_string = param_string
+        self.full_string = full_string
+
+class FuncThing:
+    def __init__(self, num, header_line, param, body):
+        self.num = num
+        self.param = param
+        self.header_line = header_line
+        self.body = body
+
 class WatStuff:
+    def getFuncByNum(self, num):
+        for thing in self.funcs:
+            if thing.num == num: return thing
+        return None
+    
+    def getImportByNum(self, num):
+        for thing in self.imports:
+            if thing.num == num: return thing
+        return None
+    
+    def getTypeByNum(self, num):
+        for thing in self.types:
+            if thing.num == num: return thing
+        return None
+
     def __init__(self, wat_content, debug=True):
         self.imports = []
         self.exports = {}
-        self.types = {}
-        self.func_bodies = {}
-        self.func_param_types = {}
+        self.types = []
+        self.funcs = []
 
         in_func_body = False
         func_current_name = ""
         func_body = []
+        func_param = None
+        func_header_line = None
         # func_locals = []
 
         for line in wat_content.split("\n"):
@@ -110,8 +143,11 @@ class WatStuff:
                     if rparens == 1 + lparens: # we hit the closing parens from the func
                         func_body[-1] = func_body[-1][0:-1] + '\n' # remove closing parens
                         if debug: print("added func", func_current_name, len(func_body))
-                        self.func_bodies[int(func_current_name)] = "\n".join(func_body)
+                        # self.func_bodies[int(func_current_name)] = "\n".join(func_body)
+                        self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body)))
+
                         in_func_body = False
+                        func_param = None
                         func_body = []
                         continue
                     else:
@@ -143,7 +179,8 @@ class WatStuff:
                 num_semicolon_str = line[line.find('(;')+2:line.find(";)")]
                 type_num = int(num_semicolon_str)
                 type_param_str = line[line.find(";) (")+3:len(line)-1]
-                self.types[type_num] = type_param_str
+                # self.types[type_num] = type_param_str
+                self.types.append(TypeThing(type_num, type_param_str, line))
                 if debug: print("type",type_param_str, type_num)
                 continue
 
@@ -152,14 +189,19 @@ class WatStuff:
                 func_body = []
                 func_param = re.search(r"\(type ([0-9]*)\)",line).group(1)
                 if debug: print(func_current_name,func_param)
-                self.func_param_types[func_current_name] = func_param
+                # self.func_param_types[func_current_name] = func_param
 
                 if line.endswith("))"):
                     func_body = "\n"
-                    self.func_bodies[int(func_current_name)] = func_body
+                    func_header_line = line[:-1] # remove the last ) cus yea, we dont liek that
                     if debug: print("added func", func_current_name, len(func_body))
+                    self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body)))
+
+                    func_param = None
+                    func_body = []
                     in_func_body = False
                 else:
+                    func_header_line = line
                     func_body = []
                     in_func_body = True
 
@@ -169,7 +211,7 @@ inject_wat_content = ""
 with open(args.i) as f: inject_wat_content = f.read()
 
 inject_wat_stuff = WatStuff(inject_wat_content)
-print(f"{inject_wat_stuff.exports}\n{inject_wat_stuff.imports}\n{inject_wat_stuff.types}\n{inject_wat_stuff.func_bodies}")
+# print(f"{inject_wat_stuff.exports}\n{inject_wat_stuff.imports}\n{inject_wat_stuff.types}")
 
 # exit()
 
@@ -177,34 +219,72 @@ app_wat_content = ""
 with open(args.w) as f: app_wat_content = f.read()
 
 app_wat_stuff = WatStuff(app_wat_content, debug=False)
-print(f"{app_wat_stuff.exports}\n{app_wat_stuff.imports}\n{app_wat_stuff.types}")
+# print(f"{app_wat_stuff.exports}\n{app_wat_stuff.imports}\n{app_wat_stuff.types}")
 # exit()
+
+seperate_function_jobs = {}
+seperate_func_mapping = {}
+seperate_func_counter = 1
+
+last_app_wat_func_num = app_wat_stuff.funcs[-1].num
+for inject_func in inject_wat_stuff.funcs:
+    for (export_name, export_func_num) in inject_wat_stuff.exports.items():
+        if export_func_num == inject_func.num and export_name.startswith("seperate_func_"):
+            seperate_func_mapping[inject_func.num] = last_app_wat_func_num + seperate_func_counter
+            seperate_func_counter = seperate_func_counter + 1
+    
+# inject_function_jobs[funcNum] = wat code to be injected in the beginning of the funcNum function.
 inject_function_jobs = {}
-for (export_name, func_num) in inject_wat_stuff.exports.items():
-    if export_name == "inject_func_all":
-        inject_body = inject_wat_stuff.func_bodies[func_num]
-        inject_body = inject_body.replace("local.get 0", "FUNC_NUM_CONST_INSTR")
+for (export_name, export_func_num) in inject_wat_stuff.exports.items():
+    def fix_indexhtml_import_calls(inject_body):
         for inject_import in inject_wat_stuff.imports:
                 import_name = inject_import.name
                 inject_import_func_num = inject_import.num
 
                 if import_name in index_imports_name_index_mapping:
-                    import_type = inject_wat_stuff.types[inject_import.type]
-
+                    import_type = inject_wat_stuff.getTypeByNum(inject_import.type).param_string
                     app_import_index = index_imports_name_index_mapping[import_name]
 
                     for app_import in app_wat_stuff.imports:
                         app_import_func_num = app_import.num
-                        app_import_type = app_wat_stuff.types[app_import.type]
+                        app_import_type = app_wat_stuff.getTypeByNum(app_import.type).param_string
 
                         if import_type == app_import_type and app_import.name == app_import_index:
                             inject_body = inject_body.replace(f"call {inject_import_func_num}", f"call {app_import_func_num}")
-                            continue
+                    return inject_body
+    def fix_seperate_func_calls(inject_body):
+        for inject_func in inject_wat_stuff.funcs:
+            if inject_func.num in seperate_func_mapping:
+                inject_body = inject_body.replace(f"call {inject_func.num}", f"call {seperate_func_mapping[inject_func.num]}")
+        return inject_body
 
-        for func_num in app_wat_stuff.func_bodies.keys():
-            inject_function_jobs[func_num] = inject_body
+    if export_name.startswith("inject_func_"):
+        inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
+        inject_body = fix_seperate_func_calls(inject_body)
+        inject_body = fix_indexhtml_import_calls(inject_body)
 
-print(inject_function_jobs[196])
+        target_func = export_name.replace("inject_func_","")
+
+        if target_func == "all":
+            inject_body = inject_body.replace("local.get 0", "FUNC_NUM_CONST_INSTR")
+
+        if target_func == "all":
+            for inject_func in app_wat_stuff.funcs:
+                inject_function_jobs[inject_func.num] = inject_body
+        else:
+            inject_function_jobs[int(target_func)] = inject_body
+    elif export_name.startswith("seperate_func_"):
+        inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
+        inject_body = fix_seperate_func_calls(inject_body)
+        inject_body = fix_indexhtml_import_calls(inject_body)
+
+        seperate_function_jobs[export_func_num] = inject_body
+
+        # seperate_function_jobs[] = 
+
+        
+
+print(inject_function_jobs[302])
 # exit()
 app_wat_patched = ["",""]
 on_func = -1
@@ -224,28 +304,51 @@ for line in app_wat_content.split("\n"):
         on_func = int(line[line.find('(;')+2:line.find(";)")])
         # seen_first_func = True
     elif line.startswith("  (start "):
-        print("WAT")
-        # inject imports here
-        if False:
-            for (inject_func_name, inject_func_num) in inject_wat_stuff.imports.items():
-                if inject_func_name.startswith("import"):
-                    import_string = inject_wat_stuff.import_strings[inject_func_name]
-                    import_string = import_string.replace("\"env\" \"import_js_debug\"", f"\"0\" \"{get_import_inject_index(inject_func_name)}\"")
-                    import_string = import_string.replace(f"(func (;{inject_func_num};)", f"(func ${inject_func_name}")
-                    app_wat_patched.append(import_string)
+        print("found (start")
+        # for inject_func in seperate_function_jobs:
+        for inject_func in inject_wat_stuff.funcs:
+            if inject_func.num in seperate_func_mapping:
+                """
+                    (func (;5;) (type 0) (param i32)
+                turns into
+                    (func (;5;)  (param i32)
+                seperate_funcs.append(FuncThing())
+                """
+                func_header = inject_func.header_line
+                pattern = r"(\(type [0-9]*\))"
+                result = re.search(pattern, func_header)
+                print(result)
+                left = func_header[:result.start(1)]
+                right = func_header[result.end(1):]
+                # print(func_header, left + right)
+                app_wat_patched.append(left+right + "\n")
+                app_wat_patched.append(seperate_function_jobs[inject_func.num] + ")\n")
+            
+            # for (inject_func_name, inject_func_num) in inject_wat_stuff.imports.items():
+            #     if inject_func_name.startswith("import"):
+            #         import_string = inject_wat_stuff.import_strings[inject_func_name]
+            #         import_string = import_string.replace("\"env\" \"import_js_debug\"", f"\"0\" \"{get_import_inject_index(inject_func_name)}\"")
+            #         import_string = import_string.replace(f"(func (;{inject_func_num};)", f"(func ${inject_func_name}")
+            #         app_wat_patched.append(import_string)
     elif (before1_is_local and before2_is_func) or (not before0_is_local and before1_is_func):
         if on_func in inject_function_jobs: #and on_func==513:
             inject_code = inject_function_jobs[on_func]
-            inject_code = inject_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
-            for inject_import in inject_wat_stuff.imports:
-                inject_func_name = inject_import.name
-                inject_func_num = inject_import.num
-                if inject_func_name.startswith("import"):
-                    inject_code = inject_code.replace(f"call {inject_func_num} ", f"call ${inject_func_name} ")
-                    inject_code = inject_code.replace(f"call {inject_func_num})", f"call ${inject_func_name})")
-                    inject_code = inject_code.replace(f"call {inject_func_num}\n", f"call ${inject_func_name}\n")
-                elif inject_func_name == "special_clear_locals":
-                    pass #TODO inject code that clears all the locals...
+            def code(injecting_code):
+                injecting_code = injecting_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
+                for inject_import in inject_wat_stuff.imports:
+                    inject_func_name = inject_import.name
+                    inject_func_num = inject_import.num
+                    if inject_func_name.startswith("import"):
+                        pass
+                        # injecting_code = injecting_code.replace(f"call {inject_func_num} ", f"call ${inject_func_name} ")
+                        # injecting_code = injecting_code.replace(f"call {inject_func_num})", f"call ${inject_func_name})")
+                        # injecting_code = injecting_code.replace(f"call {inject_func_num}\n", f"call ${inject_func_name}\n")
+                    elif inject_func_name == "special_clear_locals":
+                        pass #TODO inject code that clears all the locals...
+                return injecting_code
+
+            inject_code = code(inject_code)
+
             app_wat_patched.append(inject_code)
             # print(app_wat_patched)
 

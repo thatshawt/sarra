@@ -1,9 +1,11 @@
+* add to the index.html.patched a mapping between import_e_t_get and the new thing i added to it... the hxh microcode stuff.
+
+*break on another packet type with longer length... only log a certain number of things, probably like 3000 or something idk...
+
 *see decomp.notes about encryptFunc. need to investigate more about encryptFunc and probably need to upgrade injecting code into the packet data code to intercept it and yea perhaps modify it before it gets used by the rest of the arras system to my own liking.
 probably gonna need to:
     find a locator to inject instructions into the packet decoding section.
     add a custom function at the end of the app.wat.
-
-*try breaking on all the received packets and print out all the bigswitchfunc indexe files up to 500 lines or so, maybe i can pin point the decoding structure or something.
 
 *do the same for length 15 and 13 reciving packets? we dont send anything for those lengths only receive, so i need to find a better place for the breakpoint to stop the stuff...
 probably print out the first 1000 or something in the bigSwitchFunc.. gotta figure that one out...
