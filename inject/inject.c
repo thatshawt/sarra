@@ -6,6 +6,10 @@ struct{
   int c;
 } caca;
 
+struct{
+  int enabled;
+}debug_state;
+
 #define FOR(a,b) for(int a=0;a<100;a++){b; import_e_t_get(a);}
 void _hithere(int hithere){
   // FOR(a,FOR(b,FOR(c,FOR(d,FOR(e,import_e_t_get(hithere))))));
@@ -21,7 +25,7 @@ void _hithere(int hithere){
 }
 
 // __attribute__((optnone))
-void inject_func_all(int funcNum, int b, long c){
+void inject_all(int funcNum, int b, long c){
   // i32STORE(123, i32LOAD(123)+1);
   // import_e_t_get(funcNum+9999);
   // seperate_func_hithere(1234);
@@ -48,7 +52,21 @@ void _hellnaw(unsigned int a){
 
 // __attribute__((optnone))
 __attribute__((noinline))
-void inject_func_271(unsigned int a){
+void inject_271(unsigned int a){
   _hellnaw(a);
 }
 
+void export_toggle_debug_mode(){
+  hxh_CONSOLE_LOG_CHAR_STRING("whats there o.O", 15);
+  debug_state.enabled = !debug_state.enabled;
+}
+
+void _init_all_the_things(){
+  hxh_CONSOLE_LOG_CHAR_STRING("Behold!! Poo poop fart v3.1415!!...", 35);
+
+  debug_state.enabled = 0;
+}
+
+void inject_start(){
+  _init_all_the_things();
+}

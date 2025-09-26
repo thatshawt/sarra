@@ -12,6 +12,11 @@ parser.add_argument("-o2" ,help="index.html.patched file path", required=True)
 # wasm2wat src/app.wasm -o /tmp/app.wat && cp /tmp/app.wat mitmoverride/app.wat && python3 scripts/generatePatchedAppWasm.py -w mitmoverride/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched --enable-multi-memory -o mitmoverride/app.wasm
 args = parser.parse_args()
 
+seperate_function_prefix = "_"
+inject_func_prefix = "inject_"
+export_function_prefix = "export_"
+
+
 index_html_content = ""
 with open(args.f) as f: index_html_content = f.read()
 
@@ -124,6 +129,7 @@ class WatStuff:
         self.types = []
         self.funcs = []
         self.memories = []
+        self.start_func_num = None
 
         in_func_body = False
         func_current_name = ""
@@ -155,7 +161,10 @@ class WatStuff:
                         continue
                 else:
                     continue
-
+            if "  (start " in line:
+                self.start_func_num = int(line[9:-1])
+                # print("start is",self.start_func_num)
+                # exit()
             if "  (import " in line:
                 #  (import "env" "js_debug" (func (;0;) (type 0)))
                 #  (import "0" "168" (func (;7;) (type 19)))
@@ -226,7 +235,6 @@ app_wat_stuff = WatStuff(app_wat_content, debug=False)
 # print(f"{app_wat_stuff.exports}\n{app_wat_stuff.imports}\n{app_wat_stuff.types}")
 # exit()
 
-seperate_function_prefix = "_"
 
 seperate_function_jobs = {}
 seperate_func_mapping = {}
@@ -235,12 +243,13 @@ seperate_func_counter = 1
 last_app_wat_func_num = app_wat_stuff.funcs[-1].num
 for inject_func in inject_wat_stuff.funcs:
     for (export_name, export_func_num) in inject_wat_stuff.exports.items():
-        if export_func_num == inject_func.num and export_name.startswith(seperate_function_prefix):
+        if export_func_num == inject_func.num and (export_name.startswith(seperate_function_prefix) or export_name.startswith(export_function_prefix)):
             seperate_func_mapping[inject_func.num] = last_app_wat_func_num + seperate_func_counter
             seperate_func_counter = seperate_func_counter + 1
     
 # inject_function_jobs[funcNum] = wat code to be injected in the beginning of the funcNum function.
 inject_function_jobs = {}
+export_function_jobs = {}
 for (export_name, export_func_num) in inject_wat_stuff.exports.items():
     def replace_instruction_with(inject_body, instruction, replacement):
         inject_body = inject_body.replace(f"{instruction} ",f"{replacement} ")
@@ -299,36 +308,32 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"{rightSection}")
 
-
         return inject_body
 
-    if export_name.startswith("inject_func_"):
-        inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
-        inject_body = fix_seperate_func_calls(inject_body)
-        inject_body = fix_indexhtml_import_calls(inject_body)
-        inject_body = fix_memory_instructions(inject_body)
-        inject_body = fix_special_arras_calls(inject_body)
+    inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
+    inject_body = fix_seperate_func_calls(inject_body)
+    inject_body = fix_indexhtml_import_calls(inject_body)
+    inject_body = fix_memory_instructions(inject_body)
+    inject_body = fix_special_arras_calls(inject_body)
 
-        target_func = export_name.replace("inject_func_","")
-
+    if export_name.startswith(inject_func_prefix):
+        target_func = export_name.replace(inject_func_prefix,"")
         if target_func == "all":
             inject_body = inject_body.replace("local.get 0", "FUNC_NUM_CONST_INSTR")
-
-        if target_func == "all":
             for inject_func in app_wat_stuff.funcs:
                 inject_function_jobs[inject_func.num] = inject_body
-        else:
+        elif target_func == "start":
+            inject_function_jobs[app_wat_stuff.start_func_num] = inject_body
+        else: # assume its a number :skull:
             inject_function_jobs[int(target_func)] = inject_body
     elif export_name.startswith(seperate_function_prefix):
-        inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
-        inject_body = fix_seperate_func_calls(inject_body)
-        inject_body = fix_indexhtml_import_calls(inject_body)
-        inject_body = fix_memory_instructions(inject_body)
-        inject_body = fix_special_arras_calls(inject_body)
-
         seperate_function_jobs[export_func_num] = inject_body
-
-        # seperate_function_jobs[] = 
+    elif export_name.startswith(export_function_prefix):
+        mapped_func_num = seperate_func_mapping[export_func_num]
+        export_function_jobs[mapped_func_num] = export_name
+        seperate_function_jobs[export_func_num] = inject_body
+        # print(f"added export_job {mapped_func_num}:{export_name}")
+        # exit()
 
         
 
@@ -383,6 +388,9 @@ for line in app_wat_content.split("\n"):
             #         import_string = import_string.replace("\"env\" \"import_js_debug\"", f"\"0\" \"{get_import_inject_index(inject_func_name)}\"")
             #         import_string = import_string.replace(f"(func (;{inject_func_num};)", f"(func ${inject_func_name}")
             #         app_wat_patched.append(import_string)
+        for (export_job_func_num, export_job_func_name) in export_function_jobs.items():
+            app_wat_patched.append(f"  (export \"{export_job_func_name}\" (func {export_job_func_num}))")
+
     elif (before1_is_local and before2_is_func) or (not before0_is_local and before1_is_func):
         if on_func in inject_function_jobs: #and on_func==513:
             inject_code = inject_function_jobs[on_func]
