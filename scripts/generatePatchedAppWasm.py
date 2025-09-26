@@ -9,7 +9,7 @@ parser.add_argument("-i" ,help="inject.wat file path", required=True)
 parser.add_argument("-f" ,help="index.html file path", required=True)
 parser.add_argument("-o1" ,help="app.wat.patched file path", required=True)
 parser.add_argument("-o2" ,help="index.html.patched file path", required=True)
-# wasm2wat src/app.wasm -o /tmp/app.wat && cp /tmp/app.wat mitmoverride/app.wat && python3 scripts/generatePatchedAppWasm.py -w mitmoverride/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched -o mitmoverride/app.wasm
+# wasm2wat src/app.wasm -o /tmp/app.wat && cp /tmp/app.wat mitmoverride/app.wat && python3 scripts/generatePatchedAppWasm.py -w mitmoverride/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched --enable-multi-memory -o mitmoverride/app.wasm
 args = parser.parse_args()
 
 index_html_content = ""
@@ -72,7 +72,7 @@ if len(index_imports_code_mapping) != len(index_imports_name_index_mapping):
 index_html_patched = "\n".join(index_html_patched)
 with open(args.o2, "w") as f: f.write(index_html_patched)
 
-print(index_html_patched,index_html_import_counter)
+# print(index_html_patched,index_html_import_counter)
 
 # exit()
 
@@ -123,6 +123,7 @@ class WatStuff:
         self.exports = {}
         self.types = []
         self.funcs = []
+        self.memories = []
 
         in_func_body = False
         func_current_name = ""
@@ -167,6 +168,9 @@ class WatStuff:
                 # self.import_types[import_func_name] = int(import_type)
                 if debug: print("import",import_func_name, import_func_num,line,import_type)
                 continue
+
+            if "  (memory (;" in line:
+                self.memories.append(line)
 
             if "  (export \"" in line and "func" in line:#  (export "inject_into_all_func_top_part" (func 2))
                 func_name = line[line.find(' "')+2:line.find('" ')]
@@ -222,6 +226,8 @@ app_wat_stuff = WatStuff(app_wat_content, debug=False)
 # print(f"{app_wat_stuff.exports}\n{app_wat_stuff.imports}\n{app_wat_stuff.types}")
 # exit()
 
+seperate_function_prefix = "_"
+
 seperate_function_jobs = {}
 seperate_func_mapping = {}
 seperate_func_counter = 1
@@ -229,13 +235,19 @@ seperate_func_counter = 1
 last_app_wat_func_num = app_wat_stuff.funcs[-1].num
 for inject_func in inject_wat_stuff.funcs:
     for (export_name, export_func_num) in inject_wat_stuff.exports.items():
-        if export_func_num == inject_func.num and export_name.startswith("seperate_func_"):
+        if export_func_num == inject_func.num and export_name.startswith(seperate_function_prefix):
             seperate_func_mapping[inject_func.num] = last_app_wat_func_num + seperate_func_counter
             seperate_func_counter = seperate_func_counter + 1
     
 # inject_function_jobs[funcNum] = wat code to be injected in the beginning of the funcNum function.
 inject_function_jobs = {}
 for (export_name, export_func_num) in inject_wat_stuff.exports.items():
+    def replace_instruction_with(inject_body, instruction, replacement):
+        inject_body = inject_body.replace(f"{instruction} ",f"{replacement} ")
+        inject_body = inject_body.replace(f"{instruction})",f"{replacement})")
+        inject_body = inject_body.replace(f"{instruction}\n",f"{replacement}\n")
+        return inject_body
+
     def fix_indexhtml_import_calls(inject_body):
         for inject_import in inject_wat_stuff.imports:
                 import_name = inject_import.name
@@ -250,18 +262,52 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                         app_import_type = app_wat_stuff.getTypeByNum(app_import.type).param_string
 
                         if import_type == app_import_type and app_import.name == app_import_index:
-                            inject_body = inject_body.replace(f"call {inject_import_func_num}", f"call {app_import_func_num}")
+                            print(f"replace 'call {inject_import_func_num}' with 'call {app_import_func_num}'")
+                            inject_body = replace_instruction_with(inject_body, f"call {inject_import_func_num}", f"call {app_import_func_num}")
                     return inject_body
     def fix_seperate_func_calls(inject_body):
         for inject_func in inject_wat_stuff.funcs:
             if inject_func.num in seperate_func_mapping:
-                inject_body = inject_body.replace(f"call {inject_func.num}", f"call {seperate_func_mapping[inject_func.num]}")
+                # print(f"replace 'call {inject_func.num}' with 'call {seperate_func_mapping[inject_func.num]}'")
+                inject_body = replace_instruction_with(inject_body, f"call {inject_func.num}", f"call {seperate_func_mapping[inject_func.num]}")
+        return inject_body
+    
+    def fix_memory_instructions(inject_body):
+        loads = "i32.load,i64.load,f32.load,f64.load,i32.load8_s,i32.load8_,i32.load16_s,i32.load16_u,i64.load8_s,i64.load8_u,i64.load16_s,i64.load16_u,i64.load32_s,i64.load32_u"
+        for load_str in loads.split(","):
+            inject_body = replace_instruction_with(inject_body, load_str, f"{load_str} (memory 1)")
+
+        stores = "i32.store,i64.store,f32.store,f64.store,i32.store8,i32.store16,i64.store8,i64.store16,i64.store32"
+        for store_str in stores.split(","):
+            inject_body = replace_instruction_with(inject_body, store_str, f"{store_str} (memory 1)")
+
+        inject_body = replace_instruction_with(inject_body,"memory.fill","memory.fill (memory 1)")
+        inject_body = replace_instruction_with(inject_body,"memory.size","memory.size (memory 1)")
+        inject_body = replace_instruction_with(inject_body,"memory.grow","memory.grow (memory 1)")
+        inject_body = replace_instruction_with(inject_body,"memory.copy","memory.copy (memory 1)")
+
+        return inject_body
+
+    # has to be be after fix_memory_instructions()
+    def fix_special_arras_calls(inject_body):
+        for import_thing in inject_wat_stuff.imports:
+            if import_thing.name.startswith("special_arras_memory_"):
+                rightSection = import_thing.name.replace("special_arras_memory_","")
+                rightSection = rightSection.replace("_", ".", 1)
+
+                # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
+                # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
+                inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"{rightSection}")
+
+
         return inject_body
 
     if export_name.startswith("inject_func_"):
         inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
         inject_body = fix_seperate_func_calls(inject_body)
         inject_body = fix_indexhtml_import_calls(inject_body)
+        inject_body = fix_memory_instructions(inject_body)
+        inject_body = fix_special_arras_calls(inject_body)
 
         target_func = export_name.replace("inject_func_","")
 
@@ -273,10 +319,12 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 inject_function_jobs[inject_func.num] = inject_body
         else:
             inject_function_jobs[int(target_func)] = inject_body
-    elif export_name.startswith("seperate_func_"):
+    elif export_name.startswith(seperate_function_prefix):
         inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
         inject_body = fix_seperate_func_calls(inject_body)
         inject_body = fix_indexhtml_import_calls(inject_body)
+        inject_body = fix_memory_instructions(inject_body)
+        inject_body = fix_special_arras_calls(inject_body)
 
         seperate_function_jobs[export_func_num] = inject_body
 
@@ -300,7 +348,12 @@ for line in app_wat_content.split("\n"):
 
     before2_is_func = app_wat_patched[-2].startswith("  (func (;")
 
-    if line.startswith("  (func (;"):
+
+    if line.startswith("  (memory (;"):
+        app_wat_patched.append(line)
+        app_wat_patched.append(inject_wat_stuff.memories[0])
+        continue
+    elif line.startswith("  (func (;"):
         on_func = int(line[line.find('(;')+2:line.find(";)")])
         # seen_first_func = True
     elif line.startswith("  (start "):

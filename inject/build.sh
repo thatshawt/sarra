@@ -6,6 +6,7 @@ clang-21 \
   -Wl,--allow-undefined \
   -Wl,--export-all \
   -Wl,--strip-debug \
+  -Wl,--initial-memory=$((65536*5))\
   -o /tmp/inject.wasm \
   inject.c \
  && wasm2wat /tmp/inject.wasm -o inject.wat

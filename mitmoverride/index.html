@@ -178,6 +178,14 @@
                       hxh_state.memory[hxh_state.microcode[0]] = hxh_state.microcode[1];
                       hxh_state.microcode = [];
                       break;
+                    case 3: // console.log the rest as a charcode thing
+                      var temp = []
+                      Array.from(hxh_state.microcode).forEach(function(a, index) {
+                        temp.push(String.fromCharCode(a))
+                      });
+                      console.log(temp.join(""));
+                      hxh_state.microcode = [];
+                      break;
                   }
                   hxh_state.microcode = []
                 }else if(t>=MICROCODE_OFFSET){
