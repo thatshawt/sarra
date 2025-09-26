@@ -22,9 +22,8 @@ extern int import_e_t_get(int t);
 // (t) => e[t](),
 extern int import_e_t_call(int t);
 
-// this should be handled by the injection scripts and will be string replaced with some other code that clears all the locals of a function...
-// TODO implement later
-extern void special_clear_locals();
+extern void special_clear_locals(); //TODO do this
+extern int special_func_number();
 
 extern int special_arras_memory_i32_load(int address);
 extern void special_arras_memory_i32_store(int address, int value);
@@ -64,3 +63,26 @@ void _hxh_add_int_string_microcode(int* value, int size){
 #define hxh_CONSOLE_LOG_INT_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(0); \
     _hxh_add_int_string_microcode(value, size); \
     hxh_PARSE_EXECUTE();
+
+extern void special_printargs();
+
+void _special_printargs_begin(){
+    hxh_PUSH_MICROCODE_LITERAL(0);
+}
+
+__attribute__((noinline)) void _special_printargs_per_arg_i32(int a){
+    hxh_PUSH_MICROCODE_LITERAL((int)a);
+}
+// __attribute__((noinline)) void _special_printargs_per_arg_i64(long a){
+//     hxh_PUSH_MICROCODE_LITERAL((int)a);
+// }
+__attribute__((noinline)) void _special_printargs_per_arg_f32(float a){
+    hxh_PUSH_MICROCODE_LITERAL((int)a);
+}
+__attribute__((noinline)) void _special_printargs_per_arg_f64(double a){
+    hxh_PUSH_MICROCODE_LITERAL((int)a);
+}
+
+void _special_printargs_end(){
+    hxh_PARSE_EXECUTE();
+}

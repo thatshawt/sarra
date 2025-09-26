@@ -25,9 +25,13 @@ void _hithere(int hithere){
 }
 
 // __attribute__((optnone))
-void inject_all(int funcNum, int b, long c){
+void inject_all(){
   // i32STORE(123, i32LOAD(123)+1);
-  // import_e_t_get(funcNum+9999);
+  // if(debug_state.enabled){
+  //   hxh_PUSH_MICROCODE_LITERAL(0);
+  //   hxh_PUSH_MICROCODE_LITERAL(special_func_number());
+  //   hxh_PARSE_EXECUTE();
+  // }
   // seperate_func_hithere(1234);
   // special_clear_locals();
   // return 1;
@@ -35,36 +39,54 @@ void inject_all(int funcNum, int b, long c){
 
 __attribute__((noinline))
 void _hellnaw(unsigned int a){
+  hxh_PUSH_MICROCODE_LITERAL(0);
+  hxh_PUSH_MICROCODE_LITERAL(271);
+  hxh_PUSH_MICROCODE_LITERAL(a);
+  hxh_PARSE_EXECUTE();
   // hxh_CONSOLE_LOG_CHAR_STRING("whats there o.O", 15);
   // unsigned int result = special_arras_memory_i32_load(a);
   // struct int32_char_view bytes = (struct int32_char_view)value;
-  hxh_PUSH_MICROCODE_LITERAL(3);
-  for(int i=0;i<4;i++){
-    int value = special_arras_memory_i32_load(a+(i*4));
-    value = SWAP_ENDIAN_32(value);
-    hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE0(value));
-    hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE1(value));
-    hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE2(value));
-    hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE3(value));
-  }
-  hxh_PARSE_EXECUTE();
+  // hxh_PUSH_MICROCODE_LITERAL(3);
+  // for(int i=0;i<4;i++){
+  //   int value = special_arras_memory_i32_load(a+(i*4));
+  //   value = SWAP_ENDIAN_32(value);
+  //   hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE0(value));
+  //   hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE1(value));
+  //   hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE2(value));
+  //   hxh_PUSH_MICROCODE_LITERAL(INT32_BYTE3(value));
+  // }
+  // hxh_PARSE_EXECUTE();
 }
 
 // __attribute__((optnone))
-__attribute__((noinline))
-void inject_271(unsigned int a){
-  _hellnaw(a);
+__attribute__((noinline)) void inject_271(unsigned int a){
+  // if(debug_state.enabled){
+  //   hxh_PUSH_MICROCODE_LITERAL(0);
+  //   hxh_PUSH_MICROCODE_LITERAL(special_func_number());
+  //   special_printargs();
+  //   // hxh_PUSH_MICROCODE_LITERAL(a);
+  //   hxh_PARSE_EXECUTE();
+  // }
 }
 
 void export_toggle_debug_mode(){
-  hxh_CONSOLE_LOG_CHAR_STRING("whats there o.O", 15);
+  // hxh_CONSOLE_LOG_CHAR_STRING("", 15);
   debug_state.enabled = !debug_state.enabled;
+  if(debug_state.enabled){
+    hxh_PUSH_MICROCODE_LITERAL(4);
+    hxh_PARSE_EXECUTE();
+  }else{
+    hxh_PUSH_MICROCODE_LITERAL(5);
+    hxh_PARSE_EXECUTE();
+  }
 }
 
 void _init_all_the_things(){
   hxh_CONSOLE_LOG_CHAR_STRING("Behold!! Poo poop fart v3.1415!!...", 35);
 
   debug_state.enabled = 0;
+  hxh_PUSH_MICROCODE_LITERAL(5);
+  hxh_PARSE_EXECUTE();
 }
 
 void inject_start(){

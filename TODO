@@ -1,5 +1,7 @@
 * add to the index.html.patched a mapping between import_e_t_get and the new thing i added to it... the hxh microcode stuff.
 
+*do an 1000 bigFunc trace for the received t.length==74 (max chat packet received?) and yea i gotta figure out where the decrypted stuff goes...
+
 *break on another packet type with longer length... only log a certain number of things, probably like 3000 or something idk...
 
 *see decomp.notes about encryptFunc. find a locator to inject instructions into the packet decoding section. 

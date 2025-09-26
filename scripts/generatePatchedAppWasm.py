@@ -106,6 +106,9 @@ class FuncThing:
         self.param = param
         self.header_line = header_line
         self.body = body
+        # self.params = header_line
+        # print(header_line)
+        # exit()
 
 class WatStuff:
     def getFuncByNum(self, num):
@@ -152,6 +155,8 @@ class WatStuff:
                         if debug: print("added func", func_current_name, len(func_body))
                         # self.func_bodies[int(func_current_name)] = "\n".join(func_body)
                         self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body)))
+                        # print(f"params: {func_param}")
+                        # exit()
 
                         in_func_body = False
                         func_param = None
@@ -244,12 +249,20 @@ last_app_wat_func_num = app_wat_stuff.funcs[-1].num
 for inject_func in inject_wat_stuff.funcs:
     for (export_name, export_func_num) in inject_wat_stuff.exports.items():
         if export_func_num == inject_func.num and (export_name.startswith(seperate_function_prefix) or export_name.startswith(export_function_prefix)):
+            if inject_func.num in seperate_func_mapping:
+                print(f"error: does not support multiple symbols pointing to the same func definition", file=sys.stderr)
+                print(f"{inject_func.num} is the offending function", file=sys.stderr)
+                exit(1)
+                # print(f"wat da hiel {export_name},{inject_func.num},{seperate_func_mapping}")
             seperate_func_mapping[inject_func.num] = last_app_wat_func_num + seperate_func_counter
             seperate_func_counter = seperate_func_counter + 1
-    
+
+
+# print(f"{len(seperate_func_mapping)},{seperate_func_mapping}")
 # inject_function_jobs[funcNum] = wat code to be injected in the beginning of the funcNum function.
 inject_function_jobs = {}
 export_function_jobs = {}
+
 for (export_name, export_func_num) in inject_wat_stuff.exports.items():
     def replace_instruction_with(inject_body, instruction, replacement):
         inject_body = inject_body.replace(f"{instruction} ",f"{replacement} ")
@@ -271,7 +284,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                         app_import_type = app_wat_stuff.getTypeByNum(app_import.type).param_string
 
                         if import_type == app_import_type and app_import.name == app_import_index:
-                            print(f"replace 'call {inject_import_func_num}' with 'call {app_import_func_num}'")
+                            # print(f"replace 'call {inject_import_func_num}' with 'call {app_import_func_num}'")
                             inject_body = replace_instruction_with(inject_body, f"call {inject_import_func_num}", f"call {app_import_func_num}")
                     return inject_body
     def fix_seperate_func_calls(inject_body):
@@ -307,6 +320,10 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
                 # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"{rightSection}")
+            elif import_thing.name == "special_func_number":
+                inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"FUNC_NUM_CONST_INSTR")
+            elif import_thing.name == "special_printargs":
+                inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_PRINT_ARGS")
 
         return inject_body
 
@@ -319,7 +336,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
     if export_name.startswith(inject_func_prefix):
         target_func = export_name.replace(inject_func_prefix,"")
         if target_func == "all":
-            inject_body = inject_body.replace("local.get 0", "FUNC_NUM_CONST_INSTR")
+            # inject_body = inject_body.replace("local.get 0", "FUNC_NUM_CONST_INSTR")
             for inject_func in app_wat_stuff.funcs:
                 inject_function_jobs[inject_func.num] = inject_body
         elif target_func == "start":
@@ -342,6 +359,7 @@ print(inject_function_jobs[302])
 app_wat_patched = ["",""]
 on_func = -1
 seen_first_func = False
+func_header_line = None
 for line in app_wat_content.split("\n"):
     before0_is_local = line.startswith("    (local ")
     before0_is_import = "import" in line
@@ -353,6 +371,47 @@ for line in app_wat_content.split("\n"):
 
     before2_is_func = app_wat_patched[-2].startswith("  (func (;")
 
+    def do_final_changes(injecting_code):
+        injecting_code = injecting_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
+        
+        param_list = []
+        #  (func (;264;) (type 4) (param i32 i32 i32) (result i32)
+        #  (func (;262;) (type 30) (param i32 f64 f64 f64 f64 f64 i32 f32 f32 i32 i32)
+        #  (func (;264;) (type 4) (result i32)
+        #  (func (;287;) (type 12)
+        if "param" in func_header_line:
+            temp = func_header_line[func_header_line.find("(param ")+7:]
+            temp = temp[:temp.find(")")]
+            temp = temp.split(" ")
+            param_list = temp
+
+        poop_mapping = {
+            "i32": "_special_printargs_per_arg_i32",
+            "i64": "_special_printargs_per_arg_i32",
+            "f32": "_special_printargs_per_arg_f32",
+            "f64": "_special_printargs_per_arg_f64",
+        }
+        special_inject_code = []
+
+        for i in range(len(param_list)):
+            param = param_list[i]
+            poop_map_number = inject_wat_stuff.exports[poop_mapping[param]]
+            special_call_number = seperate_func_mapping[poop_map_number]
+            special_inject_code.append(f"local.get {i}\ncall {special_call_number}")
+
+        if "SPECIAL_PRINT_ARGS" in inject_code:
+            injecting_code = injecting_code.replace("SPECIAL_PRINT_ARGS", "\n" + "\n".join(special_inject_code))
+            print(special_inject_code, param_list,func_header_line)
+            # exit(1)
+
+        # for inject_import in inject_wat_stuff.imports:
+        #     inject_func_name = inject_import.name
+        #     inject_func_num = inject_import.num
+        #     if inject_func_name.startswith("import"):
+        #         pass
+        #     elif inject_func_name == "special_func_number":
+        #         pass
+        return injecting_code
 
     if line.startswith("  (memory (;"):
         app_wat_patched.append(line)
@@ -360,11 +419,13 @@ for line in app_wat_content.split("\n"):
         continue
     elif line.startswith("  (func (;"):
         on_func = int(line[line.find('(;')+2:line.find(";)")])
+        func_header_line = line
         # seen_first_func = True
     elif line.startswith("  (start "):
         print("found (start")
         # for inject_func in seperate_function_jobs:
         for inject_func in inject_wat_stuff.funcs:
+            # INJECTING SEPERATE FUNCTIONS CODE HERE
             if inject_func.num in seperate_func_mapping:
                 """
                     (func (;5;) (type 0) (param i32)
@@ -375,12 +436,22 @@ for line in app_wat_content.split("\n"):
                 func_header = inject_func.header_line
                 pattern = r"(\(type [0-9]*\))"
                 result = re.search(pattern, func_header)
-                print(result)
+                # print(result)
                 left = func_header[:result.start(1)]
                 right = func_header[result.end(1):]
                 # print(func_header, left + right)
                 app_wat_patched.append(left+right + "\n")
-                app_wat_patched.append(seperate_function_jobs[inject_func.num] + ")\n")
+
+                on_func = seperate_func_mapping[inject_func.num]
+                inject_body = seperate_function_jobs[inject_func.num]
+
+                # inject_body = inject_body.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
+                inject_body = do_final_changes(inject_body)
+
+                app_wat_patched.append(inject_body + ")\n")
+
+                # print(on_func, left+right)
+                # exit()
             
             # for (inject_func_name, inject_func_num) in inject_wat_stuff.imports.items():
             #     if inject_func_name.startswith("import"):
@@ -392,23 +463,11 @@ for line in app_wat_content.split("\n"):
             app_wat_patched.append(f"  (export \"{export_job_func_name}\" (func {export_job_func_num}))")
 
     elif (before1_is_local and before2_is_func) or (not before0_is_local and before1_is_func):
+        # INJECTING MODIFIED APP WASM CODE HERE
         if on_func in inject_function_jobs: #and on_func==513:
             inject_code = inject_function_jobs[on_func]
-            def code(injecting_code):
-                injecting_code = injecting_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
-                for inject_import in inject_wat_stuff.imports:
-                    inject_func_name = inject_import.name
-                    inject_func_num = inject_import.num
-                    if inject_func_name.startswith("import"):
-                        pass
-                        # injecting_code = injecting_code.replace(f"call {inject_func_num} ", f"call ${inject_func_name} ")
-                        # injecting_code = injecting_code.replace(f"call {inject_func_num})", f"call ${inject_func_name})")
-                        # injecting_code = injecting_code.replace(f"call {inject_func_num}\n", f"call ${inject_func_name}\n")
-                    elif inject_func_name == "special_clear_locals":
-                        pass #TODO inject code that clears all the locals...
-                return injecting_code
 
-            inject_code = code(inject_code)
+            inject_code = do_final_changes(inject_code)
 
             app_wat_patched.append(inject_code)
             # print(app_wat_patched)
@@ -417,6 +476,10 @@ for line in app_wat_content.split("\n"):
         last_is_import = True
 
     app_wat_patched.append(line)
+
+# print(f"{len(seperate_func_mapping)},{seperate_func_mapping}")
+# print(f"{len(inject_function_jobs)},{inject_function_jobs}")
+# print(f"{len(export_function_jobs)},{export_function_jobs}")
 
 app_wat_patched = "\n".join(app_wat_patched)
 with open(args.o1, "w") as f: f.write(app_wat_patched)
