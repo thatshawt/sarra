@@ -1,6 +1,11 @@
 #define i32LOAD(address) (*((int*)address))
 #define i32STORE(address, value) ((*((int*)address)) = value)
 
+typedef int i32;
+typedef long long i64;
+typedef float f32;
+typedef double f64;
+
 #define SWAP_ENDIAN_32(num) ((((num)>>24)&0xff) | \
                     (((num)<<8)&0xff0000) | \
                     (((num)>>8)&0xff00) | \
@@ -22,7 +27,7 @@ extern int import_e_t_get(int t);
 // (t) => e[t](),
 extern int import_e_t_call(int t);
 
-extern void special_clear_locals(); //TODO do this
+extern void special_clear_locals();
 extern int special_func_number();
 
 extern int special_arras_memory_i32_load(int address);
@@ -70,16 +75,17 @@ void _special_printargs_begin(){
     hxh_PUSH_MICROCODE_LITERAL(0);
 }
 
-__attribute__((noinline)) void _special_printargs_per_arg_i32(int a){
+__attribute__((noinline)) void _special_printargs_per_arg_i32(i32 a){
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
-// __attribute__((noinline)) void _special_printargs_per_arg_i64(long a){
-//     hxh_PUSH_MICROCODE_LITERAL((int)a);
-// }
-__attribute__((noinline)) void _special_printargs_per_arg_f32(float a){
+
+__attribute__((noinline)) void _special_printargs_per_arg_i64(i64 a){
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
-__attribute__((noinline)) void _special_printargs_per_arg_f64(double a){
+__attribute__((noinline)) void _special_printargs_per_arg_f32(f32 a){
+    hxh_PUSH_MICROCODE_LITERAL((int)a);
+}
+__attribute__((noinline)) void _special_printargs_per_arg_f64(f64 a){
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
 

@@ -81,10 +81,13 @@
           u = (e, t) => {
             let a = h.d(t.length, 1);
             r().set(t, a), n().set([a, t.length], e >> 2);
-            if(window.poop == 1 && t.length != 7 && t.length != 31 && t.length != 36){
-                // console.log("from U",t, [a, t.length], e >> 2);
+            if(window.poop == 1 && t.length != 7 && t.length != 31 && t.length != 36 && t.length != 26 && t.length != 13){
+                console.log(t, [a, t.length], e >> 2);
                 if(t.length==7 && t[0] != '['){
                   // console.log("its 7 all right!");
+                }
+                if(t.length == 74){
+                  console.log("max length chat")
                 }
             }
           },
