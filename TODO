@@ -1,9 +1,12 @@
 * add to the index.html.patched a mapping between import_e_t_get and the new thing i added to it... the hxh microcode stuff.
 
-*make a quick function that records like 1000 function calls and then prints out statistics or something. just make it an export called export_function_stats or something idk bruv
+*implement inject_imports? a way to run code before app.wat calls an imported function.
 
-*implement global instructions injecting.
-*implement injecting table instructions.
+*implement inject into the exported functions like "inject_b" "inject_c".
+
+*investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
+
+*implement injecting table instructions. also call_indirect.
 
 *do an 1000 bigFunc trace for the received t.length==74 (max chat packet received) and yea i gotta figure out where the decrypted stuff goes...
 

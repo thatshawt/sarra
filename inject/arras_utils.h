@@ -1,5 +1,5 @@
-#define i32LOAD(address) (*((int*)address))
-#define i32STORE(address, value) ((*((int*)address)) = value)
+#define i32LOAD(address) (*((int*)(address)))
+#define i32STORE(address, value) ((*((int*)(address))) = value)
 
 typedef int i32;
 typedef long long i64;
@@ -15,6 +15,23 @@ typedef double f64;
 #define INT32_BYTE1(n) ((n >> 16) & 0xFF)
 #define INT32_BYTE2(n) ((n >> 8) & 0xFF)
 #define INT32_BYTE3(n) (n & 0xFF)
+
+#define TRUE 1
+#define FALSE 0
+
+i32 max_i32(i32 a, i32 b){
+    return a > b ? a:b;
+}
+
+i32 min_i32(i32 a, i32 b){
+    return a < b ? a:b;
+}
+
+void _memset_i32(int* start, int numberOfInts, int value){
+    for(int i=0;i<numberOfInts;i++){
+        i32STORE(start+i, value);
+    }
+}
 
 // (t) => {
 //   e[t] = null;
@@ -80,12 +97,15 @@ __attribute__((noinline)) void _special_printargs_per_arg_i32(i32 a){
 }
 
 __attribute__((noinline)) void _special_printargs_per_arg_i64(i64 a){
+    hxh_PUSH_MICROCODE_LITERAL(789789);
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
 __attribute__((noinline)) void _special_printargs_per_arg_f32(f32 a){
+    hxh_PUSH_MICROCODE_LITERAL(123123);
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
 __attribute__((noinline)) void _special_printargs_per_arg_f64(f64 a){
+    hxh_PUSH_MICROCODE_LITERAL(456456);
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
 

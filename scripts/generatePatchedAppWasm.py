@@ -67,7 +67,7 @@ for line in index_html_content.split("\n"):
     
     index_html_patched.append(line)
 
-print(f"{index_imports_code_mapping}, {index_imports_name_index_mapping}")
+# print(f"{index_imports_code_mapping}, {index_imports_name_index_mapping}")
 # exit()
 
 if len(index_imports_code_mapping) != len(index_imports_name_index_mapping):
@@ -126,12 +126,21 @@ class WatStuff:
             if thing.num == num: return thing
         return None
 
-    def __init__(self, wat_content, debug=True):
+    def _calculate_largest_func(self):
+        largestFunc = [-1,-1]
+        for funcThing in self.funcs:
+            if len(funcThing.body) > largestFunc[1]:
+                largestFunc[0] = funcThing.num
+                largestFunc[1] = len(funcThing.body)
+        self.largestFuncNum = largestFunc[0]
+
+    def __init__(self, wat_content, debug=False):
         self.imports = []
         self.exports = {}
         self.types = []
         self.funcs = []
         self.memories = []
+        self.globals = []
         self.start_func_num = None
 
         in_func_body = False
@@ -185,6 +194,9 @@ class WatStuff:
 
             if "  (memory (;" in line:
                 self.memories.append(line)
+            
+            if "  (global (" in line:
+                self.globals.append(line)
 
             if "  (export \"" in line and "func" in line:#  (export "inject_into_all_func_top_part" (func 2))
                 func_name = line[line.find(' "')+2:line.find('" ')]
@@ -224,14 +236,24 @@ class WatStuff:
                     in_func_body = True
 
                 continue
+        self._calculate_largest_func()
+
+        counts = {}
+        for (export_name, export_num) in self.exports.items():
+            if export_num in counts:
+                counts[export_num] = counts[export_num] + 1
+            else:
+                counts[export_num] = 1
+
+        for (func_num, count) in counts.items():
+            if count > 1:
+                print(f"WARNING: more than one export point to the same function {func_num}", file=sys.stderr)
 
 inject_wat_content = ""
 with open(args.i) as f: inject_wat_content = f.read()
 
 inject_wat_stuff = WatStuff(inject_wat_content)
 # print(f"{inject_wat_stuff.exports}\n{inject_wat_stuff.imports}\n{inject_wat_stuff.types}")
-
-# exit()
 
 app_wat_content = ""
 with open(args.w) as f: app_wat_content = f.read()
@@ -240,6 +262,8 @@ app_wat_stuff = WatStuff(app_wat_content, debug=False)
 # print(f"{app_wat_stuff.exports}\n{app_wat_stuff.imports}\n{app_wat_stuff.types}")
 # exit()
 
+# print(f"largest func in appwat: {app_wat_stuff.largestFuncNum}")
+# exit(1)
 
 seperate_function_jobs = {}
 seperate_func_mapping = {}
@@ -262,6 +286,7 @@ for inject_func in inject_wat_stuff.funcs:
 # inject_function_jobs[funcNum] = wat code to be injected in the beginning of the funcNum function.
 inject_function_jobs = {}
 export_function_jobs = {}
+bigfunc_beforebranch_job = ""
 
 def replace_instruction_with(inject_body, instruction, replacement):
     inject_body = inject_body.replace(f"{instruction} ",f"{replacement} ")
@@ -270,6 +295,15 @@ def replace_instruction_with(inject_body, instruction, replacement):
     return inject_body
 
 for (export_name, export_func_num) in inject_wat_stuff.exports.items():
+
+    # dont call this on the same code twice :skull:
+    def fix_globals(inject_body):
+        for i in range(len(inject_wat_stuff.globals)-1,-1,-1):
+            inject_body = replace_instruction_with(inject_body, f"global.get {i}", f"global.get {i+len(app_wat_stuff.globals)}")
+            inject_body = replace_instruction_with(inject_body, f"global.set {i}", f"global.set {i+len(app_wat_stuff.globals)}")
+            # print(f"replacing 'global.set {i}' with 'global.set {i+len(app_wat_stuff.globals)}'")
+
+        return inject_body
 
     def fix_indexhtml_import_calls(inject_body):
         for inject_import in inject_wat_stuff.imports:
@@ -332,6 +366,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
         return inject_body
 
     inject_body = inject_wat_stuff.getFuncByNum(export_func_num).body
+    inject_body = fix_globals(inject_body)
     inject_body = fix_seperate_func_calls(inject_body)
     inject_body = fix_indexhtml_import_calls(inject_body)
     inject_body = fix_memory_instructions(inject_body)
@@ -345,6 +380,8 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
         elif target_func == "start":
             inject_function_jobs[app_wat_stuff.start_func_num] = inject_body
             # print(f"added start func thing: '{inject_body}'")
+        elif target_func == "bigfunc_beforebranch":
+            bigfunc_beforebranch_job = inject_body
         else: # assume its a number :skull:
             inject_function_jobs[int(target_func)] = inject_body
     elif export_name.startswith(seperate_function_prefix):
@@ -359,7 +396,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
         
 
 # print(inject_function_jobs[302])
-print(inject_function_jobs[572])
+# print(inject_function_jobs[572])
 # exit()
 app_wat_patched = ["",""]
 on_func = -1
@@ -474,6 +511,14 @@ for line in app_wat_content.split("\n"):
     def do_local_offsetting_stuff(inject_code):
         global func_locals_line
         global on_func
+        global bigfunc_beforebranch_job
+
+        start_local_index = func_locals_line.find("    (local ")
+        end_local_index = func_locals_line.find(")", start_local_index+10)
+        app_locals_list = func_locals_line[start_local_index+11:end_local_index].split(" ")
+        if func_locals_line == "":
+            app_locals_list = []
+    
 
         inject_locals_list = []
         if "    (local " in inject_code:
@@ -483,17 +528,23 @@ for line in app_wat_content.split("\n"):
             
             #remove local instruction from injecting code
             inject_code = inject_code[:start_local_index] + inject_code[end_local_index+1:]
+        
+        bigfunc_beforebranch_code_locals_list = []
+        if on_func == app_wat_stuff.largestFuncNum and bigfunc_beforebranch_job != "":
+            if "    (local " in bigfunc_beforebranch_job:
+                start_local_index = bigfunc_beforebranch_job.find("    (local ")
+                end_local_index = bigfunc_beforebranch_job.find(")", start_local_index+10)
+                bigfunc_beforebranch_code_locals_list = bigfunc_beforebranch_job[start_local_index+11:end_local_index].split(" ")
+                
+                #remove local instruction from injecting code
+                bigfunc_beforebranch_job = bigfunc_beforebranch_job[:start_local_index] + bigfunc_beforebranch_job[end_local_index+1:]
 
-        start_local_index = func_locals_line.find("    (local ")
-        end_local_index = func_locals_line.find(")", start_local_index+10)
-        app_locals_list = func_locals_line[start_local_index+11:end_local_index].split(" ")
-        if func_locals_line == "":
-            app_locals_list = []
-    
         # print(f"onfunc: {on_func},inject locals:'{inject_locals_list}', app locals:'{app_locals_list}'")
         #merge into app local instruction
         # line = f"    (local {" ".join(app_locals_list)} {" ".join(inject_locals_list)})"
         func_locals_line = f"    (local {" ".join(app_locals_list)} {" ".join(inject_locals_list)})"
+        if on_func == app_wat_stuff.largestFuncNum and bigfunc_beforebranch_job != "":
+            func_locals_line = f"    (local {" ".join(app_locals_list)} {" ".join(inject_locals_list)} {" ".join(bigfunc_beforebranch_code_locals_list)})"
         # func_locals_line = line
 
         param_list = []
@@ -512,9 +563,23 @@ for line in app_wat_content.split("\n"):
         #update the new inject code for when we inject it, in the next line i think
         inject_function_jobs[on_func] = inject_code
 
+        if on_func == app_wat_stuff.largestFuncNum and bigfunc_beforebranch_job != "":
+            for i in range(len(bigfunc_beforebranch_code_locals_list)):
+                bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.get {i+1}", f"local.get {i+len(app_locals_list)+len(param_list)+len(inject_locals_list)}")
+                bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.set {i+1}", f"local.set {i+len(app_locals_list)+len(param_list)+len(inject_locals_list)}")
+                bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.tee {i+1}", f"local.tee {i+len(app_locals_list)+len(param_list)+len(inject_locals_list)}")
+
+    hit_large_branch_bigfunc = False
+
     if line.startswith("  (memory (;"):
         app_wat_patched.append(line)
         app_wat_patched.append(inject_wat_stuff.memories[0])
+        continue
+    elif line.startswith("  (global ("):
+        app_wat_patched.append(line)
+        for i in range(len(inject_wat_stuff.globals)):
+            global_line = inject_wat_stuff.globals[i]
+            app_wat_patched.append(global_line)
         continue
     elif line.startswith("  (func (;"):
         on_func = int(line[line.find('(;')+2:line.find(";)")])
@@ -556,7 +621,8 @@ for line in app_wat_content.split("\n"):
                 # print(on_func, left+right)
                 # exit()
             else:
-                print(f"not in seperate func mapping: {inject_func.num}, {inject_func.header_line}")
+                # print(f"not in seperate func mapping: {inject_func.num}, {inject_func.header_line}")
+                pass
             
             # for (inject_func_name, inject_func_num) in inject_wat_stuff.imports.items():
             #     if inject_func_name.startswith("import"):
@@ -582,24 +648,36 @@ for line in app_wat_content.split("\n"):
             # if len(func_locals_line) == 0:
                 
             inject_code = inject_function_jobs[on_func]
-            if on_func==572:
-                print(f"'inject_code:{inject_code}', func_locals_line:'{func_locals_line}'")
+            # if on_func==572:
+            #     print(f"'inject_code:{inject_code}', func_locals_line:'{func_locals_line}'")
             do_local_offsetting_stuff(inject_code)
             inject_code = inject_function_jobs[on_func]
-            if on_func==572:
-               print(f"'inject_code:{inject_code}', func_locals_line:'{func_locals_line}'")
+            # if on_func==572:
+            #    print(f"'inject_code:{inject_code}', func_locals_line:'{func_locals_line}'")
             inject_code = do_final_changes(inject_code)
-            if on_func==572:
-                print(f"'inject_code:{inject_code}', func_locals_line:'{func_locals_line}'")
+            # if on_func==572:
+            #     print(f"'inject_code:{inject_code}', func_locals_line:'{func_locals_line}'")
             app_wat_patched.append(func_locals_line)
             app_wat_patched.append(inject_code)
             # print(app_wat_patched)
+
+    elif on_func == app_wat_stuff.largestFuncNum and len(line) > 6000 and "br_table" in line and hit_large_branch_bigfunc == False:
+        hit_large_branch_bigfunc = True
+        if bigfunc_beforebranch_job != "":
+            # inject the stuff
+            local_before_branch_line = app_wat_patched[-1]
+            local_before_branch = re.search(r"local.get ([0-9]*)", local_before_branch_line).group(1)
+            # print(f"{local_before_branch}")
+            # exit(1)
+            bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.get 0", f"local.get {local_before_branch}")
+            app_wat_patched.append(f"drop\n{bigfunc_beforebranch_job}")
+
+
 
     if before0_is_import:
         last_is_import = True
 
     app_wat_patched.append(line)
-
 # print(f"{len(seperate_func_mapping)},{seperate_func_mapping}")
 # print(f"{len(inject_function_jobs)},{inject_function_jobs}")
 # print(f"{len(export_function_jobs)},{export_function_jobs}")
