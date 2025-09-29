@@ -1,6 +1,9 @@
 #define i32LOAD(address) (*((int*)(address)))
 #define i32STORE(address, value) ((*((int*)(address))) = value)
 
+#define i8LOAD(address) (*((char*)(address)))
+#define i8STORE(address, value) ((*((char*)(address))) = value)
+
 typedef int i32;
 typedef long long i64;
 typedef float f32;
@@ -27,9 +30,15 @@ i32 min_i32(i32 a, i32 b){
     return a < b ? a:b;
 }
 
-void _memset_i32(int* start, int numberOfInts, int value){
-    for(int i=0;i<numberOfInts;i++){
+void _memset_i32(int* start, int size, int value){
+    for(int i=0;i<size;i++){
         i32STORE(start+i, value);
+    }
+}
+
+void _memset_i8(char* start, int size, char value){
+    for(int i=0;i<size;i++){
+        i8STORE(start+i, value);
     }
 }
 
@@ -46,9 +55,13 @@ extern int import_e_t_call(int t);
 
 extern void special_clear_locals();
 extern int special_func_number();
+extern int special_start_func_number();
 
 extern int special_arras_memory_i32_load(int address);
 extern void special_arras_memory_i32_store(int address, int value);
+
+#define HXH_ARRAY_CONSOLE_LOG 0
+#define HXH_WINDOW_POOP_SET_NULL 5
 
 #define hxh_PARSE_EXECUTE() (import_e_t_get(9999))
 #define hxh_PUSH_MICROCODE_LITERAL(value) (import_e_t_get(10000+(value)))
@@ -63,7 +76,7 @@ extern void special_arras_memory_i32_store(int address, int value);
     hxh_PARSE_EXECUTE();
 
 // TODO allow multiple values
-#define hxh_CONSOLE_LOG_LITERAL(value) hxh_PUSH_MICROCODE_LITERAL(0); \
+#define hxh_CONSOLE_LOG_LITERAL(value) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
     hxh_PUSH_MICROCODE_LITERAL(value); \
     hxh_PARSE_EXECUTE();
 
@@ -82,9 +95,14 @@ void _hxh_add_int_string_microcode(int* value, int size){
         hxh_PUSH_MICROCODE_LITERAL(*(value+i));
     }
 }
-#define hxh_CONSOLE_LOG_INT_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(0); \
+#define hxh_CONSOLE_LOG_INT_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
     _hxh_add_int_string_microcode(value, size); \
     hxh_PARSE_EXECUTE();
+
+void _hxh_breakpoint(){
+    hxh_PUSH_MICROCODE_LITERAL(6);
+    hxh_PARSE_EXECUTE();
+}
 
 extern void special_printargs();
 
@@ -112,3 +130,15 @@ __attribute__((noinline)) void _special_printargs_per_arg_f64(f64 a){
 void _special_printargs_end(){
     hxh_PARSE_EXECUTE();
 }
+
+struct{
+    int what_the_sigma;
+}nothing_state;
+
+__attribute__((noinline))
+void export_nothing(int a){
+    //what does it really do... i dont know...
+    nothing_state.what_the_sigma += special_arras_memory_i32_load(123456) + a;
+}
+
+#define UNIQUEIFER export_nothing(__LINE__)

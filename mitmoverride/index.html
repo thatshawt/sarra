@@ -81,7 +81,7 @@
           u = (e, t) => {
             let a = h.d(t.length, 1);
             r().set(t, a), n().set([a, t.length], e >> 2);
-            if(window.poop == 1 || true
+            if(window.poop == 1
             //  && t.length != 7 && t.length != 31 && t.length != 36 && t.length != 26 && t.length != 13
             ){
               if(t.length == window.pee){
@@ -180,15 +180,12 @@
                   switch(hxh_state.microcode.shift()){
                     case 0: // console.log the rest
                       console.log(Array.from(hxh_state.microcode));
-                      hxh_state.microcode = [];
                       break;
                     case 1: // return memory[microcode[0]]
                       let value = hxh_state.memory[hxh_state.microcode.shift()];
-                      hxh_state.microcode = [];
                       return value || 0;
                     case 2: // memory[microcode[0]] = microcode[1]
                       hxh_state.memory[hxh_state.microcode[0]] = hxh_state.microcode[1];
-                      hxh_state.microcode = [];
                       break;
                     case 3: // console.log the rest as a charcode thing
                       var temp = []
@@ -196,7 +193,6 @@
                         temp.push(String.fromCharCode(a))
                       });
                       console.log(temp.join(""));
-                      hxh_state.microcode = [];
                       break;
                     case 4: // window.poop = 1
                       window.poop = 1;
@@ -204,8 +200,11 @@
                     case 5: // window.poop = null
                       window.poop = null;
                       break;
+                    case 6: // breakpoint
+                      debugger;
+                      break;
                   }
-                  hxh_state.microcode = []
+                  hxh_state.microcode = [];
                 }else if(t>=MICROCODE_OFFSET){
                   let val = t-10000
                   if(hxh_state.microcode.at(-1) == 123123){val = val + 0.1;hxh_state.microcode.pop();}

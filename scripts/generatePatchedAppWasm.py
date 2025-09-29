@@ -111,6 +111,11 @@ class FuncThing:
         # exit()
 
 class WatStuff:
+    def getFuncByName(self, name):
+        if not name in self.funcNameMap: return None
+        funcNum = self.funcNameMap[name]
+        return self.getFuncByNum(funcNum)
+
     def getFuncByNum(self, num):
         for thing in self.funcs:
             if thing.num == num: return thing
@@ -142,6 +147,8 @@ class WatStuff:
         self.memories = []
         self.globals = []
         self.start_func_num = None
+
+        self.funcNameMap = {}
 
         in_func_body = False
         func_current_name = ""
@@ -236,7 +243,11 @@ class WatStuff:
                     in_func_body = True
 
                 continue
+        
         self._calculate_largest_func()
+
+        for (export_name, export_num) in self.exports.items():
+            self.funcNameMap[export_name] = export_num
 
         counts = {}
         for (export_name, export_num) in self.exports.items():
@@ -322,6 +333,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                             # print(f"replace 'call {inject_import_func_num}' with 'call {app_import_func_num}'")
                             inject_body = replace_instruction_with(inject_body, f"call {inject_import_func_num}", f"call {app_import_func_num}")
                     return inject_body
+    
     def fix_seperate_func_calls(inject_body):
         for inject_func in inject_wat_stuff.funcs:
             if inject_func.num in seperate_func_mapping:
@@ -361,6 +373,8 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_PRINT_ARGS")
             elif import_thing.name == "special_clear_locals":
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_CLEAR_LOCALS")
+            elif import_thing.name == "special_start_func_number":
+                inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_START_FUNC_NUM")
 
 
         return inject_body
@@ -404,6 +418,11 @@ func_locals_line = None
 seen_first_func = False
 func_header_line = None
 
+hit_large_branch_bigfunc = False
+searching_for_xor_store8_pair = False
+xor_store8_pair1_counter = 0
+xor_store8_pair2_counter = 0
+
 for line in app_wat_content.split("\n"):
     before0_is_local = line.startswith("    (local ")
     before0_is_import = "import" in line
@@ -420,6 +439,7 @@ for line in app_wat_content.split("\n"):
         global func_locals_line
         global on_func
         injecting_code = injecting_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
+        injecting_code = injecting_code.replace("SPECIAL_START_FUNC_NUM", f"i32.const {app_wat_stuff.start_func_num}")
 
         # if len(locals_list) > 0:
         #     print(f"{injecting_code},{locals_list}")
@@ -569,8 +589,6 @@ for line in app_wat_content.split("\n"):
                 bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.set {i+1}", f"local.set {i+len(app_locals_list)+len(param_list)+len(inject_locals_list)}")
                 bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.tee {i+1}", f"local.tee {i+len(app_locals_list)+len(param_list)+len(inject_locals_list)}")
 
-    hit_large_branch_bigfunc = False
-
     if line.startswith("  (memory (;"):
         app_wat_patched.append(line)
         app_wat_patched.append(inject_wat_stuff.memories[0])
@@ -592,7 +610,7 @@ for line in app_wat_content.split("\n"):
         for inject_func in inject_wat_stuff.funcs:
             # APPENDING SEPERATE FUNCTIONS CODE HERE
             if inject_func.num in seperate_func_mapping:
-                print(f"injecting: {inject_func.num}, {inject_func.header_line}")
+                # print(f"injecting: {inject_func.num}, {inject_func.header_line}")
                 """
                     (func (;5;) (type 0) (param i32)
                 turns into
@@ -661,16 +679,40 @@ for line in app_wat_content.split("\n"):
             app_wat_patched.append(inject_code)
             # print(app_wat_patched)
 
-    elif on_func == app_wat_stuff.largestFuncNum and len(line) > 6000 and "br_table" in line and hit_large_branch_bigfunc == False:
-        hit_large_branch_bigfunc = True
-        if bigfunc_beforebranch_job != "":
-            # inject the stuff
-            local_before_branch_line = app_wat_patched[-1]
-            local_before_branch = re.search(r"local.get ([0-9]*)", local_before_branch_line).group(1)
-            # print(f"{local_before_branch}")
-            # exit(1)
-            bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.get 0", f"local.get {local_before_branch}")
-            app_wat_patched.append(f"drop\n{bigfunc_beforebranch_job}")
+    elif on_func == app_wat_stuff.largestFuncNum:
+        if len(line) > 6000 and "br_table" in line and hit_large_branch_bigfunc == False:
+            hit_large_branch_bigfunc = True
+            if bigfunc_beforebranch_job != "":
+                # inject the stuff
+                local_before_branch_line = app_wat_patched[-1]
+                local_before_branch = re.search(r"local.get ([0-9]*)", local_before_branch_line).group(1)
+                # print(f"{local_before_branch}")
+                # exit(1)
+                bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.get 0", f"local.get {local_before_branch}")
+                app_wat_patched.append(f"drop\n{bigfunc_beforebranch_job}")
+        elif "3684054920433006693" in line:
+            if xor_store8_pair2_counter < 2:
+                print("started looking for pairs o.O")
+                searching_for_xor_store8_pair = True
+        elif "i32.xor" in app_wat_patched[-1] and "i32.store8" in line and searching_for_xor_store8_pair:
+            if xor_store8_pair1_counter < 2:
+                xor_store8_pair1_counter = xor_store8_pair1_counter + 1
+                chacha1_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_1")
+                if chacha1_func != None:
+                    print("did chacah1")
+                    app_wat_patched.append(f"call {seperate_func_mapping[chacha1_func.num]}")
+
+                if xor_store8_pair1_counter == 2:
+                    searching_for_xor_store8_pair = False
+            elif xor_store8_pair2_counter < 2:
+                xor_store8_pair2_counter = xor_store8_pair2_counter + 1
+                chacha2_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_2")
+                if chacha2_func != None:
+                    print("did chacah2")
+                    app_wat_patched.append(f"call {seperate_func_mapping[chacha2_func.num]}")
+
+                if xor_store8_pair2_counter == 2:
+                    searching_for_xor_store8_pair = False
 
 
 
