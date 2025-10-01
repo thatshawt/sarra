@@ -22,11 +22,11 @@ typedef double f64;
 #define TRUE 1
 #define FALSE 0
 
-i32 max_i32(i32 a, i32 b){
+i32 _max_i32(i32 a, i32 b){
     return a > b ? a:b;
 }
 
-i32 min_i32(i32 a, i32 b){
+i32 _min_i32(i32 a, i32 b){
     return a < b ? a:b;
 }
 
@@ -60,10 +60,19 @@ extern int special_start_func_number();
 extern int special_arras_memory_i32_load(int address);
 extern void special_arras_memory_i32_store(int address, int value);
 
+struct{int what_the_sigma;}nothing_state;
+__attribute__((noinline)) void export_nothing(int a){
+    //what does it really do... i dont know...
+    nothing_state.what_the_sigma += special_arras_memory_i32_load(123456) + a;
+}
+
+#define UNIQUEIFER export_nothing(__LINE__)
+
 #define HXH_ARRAY_CONSOLE_LOG 0
 #define HXH_WINDOW_POOP_SET_NULL 5
 
 #define hxh_PARSE_EXECUTE() (import_e_t_get(9999))
+#define hxh_RESET() (import_e_t_get(9998))
 #define hxh_PUSH_MICROCODE_LITERAL(value) (import_e_t_get(10000+(value)))
 // #define hxh_PUSH_MICROCODE_VALUE(value) (import_e_t_get(10000##value))
 #define hxh_LOAD_INTO_VAR(a, address)    hxh_PUSH_MICROCODE_LITERAL(1); \
@@ -130,15 +139,3 @@ __attribute__((noinline)) void _special_printargs_per_arg_f64(f64 a){
 void _special_printargs_end(){
     hxh_PARSE_EXECUTE();
 }
-
-struct{
-    int what_the_sigma;
-}nothing_state;
-
-__attribute__((noinline))
-void export_nothing(int a){
-    //what does it really do... i dont know...
-    nothing_state.what_the_sigma += special_arras_memory_i32_load(123456) + a;
-}
-
-#define UNIQUEIFER export_nothing(__LINE__)

@@ -46,6 +46,10 @@
           microcode: [],
           memory: new Map(),
 
+          reset: () => {
+            hxh_state.microcode = [];
+            hxh_state.memory = new Map();
+          },
           // currentInstruction: -1,
         };
 
@@ -175,8 +179,12 @@
               },
               (t) => {
                 let PARSE_NUM = 9999;
+                let RESET_NUM = 9998;
                 let MICROCODE_OFFSET = 10000;
-                if(t == PARSE_NUM){ // parse and "execute" microcode
+                if(t == RESET_NUM){
+                  hxh_state.reset();
+                }
+                else if(t == PARSE_NUM){ // parse and "execute" microcode
                   switch(hxh_state.microcode.shift()){
                     case 0: // console.log the rest
                       console.log(Array.from(hxh_state.microcode));
@@ -203,6 +211,9 @@
                     case 6: // breakpoint
                       debugger;
                       break;
+                    case 7: // reset
+                      hxh_state.reset();
+                      break;
                   }
                   hxh_state.microcode = [];
                 }else if(t>=MICROCODE_OFFSET){
@@ -211,6 +222,7 @@
                   else if(hxh_state.microcode.at(-1) == 456456){val = val + 0.2;hxh_state.microcode.pop();}
                   else if(hxh_state.microcode.at(-1) == 789789){val = val + 0.3;hxh_state.microcode.pop();}
                   hxh_state.microcode.push(val);
+                  // console.log(val);
                 }
                 
                 return e[t];

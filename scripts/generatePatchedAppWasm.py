@@ -146,6 +146,7 @@ class WatStuff:
         self.funcs = []
         self.memories = []
         self.globals = []
+        self.dataLines = []
         self.start_func_num = None
 
         self.funcNameMap = {}
@@ -201,6 +202,12 @@ class WatStuff:
 
             if "  (memory (;" in line:
                 self.memories.append(line)
+
+            if "  (data (;0;)" in line:
+                if line.endswith("))"):
+                    self.dataLines.append(line[:-1])
+                else:
+                    self.dataLines.append(line)
             
             if "  (global (" in line:
                 self.globals.append(line)
@@ -342,7 +349,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
         return inject_body
     
     def fix_memory_instructions(inject_body):
-        loads = "i32.load,i64.load,f32.load,f64.load,i32.load8_s,i32.load8_,i32.load16_s,i32.load16_u,i64.load8_s,i64.load8_u,i64.load16_s,i64.load16_u,i64.load32_s,i64.load32_u"
+        loads = "i32.load,i64.load,f32.load,f64.load,i32.load8_s,i32.load8_u,i32.load16_s,i32.load16_u,i64.load8_s,i64.load8_u,i64.load16_s,i64.load16_u,i64.load32_s,i64.load32_u"
         for load_str in loads.split(","):
             inject_body = replace_instruction_with(inject_body, load_str, f"{load_str} (memory 1)")
 
@@ -419,9 +426,12 @@ seen_first_func = False
 func_header_line = None
 
 hit_large_branch_bigfunc = False
-searching_for_xor_store8_pair = False
-xor_store8_pair1_counter = 0
-xor_store8_pair2_counter = 0
+chacha_searching_for_xor_store8_pair = False
+chacha_searching_for_br1 = False
+chacha_br1_1_counter = 0
+chacha_br1_2_counter = 0
+chacha_xor_store8_pair1_counter = 0
+chacha_xor_store8_pair2_counter = 0
 
 for line in app_wat_content.split("\n"):
     before0_is_local = line.startswith("    (local ")
@@ -648,8 +658,12 @@ for line in app_wat_content.split("\n"):
             #         import_string = import_string.replace("\"env\" \"import_js_debug\"", f"\"0\" \"{get_import_inject_index(inject_func_name)}\"")
             #         import_string = import_string.replace(f"(func (;{inject_func_num};)", f"(func ${inject_func_name}")
             #         app_wat_patched.append(import_string)
+        
         for (export_job_func_num, export_job_func_name) in export_function_jobs.items():
             app_wat_patched.append(f"  (export \"{export_job_func_name}\" (func {export_job_func_num}))")
+
+        for dataline in inject_wat_stuff.dataLines:
+            app_wat_patched.append(dataline.replace("(;0;)","1"))
 
     elif before0_is_local:
         # merge locals with inject code
@@ -691,28 +705,51 @@ for line in app_wat_content.split("\n"):
                 bigfunc_beforebranch_job = replace_instruction_with(bigfunc_beforebranch_job, f"local.get 0", f"local.get {local_before_branch}")
                 app_wat_patched.append(f"drop\n{bigfunc_beforebranch_job}")
         elif "3684054920433006693" in line:
-            if xor_store8_pair2_counter < 2:
+            if chacha_xor_store8_pair2_counter < 2:
                 print("started looking for pairs o.O")
-                searching_for_xor_store8_pair = True
-        elif "i32.xor" in app_wat_patched[-1] and "i32.store8" in line and searching_for_xor_store8_pair:
-            if xor_store8_pair1_counter < 2:
-                xor_store8_pair1_counter = xor_store8_pair1_counter + 1
-                chacha1_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_1")
-                if chacha1_func != None:
+                chacha_searching_for_xor_store8_pair = True
+        elif chacha_searching_for_xor_store8_pair and "i32.xor" in app_wat_patched[-1] and "i32.store8" in line:
+            if chacha_xor_store8_pair1_counter < 2:
+                chacha_xor_store8_pair1_counter = chacha_xor_store8_pair1_counter + 1
+                chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_1")
+                if chacha_func != None:
                     print("did chacah1")
-                    app_wat_patched.append(f"call {seperate_func_mapping[chacha1_func.num]}")
+                    app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
 
-                if xor_store8_pair1_counter == 2:
-                    searching_for_xor_store8_pair = False
-            elif xor_store8_pair2_counter < 2:
-                xor_store8_pair2_counter = xor_store8_pair2_counter + 1
-                chacha2_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_2")
-                if chacha2_func != None:
+                if chacha_xor_store8_pair1_counter == 2:
+                    chacha_searching_for_xor_store8_pair = False
+                    chacha_searching_for_br1 = True
+            elif chacha_xor_store8_pair2_counter < 2:
+                chacha_xor_store8_pair2_counter = chacha_xor_store8_pair2_counter + 1
+                chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_2")
+                if chacha_func != None:
                     print("did chacah2")
-                    app_wat_patched.append(f"call {seperate_func_mapping[chacha2_func.num]}")
+                    app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
 
-                if xor_store8_pair2_counter == 2:
-                    searching_for_xor_store8_pair = False
+                if chacha_xor_store8_pair2_counter == 2:
+                    chacha_searching_for_xor_store8_pair = False
+                    chacha_searching_for_br1 = True
+        elif chacha_searching_for_br1 and "(;@1;)" in line and "br " in line:
+            if chacha_br1_1_counter < 2:
+                chacha_br1_1_counter = chacha_br1_1_counter + 1
+                chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachafinish_1")
+                if chacha_func != None:
+                    print("did chacah1 end")
+                    app_wat_patched.append(f"call {seperate_func_mapping[chacha_func.num]}")
+
+                if chacha_br1_1_counter == 2:
+                    chacha_searching_for_br1 = False
+            elif chacha_br1_2_counter < 2:
+                chacha_br1_2_counter = chacha_br1_2_counter + 1
+                chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachafinish_2")
+                if chacha_func != None:
+                    print("did chacah2 end")
+                    app_wat_patched.append(f"call {seperate_func_mapping[chacha_func.num]}")
+
+                if chacha_br1_2_counter == 2:
+                    chacha_searching_for_br1 = False
+
+
 
 
 

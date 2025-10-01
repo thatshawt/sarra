@@ -1,7 +1,5 @@
 * add to the index.html.patched a mapping between import_e_t_get and the new thing i added to it... the hxh microcode stuff.
 
-*add more special functions like special_chacha_start and special_chacha_finish so i can tell when a packet starts and ends.
-
 *implement inject_imports? a way to run code before app.wat calls an imported function.
 *implement inject into the exported functions like "inject_b" "inject_c".
 
