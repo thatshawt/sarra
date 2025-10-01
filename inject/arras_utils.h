@@ -57,8 +57,10 @@ extern void special_clear_locals();
 extern int special_func_number();
 extern int special_start_func_number();
 
-extern int special_arras_memory_i32_load(int address);
-extern void special_arras_memory_i32_store(int address, int value);
+// these are memory instructions that work with arras memory and not my memory
+extern int special_arras_memory_i32_load(int address); // this turns into i32.load
+extern void special_arras_memory_i32_store(int address, int value); // i32.store
+extern void special_arras_memory_i32_store8(int address, int value);// i32.store8
 
 struct{int what_the_sigma;}nothing_state;
 __attribute__((noinline)) void export_nothing(int a){

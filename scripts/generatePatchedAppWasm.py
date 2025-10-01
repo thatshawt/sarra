@@ -712,23 +712,26 @@ for line in app_wat_content.split("\n"):
             if chacha_xor_store8_pair1_counter < 2:
                 chacha_xor_store8_pair1_counter = chacha_xor_store8_pair1_counter + 1
                 chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_1")
-                if chacha_func != None:
-                    print("did chacah1")
-                    app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
 
                 if chacha_xor_store8_pair1_counter == 2:
                     chacha_searching_for_xor_store8_pair = False
                     chacha_searching_for_br1 = True
+                
+                if chacha_func != None:
+                    print("did chacah1")
+                    app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
+                    continue
             elif chacha_xor_store8_pair2_counter < 2:
                 chacha_xor_store8_pair2_counter = chacha_xor_store8_pair2_counter + 1
                 chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachabyte_2")
-                if chacha_func != None:
-                    print("did chacah2")
-                    app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
-
                 if chacha_xor_store8_pair2_counter == 2:
                     chacha_searching_for_xor_store8_pair = False
                     chacha_searching_for_br1 = True
+
+                if chacha_func != None:
+                    print("did chacah2")
+                    app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
+                    continue
         elif chacha_searching_for_br1 and "(;@1;)" in line and "br " in line:
             if chacha_br1_1_counter < 2:
                 chacha_br1_1_counter = chacha_br1_1_counter + 1

@@ -48,6 +48,8 @@ struct{
   char bigfunc_chacha_buffer[CHACHA_BUFFER_SIZE];
   int bigfunc_chacha_buffer_i;
   int bigfunc_chacha_firstbyte;
+  int bigfunc_chacha_firstaddress;
+  int bigfunc_chacha_lastaddress;
   int bigfunc_chacha_byte_i;
 
   int stats_enabled;
@@ -154,37 +156,29 @@ int inject_bigfunc_beforebranch(int index){
   return _do_bigfunc_stuff(index);
 }
 
-int _special_bigfunc_chachabyte_1(int the_byte){
+void _special_bigfunc_chachabyte_1(int address, int the_byte){
   UNIQUEIFER;
 
-  // if(poopState.bigfunc_chacha_enabled){
-  //   if(poopState.bigfunc_chacha_byte_i++ == 0){
-  //     hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-  //     hxh_PUSH_MICROCODE_LITERAL(the_byte);
-  //   }else{
-  //     // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-  //     hxh_PUSH_MICROCODE_LITERAL(the_byte);
-  //   }
-  // }
-
-  return the_byte;
+  special_arras_memory_i32_store8(address, the_byte);
 }
 
-int _special_bigfunc_chachabyte_2(int the_byte){
+void _special_bigfunc_chachabyte_2(int address, int the_byte){
   UNIQUEIFER;
 
   if(poopState.bigfunc_chacha_enabled){
     if(poopState.bigfunc_chacha_byte_i == 0){
       // hxh_RESET();
       poopState.bigfunc_chacha_firstbyte = the_byte;
+      poopState.bigfunc_chacha_firstaddress = address;
       hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
     }
     hxh_PUSH_MICROCODE_LITERAL(the_byte);
     poopState.bigfunc_chacha_buffer[poopState.bigfunc_chacha_byte_i % CHACHA_BUFFER_SIZE] = the_byte;
     poopState.bigfunc_chacha_byte_i++;
+    poopState.bigfunc_chacha_lastaddress = address;
   }
 
-  return the_byte;
+  special_arras_memory_i32_store8(address, the_byte);
 }
 
 void _special_bigfunc_chachafinish_1(){
@@ -324,10 +318,4 @@ __attribute__((noinline)) void inject_all(){
   }
   special_clear_locals();
 }
-
-// __attribute__((optnone))
-// __attribute__((noinline))
-// void inject_271(unsigned int a){
-
-// }
 
