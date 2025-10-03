@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "xmemory": "c"
+        "xmemory": "c",
+        "utils.h": "c"
     }
 }

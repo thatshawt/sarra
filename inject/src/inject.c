@@ -1,4 +1,5 @@
-#include "arras_utils.h"
+#include "utils.h"
+#include "poopc.h"
 
 struct{
   int a;
@@ -92,6 +93,10 @@ void _reset_chacha(){
 
 void _init_all_the_things(){
   hxh_CONSOLE_LOG_CHAR_STRING("Banna Turd Labs", 15);
+
+  hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
+  hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
+  hxh_PARSE_EXECUTE();
 
   _reset_debug();
   _reset_stats();
