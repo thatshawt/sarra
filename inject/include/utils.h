@@ -1,15 +1,10 @@
+#include "wasmtypes.h"
+
 #define i32LOAD(address) (*((int*)(address)))
 #define i32STORE(address, value) ((*((int*)(address))) = value)
 
 #define i8LOAD(address) (*((char*)(address)))
 #define i8STORE(address, value) ((*((char*)(address))) = value)
-
-typedef int i32;
-typedef long long i64;
-typedef float f32;
-typedef double f64;
-
-typedef unsigned int size_t;
 
 #define SWAP_ENDIAN_32(num) ((((num)>>24)&0xff) | \
                     (((num)<<8)&0xff0000) | \
@@ -35,6 +30,7 @@ extern int import_e_t_get(int t);
 // (t) => e[t](),
 extern int import_e_t_call(int t);
 
+extern void special_printargs();
 extern void special_clear_locals();
 extern int special_func_number();
 extern int special_start_func_number();
@@ -44,10 +40,23 @@ extern int special_arras_memory_i32_load(int address); // this turns into i32.lo
 extern void special_arras_memory_i32_store(int address, int value); // i32.store
 extern void special_arras_memory_i32_store8(int address, int value);// i32.store8
 
+
 #define UNIQUEIFER export_nothing(__LINE__)
 
 #define HXH_ARRAY_CONSOLE_LOG 0
 #define HXH_WINDOW_POOP_SET_NULL 5
+
+void _hxh_breakpoint();
+void export_nothing(int a);
+void _hxh_add_int_string_microcode(int* value, int size);
+void _hxh_add_char_string_microcode(char* value, int size);
+
+i32 max_i32(i32 a, i32 b);
+i32 min_i32(i32 a, i32 b);
+void memset_i32(int* start, int size, int value);
+void memset_i8(char* start, int size, char value);
+
+char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
 
 #define hxh_PARSE_EXECUTE() (import_e_t_get(9999))
 #define hxh_RESET() (import_e_t_get(9998))
@@ -71,5 +80,8 @@ extern void special_arras_memory_i32_store8(int address, int value);// i32.store
     _hxh_add_int_string_microcode(value, size); \
     hxh_PARSE_EXECUTE();
 
-extern void special_printargs();
+#define hxh_CONSOLE_LOG_CHAR_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(3); \
+    _hxh_add_char_string_microcode(value, size); \
+    hxh_PARSE_EXECUTE();
+
 

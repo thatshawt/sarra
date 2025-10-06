@@ -1,5 +1,6 @@
 #include "utils.h"
-#include "poopc.h"
+#include "poopstrings.h"
+// #include "poopc.h"
 
 struct{
   int a;
@@ -63,14 +64,14 @@ struct{
 void _reset_stats(){
   poopState.stats_enabled = FALSE;
   poopState.stats_max_count = STATS_MAX_COUNT_CONSIDERED;
-  _memset_i32(poopState.stats_frequencies, STATS_FREQUENCIES_SIZE, 0);
+  memset_i32(poopState.stats_frequencies, STATS_FREQUENCIES_SIZE, 0);
   poopState.stats_total_count = 0;
   poopState.stats_max_encountered_funcnum = 0;
 }
 
 void _reset_debug(){
   poopState.debug_enabled = 0;
-  _memset_i32(poopState.debug_blacklist, DEBUG_BLACKLIST_SIZE, 0);
+  memset_i32(poopState.debug_blacklist, DEBUG_BLACKLIST_SIZE, 0);
   poopState.debug_count = 0;
   poopState.debug_max_count = DEBUG_MAX_COUNT;
 }
@@ -86,7 +87,7 @@ void _reset_chacha(){
   poopState.bigfunc_chacha_count = 0;
   poopState.bigfunc_chacha_count_total = CHACHA_MAX_TOTAL;
   poopState.bigfunc_chacha_buffer_i = 0;
-  _memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
+  memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
   poopState.bigfunc_chacha_byte_i = 0;
   poopState.bigfunc_chacha_firstbyte = 0;
 }
@@ -96,6 +97,7 @@ void _init_all_the_things(){
 
   hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
   hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
+  hxh_PUSH_MICROCODE_LITERAL((int)strstr("123123","abdcef"));
   hxh_PARSE_EXECUTE();
 
   _reset_debug();
@@ -202,47 +204,24 @@ void _special_bigfunc_chachafinish_2(){
   UNIQUEIFER;
 
   if(poopState.bigfunc_chacha_enabled){
-    const int strLength = 9;
-    char aString[] = "123123123";
-    int string_i = 0;
-    
-    for(int i=0;i<poopState.bigfunc_chacha_byte_i;i++){
-      char theChar = poopState.bigfunc_chacha_buffer[i % CHACHA_BUFFER_SIZE];
-      // hxh_RESET();
-      // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-      // hxh_PUSH_MICROCODE_LITERAL(1337);
-      // hxh_PUSH_MICROCODE_LITERAL(i);
-      // hxh_PUSH_MICROCODE_LITERAL(theChar);
-      // hxh_PUSH_MICROCODE_LITERAL(string_i);
-      // hxh_PUSH_MICROCODE_LITERAL(aString[string_i]);
-      // hxh_PARSE_EXECUTE();
+    char* result = strstr(poopState.bigfunc_chacha_buffer, "123456789");
+    if(result != 0 && poopState.bigfunc_chacha_firstbyte == 77){
+      hxh_PARSE_EXECUTE();
+      hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
 
-      if(theChar == aString[string_i]){
-        string_i++;
-      }
-      else{
-        string_i = 0;
-      }
+      memcpy(result, "hi there!", 9);
 
-      if(string_i == strLength){
-        hxh_PARSE_EXECUTE();
-        hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
-        // _hxh_breakpoint();
-        poopState.bigfunc_chacha_byte_i = 0;
-        poopState.bigfunc_chacha_firstbyte = 0;
-        if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
-          _reset_chacha();
-        }
-        hxh_RESET();
-        _memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
-        return;
+      memcpy_i8_to_arras_memory(poopState.bigfunc_chacha_firstaddress+(result-(int)poopState.bigfunc_chacha_buffer),result,9);
+      // _hxh_breakpoint();
+      if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
+        _reset_chacha();
       }
     }
 
     poopState.bigfunc_chacha_byte_i = 0;
     poopState.bigfunc_chacha_firstbyte = 0;
     hxh_RESET();
-    _memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
+    memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
     // if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
     //   _reset_chacha();
     // }
@@ -318,7 +297,7 @@ __attribute__((noinline)) void inject_all(){
     }else{
       poopState.stats_frequencies[func_num]++;
       poopState.stats_total_count++;
-      poopState.stats_max_encountered_funcnum = _max_i32(poopState.stats_max_encountered_funcnum, func_num);
+      poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
     }
   }
   special_clear_locals();

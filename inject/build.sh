@@ -3,6 +3,7 @@ clang-21 \
   -O3 \
   -nostdlib \
   --include-directory include \
+  -Wno-incompatible-library-redeclaration \
   -Wl,--no-entry \
   -Wl,--allow-undefined \
   -Wl,--export-all \

@@ -12,10 +12,9 @@ parser.add_argument("-o2" ,help="index.html.patched file path", required=True)
 # wasm2wat src/app.wasm -o /tmp/app.wat && python3 scripts/generatePatchedAppWasm.py -w /tmp/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched --enable-multi-memory -o mitmoverride/app.wasm
 args = parser.parse_args()
 
-seperate_function_prefix = "_"
+seperate_function_prefix = ""
 inject_func_prefix = "inject_"
 export_function_prefix = "export_"
-
 
 index_html_content = ""
 with open(args.f) as f: index_html_content = f.read()
@@ -290,7 +289,7 @@ seperate_func_counter = 1
 last_app_wat_func_num = app_wat_stuff.funcs[-1].num
 for inject_func in inject_wat_stuff.funcs:
     for (export_name, export_func_num) in inject_wat_stuff.exports.items():
-        if export_func_num == inject_func.num and (export_name.startswith(seperate_function_prefix) or export_name.startswith(export_function_prefix)):
+        if export_func_num == inject_func.num and (export_name.startswith(export_function_prefix) or export_name.startswith(seperate_function_prefix) and not export_name.startswith(inject_func_prefix)):
             if inject_func.num in seperate_func_mapping:
                 print(f"error: does not support multiple symbols pointing to the same func definition", file=sys.stderr)
                 print(f"{inject_func.num} is the offending function", file=sys.stderr)
@@ -405,17 +404,19 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
             bigfunc_beforebranch_job = inject_body
         else: # assume its a number :skull:
             inject_function_jobs[int(target_func)] = inject_body
-    elif export_name.startswith(seperate_function_prefix):
-        seperate_function_jobs[export_func_num] = inject_body
     elif export_name.startswith(export_function_prefix):
         mapped_func_num = seperate_func_mapping[export_func_num]
         export_function_jobs[mapped_func_num] = export_name
         seperate_function_jobs[export_func_num] = inject_body
         # print(f"added export_job {mapped_func_num}:{export_name}")
         # exit()
+    # i want this to be last cus it catches everything right now
+    elif export_name.startswith(seperate_function_prefix):
+        seperate_function_jobs[export_func_num] = inject_body
 
         
-
+# print(seperate_function_jobs)
+# exit(1)
 # print(inject_function_jobs[302])
 # print(inject_function_jobs[572])
 # exit()
@@ -619,7 +620,7 @@ for line in app_wat_content.split("\n"):
         # for inject_func in seperate_function_jobs:
         for inject_func in inject_wat_stuff.funcs:
             # APPENDING SEPERATE FUNCTIONS CODE HERE
-            if inject_func.num in seperate_func_mapping:
+            if inject_func.num in seperate_function_jobs:
                 # print(f"injecting: {inject_func.num}, {inject_func.header_line}")
                 """
                     (func (;5;) (type 0) (param i32)
@@ -637,11 +638,16 @@ for line in app_wat_content.split("\n"):
                 app_wat_patched.append(left+right + "\n")
 
                 on_func = seperate_func_mapping[inject_func.num]
+
+                if not inject_func.num in seperate_function_jobs:
+                    print(f"tried to add func num {inject_func.num}:{on_func} when it doesnt have a job\n",file=sys.stderr)
+                    exit(1)
+
                 inject_body = seperate_function_jobs[inject_func.num]
 
                 # inject_body = inject_body.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
-                if inject_func.num == 572:
-                    print(f"inject_body:'{inject_body}'")
+                # if inject_func.num == 572:
+                #     print(f"inject_body:'{inject_body}'")
                 inject_body = do_final_changes(inject_body)
 
                 app_wat_patched.append(inject_body + ")\n")

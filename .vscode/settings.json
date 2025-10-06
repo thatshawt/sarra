@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "xmemory": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "stdint.h": "c",
+        "string.h": "c",
+        "poopstrings.h": "c"
     }
 }
