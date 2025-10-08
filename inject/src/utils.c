@@ -30,17 +30,9 @@ char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
     unsigned char *d = dest;
 	const unsigned char *s = src;
 
-    // hxh_RESET();
-    // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-
-    int a = 0;
 	for (int i=0;i<n;i++){
-        //*d++ = *s++;
         int dval = special_arras_memory_i32_load((int)dest + (i/4)*4);
         int sval = (int)*s++;
-
-        // hxh_PUSH_MICROCODE_LITERAL(dval);
-        // hxh_PUSH_MICROCODE_LITERAL(sval);
 
         switch(i % 4){
             case 0:
@@ -56,12 +48,8 @@ char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
                 dval = (dval & 0x00FFFFFF) | (sval << 24);
                 break;
         }
-        // hxh_PUSH_MICROCODE_LITERAL(dval);
 
         special_arras_memory_i32_store((int)dest + (i/4)*4, dval);
-        // d++;
-
-        if(i % 4 == 0)a++;
     } 
 
     hxh_PARSE_EXECUTE();

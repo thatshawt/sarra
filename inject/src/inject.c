@@ -163,10 +163,11 @@ int inject_bigfunc_beforebranch(int index){
   return _do_bigfunc_stuff(index);
 }
 
+void _special_bigfunc_chachabyte_2(int address, int the_byte);
 void _special_bigfunc_chachabyte_1(int address, int the_byte){
   UNIQUEIFER;
 
-  special_arras_memory_i32_store8(address, the_byte);
+  _special_bigfunc_chachabyte_2(address, the_byte);
 }
 
 void _special_bigfunc_chachabyte_2(int address, int the_byte){
@@ -188,6 +189,8 @@ void _special_bigfunc_chachabyte_2(int address, int the_byte){
   special_arras_memory_i32_store8(address, the_byte);
 }
 
+void _special_bigfunc_chachafinish_2();
+
 void _special_bigfunc_chachafinish_1(){
   UNIQUEIFER;
   // if(poopState.bigfunc_chacha_enabled && poopState.bigfunc_chacha_byte_i > 0){
@@ -198,20 +201,25 @@ void _special_bigfunc_chachafinish_1(){
   //       _reset_chacha();
   //   }
   // }
+  // _special_bigfunc_chachafinish_2();
+  poopState.bigfunc_chacha_byte_i = 0;
+  poopState.bigfunc_chacha_firstbyte = 0;
+  hxh_RESET();
+  memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
 }
 
 void _special_bigfunc_chachafinish_2(){
   UNIQUEIFER;
 
   if(poopState.bigfunc_chacha_enabled){
-    char* result = strstr(poopState.bigfunc_chacha_buffer, "123456789");
-    if(result != 0 && poopState.bigfunc_chacha_firstbyte == 77){
+    // char* result = strstr(poopState.bigfunc_chacha_buffer, "123456789");
+    if(poopState.bigfunc_chacha_firstbyte == 'u' /* && result != 0 */){
       hxh_PARSE_EXECUTE();
-      hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
+      // hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
 
-      memcpy(result, "hi there!", 9);
+      // memcpy(result, "hi there!", 9);
 
-      memcpy_i8_to_arras_memory(poopState.bigfunc_chacha_firstaddress+(result-(int)poopState.bigfunc_chacha_buffer),result,9);
+      // memcpy_i8_to_arras_memory(poopState.bigfunc_chacha_firstaddress+(result-(int)poopState.bigfunc_chacha_buffer),result,9);
       // _hxh_breakpoint();
       if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
         _reset_chacha();

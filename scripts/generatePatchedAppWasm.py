@@ -712,7 +712,7 @@ for line in app_wat_content.split("\n"):
                 app_wat_patched.append(f"drop\n{bigfunc_beforebranch_job}")
         elif "3684054920433006693" in line:
             if chacha_xor_store8_pair2_counter < 2:
-                print("started looking for pairs o.O")
+                # print("started looking for pairs o.O")
                 chacha_searching_for_xor_store8_pair = True
         elif chacha_searching_for_xor_store8_pair and "i32.xor" in app_wat_patched[-1] and "i32.store8" in line:
             if chacha_xor_store8_pair1_counter < 2:
@@ -724,7 +724,7 @@ for line in app_wat_content.split("\n"):
                     chacha_searching_for_br1 = True
                 
                 if chacha_func != None:
-                    print("did chacah1")
+                    # print("did chacah1")
                     app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
                     continue
             elif chacha_xor_store8_pair2_counter < 2:
@@ -735,7 +735,7 @@ for line in app_wat_content.split("\n"):
                     chacha_searching_for_br1 = True
 
                 if chacha_func != None:
-                    print("did chacah2")
+                    # print("did chacah2")
                     app_wat_patched.append(f"i32.const 255\ni32.and\ncall {seperate_func_mapping[chacha_func.num]}")
                     continue
         elif chacha_searching_for_br1 and "(;@1;)" in line and "br " in line:
@@ -743,7 +743,7 @@ for line in app_wat_content.split("\n"):
                 chacha_br1_1_counter = chacha_br1_1_counter + 1
                 chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachafinish_1")
                 if chacha_func != None:
-                    print("did chacah1 end")
+                    # print("did chacah1 end")
                     app_wat_patched.append(f"call {seperate_func_mapping[chacha_func.num]}")
 
                 if chacha_br1_1_counter == 2:
@@ -752,7 +752,7 @@ for line in app_wat_content.split("\n"):
                 chacha_br1_2_counter = chacha_br1_2_counter + 1
                 chacha_func = inject_wat_stuff.getFuncByName("_special_bigfunc_chachafinish_2")
                 if chacha_func != None:
-                    print("did chacah2 end")
+                    # print("did chacah2 end")
                     app_wat_patched.append(f"call {seperate_func_mapping[chacha_func.num]}")
 
                 if chacha_br1_2_counter == 2:
