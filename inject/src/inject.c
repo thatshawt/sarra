@@ -2,25 +2,25 @@
 #include "poopstrings.h"
 // #include "poopc.h"
 
-struct{
-  int a;
-  int b;
-  int c;
-} caca;
+// struct{
+//   int a;
+//   int b;
+//   int c;
+// } caca;
 
-#define FOR(a,b) for(int a=0;a<100;a++){b; import_e_t_get(a);}
-void _hithere(int hithere){
-  // FOR(a,FOR(b,FOR(c,FOR(d,FOR(e,import_e_t_get(hithere))))));
-  caca.a = i32LOAD(123);
-  caca.b = i32LOAD(456);
-  caca.c = i32LOAD(789);
-  i32STORE(123, caca.a + caca.b + caca.c);
+// #define FOR(a,b) for(int a=0;a<100;a++){b; import_e_t_get(a);}
+// void _hithere(int hithere){
+//   // FOR(a,FOR(b,FOR(c,FOR(d,FOR(e,import_e_t_get(hithere))))));
+//   caca.a = i32LOAD(123);
+//   caca.b = i32LOAD(456);
+//   caca.c = i32LOAD(789);
+//   i32STORE(123, caca.a + caca.b + caca.c);
 
-  caca.a = special_arras_memory_i32_load(123);
-  special_arras_memory_i32_store(123, 3);
+//   caca.a = special_arras_memory_i32_load(123);
+//   special_arras_memory_i32_store(123, 3);
 
-  // import_js_debug(hithere);
-}
+//   // import_js_debug(hithere);
+// }
 
 
 #define DEBUG_BLACKLIST_SIZE 50
@@ -95,10 +95,10 @@ void _reset_chacha(){
 void _init_all_the_things(){
   hxh_CONSOLE_LOG_CHAR_STRING("Banna Turd Labs", 15);
 
-  hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-  hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
-  hxh_PUSH_MICROCODE_LITERAL((int)strstr("123123","abdcef"));
-  hxh_PARSE_EXECUTE();
+  // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
+  // hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
+  // hxh_PUSH_MICROCODE_LITERAL((int)strstr("123123","abdcef"));
+  // hxh_PARSE_EXECUTE();
 
   _reset_debug();
   _reset_stats();
@@ -123,13 +123,6 @@ void export_enable_debug(){
   // hxh_CONSOLE_LOG_CHAR_STRING("", 15);
   _reset_debug();
   poopState.debug_enabled = TRUE;
-  // if(poopState.debug_enabled){
-  //   hxh_PUSH_MICROCODE_LITERAL(4);
-  //   hxh_PARSE_EXECUTE();
-  // }else{
-  //   hxh_PUSH_MICROCODE_LITERAL(5);
-  //   hxh_PARSE_EXECUTE();
-  // }
 }
 
 void export_enable_bigfunc_trace(){
@@ -139,9 +132,9 @@ void export_enable_bigfunc_trace(){
   poopState.debug_enabled = TRUE;
 }
 
-__attribute__((noinline))
-int _do_bigfunc_stuff(int index){
-  if(poopState.bigfunc_trace_enabled){
+int _special_bigfunc_beforebranch(int index){
+  UNIQUEIFER;
+    if(poopState.bigfunc_trace_enabled){
       if(poopState.bigfunc_trace_count >= poopState.bigfunc_trace_max_count){
         _reset_bigfunc_trace();
         _reset_debug();
@@ -157,11 +150,11 @@ int _do_bigfunc_stuff(int index){
   return index;
 }
 
-__attribute__((optnone))
-int inject_bigfunc_beforebranch(int index){
-  UNIQUEIFER;
-  return _do_bigfunc_stuff(index);
-}
+// __attribute__((optnone))
+// int inject_bigfunc_beforebranch(int index){
+//   UNIQUEIFER;
+//   return _special_bigfunc_beforebranch(index);
+// }
 
 void _special_bigfunc_chachabyte_2(int address, int the_byte);
 void _special_bigfunc_chachabyte_1(int address, int the_byte){
@@ -202,10 +195,12 @@ void _special_bigfunc_chachafinish_1(){
   //   }
   // }
   // _special_bigfunc_chachafinish_2();
-  poopState.bigfunc_chacha_byte_i = 0;
-  poopState.bigfunc_chacha_firstbyte = 0;
-  hxh_RESET();
-  memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
+  if(poopState.bigfunc_chacha_enabled){
+    poopState.bigfunc_chacha_byte_i = 0;
+    poopState.bigfunc_chacha_firstbyte = 0;
+    if(poopState.bigfunc_chacha_enabled) hxh_RESET();
+    memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
+  }
 }
 
 void _special_bigfunc_chachafinish_2(){
@@ -216,9 +211,7 @@ void _special_bigfunc_chachafinish_2(){
     if(poopState.bigfunc_chacha_firstbyte == 'u' /* && result != 0 */){
       hxh_PARSE_EXECUTE();
       // hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
-
       // memcpy(result, "hi there!", 9);
-
       // memcpy_i8_to_arras_memory(poopState.bigfunc_chacha_firstaddress+(result-(int)poopState.bigfunc_chacha_buffer),result,9);
       // _hxh_breakpoint();
       if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
@@ -228,7 +221,7 @@ void _special_bigfunc_chachafinish_2(){
 
     poopState.bigfunc_chacha_byte_i = 0;
     poopState.bigfunc_chacha_firstbyte = 0;
-    hxh_RESET();
+    if(poopState.bigfunc_chacha_enabled) hxh_RESET();
     memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
     // if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
     //   _reset_chacha();
@@ -237,27 +230,9 @@ void _special_bigfunc_chachafinish_2(){
   }
 }
 
-// __attribute__((noinline))
-// int _bigfunc_chachabyte_1(int the_byte){
-//   export_nothing(212);
-//   return the_byte;
-// }
+void inject_all(){
+  UNIQUEIFER;
 
-// // __attribute__((noinline))
-// int inject_bigfunc_chachabyte_1(int the_byte){
-//   return _bigfunc_chachabyte_1(the_byte);
-// }
-
-// __attribute__((noinline)) void inject_start(){
-//   _init_all_the_things();
-// }
-
-// __attribute__((noinline)) void inject_271(){
-  
-// }
-
-// __attribute__((optnone))
-__attribute__((noinline)) void inject_all(){
   int func_num = special_func_number();
 
   if(func_num == special_start_func_number()){

@@ -24,9 +24,13 @@ index_import_injects = [('import_js_debug', """(a)=>{
                          console.log("hi there?");
                          },\n"""),]
 
+class ImportOverride:
+    def __init__(self, locator, override):
+        self.locator = locator
+        self.override = override
+
 index_imports_code_mapping = {
-    # 'import_e_t_get':'              (t) => e[t],',
-    'import_e_t_get':'                let PARSE_NUM = 9999;',
+    'import_e_t_get': ImportOverride('              (t) => e[t],', ''),
     'import_e_t_call':'              (t) => e[t](),',
 }
 
@@ -49,19 +53,22 @@ def get_import_inject_index(importInjectCode):
     return None
 
 for line in index_html_content.split("\n"):
-    if started and line[:len("              (")] == "              (":
-        index_html_import_counter = index_html_import_counter+1
-
-    for (import_name, import_code) in index_imports_code_mapping.items():
-        if line.startswith(import_code):
-            index_imports_name_index_mapping[import_name] = str(index_html_import_counter)
-            # print(line, index_html_import_counter)
+    beginning_param = line[:len("              (")] == "              ("
     
     if line.startswith("            ["):
         started = True
     if started and line.startswith("            ],"):
         started = False
-        index_html_patched.append(index_import_injects[0][1])
+
+    if started:
+        if beginning_param:
+            index_html_import_counter = index_html_import_counter+1
+
+        for (import_name, import_code) in index_imports_code_mapping.items():
+            if line.startswith(import_code):
+                index_imports_name_index_mapping[import_name] = str(index_html_import_counter)
+                # print(line, index_html_import_counter)
+    
 
     
     index_html_patched.append(line)
@@ -702,7 +709,10 @@ for line in app_wat_content.split("\n"):
     elif on_func == app_wat_stuff.largestFuncNum:
         if len(line) > 6000 and "br_table" in line and hit_large_branch_bigfunc == False:
             hit_large_branch_bigfunc = True
-            if bigfunc_beforebranch_job != "":
+            bigfunc_branch_func = inject_wat_stuff.getFuncByName("_special_bigfunc_beforebranch")
+            if bigfunc_branch_func != None:
+                app_wat_patched.append(f"call {seperate_func_mapping[bigfunc_branch_func.num]}")
+            elif bigfunc_beforebranch_job != "":
                 # inject the stuff
                 local_before_branch_line = app_wat_patched[-1]
                 local_before_branch = re.search(r"local.get ([0-9]*)", local_before_branch_line).group(1)
@@ -757,10 +767,6 @@ for line in app_wat_content.split("\n"):
 
                 if chacha_br1_2_counter == 2:
                     chacha_searching_for_br1 = False
-
-
-
-
 
     if before0_is_import:
         last_is_import = True

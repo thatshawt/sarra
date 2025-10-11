@@ -1,7 +1,10 @@
+* do what i did with the WatStuff but also for the index.html import function array. aka, parse the array into an array or classes or something where i can seperate and map out the different functions and give them names and then after that i can replace their code with injected code or whatnot.
+
 * add to the index.html.patched a mapping between import_e_t_get and the new thing i added to it... the hxh microcode stuff.
 
 *implement inject_imports? a way to run code before app.wat calls an imported function.
-*implement inject into the exported functions like "inject_b" "inject_c".
+
+*maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.
 
 *investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
 

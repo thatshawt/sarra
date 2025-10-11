@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en-US">
+  <title>Super Hi There</title>
+  <meta charset=utf-8><meta name=description content="Level up and gain score by shooting at other players and bosses while keeping yourself alive! Play the game at https://arras.io/."><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><meta name=robots content="index, follow"><meta name=theme-color content=#8abc3f><meta property=og:image content=/favicon/128x128.png><meta property=og:image:width content=54><meta property=og:image:height content=54><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preconnect href=https://config.playwire.com crossorigin><link rel=preconnect href=https://cdn.intergi.com crossorigin><link rel=preconnect href=https://cdn.intergient.com crossorigin><link rel=preconnect href=https://securepubads.g.doubleclick.net crossorigin><link rel=preconnect href=https://cdn.playwire.com crossorigin><link rel=preconnect href=https://cdn.video.playwire.com crossorigin><link rel=preconnect href=https://z.moatads.com crossorigin><link rel=apple-touch-icon sizes=60x60 href=/favicon/60x60.png><link rel=apple-touch-icon sizes=120x120 href=/favicon/120x120.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/180x180.png><link rel=icon type=image/png sizes=16x16 href=/favicon/16x16.png><link rel=icon type=image/png sizes=32x32 href=/favicon/32x32.png><link rel=icon type=image/png sizes=64x64 href=/favicon/64x64.png><link rel=icon type=image/png sizes=96x96 href=/favicon/96x96.png><link rel=icon type=image/png sizes=128x128 href=/favicon/128x128.png><link rel=icon type=image/png sizes=192x192 href=/favicon/192x192.png><link rel=icon type=image/png sizes=256x256 href=/favicon/256x256.png><link rel=icon type=image/png sizes=512x512 href=/favicon/512x512.png><link rel=icon type=image/png sizes=1024x1024 href=/favicon/1024x1024.png><link rel=icon type=image/png sizes=2048x2048 href=/favicon/2048x2048.png><link rel=icon type=image/svg+xml sizes=400x400 href=/favicon/base.svg><link rel=manifest href=/favicon/manifest.json><link rel=canonical href=https://arras.io/><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700">
+  <script
+    async
+    defer
+    src="https://www.googletagmanager.com/gtag/js?id=UA-120544149-1"
+  ></script>
+  <style>
+    html,
+    body,
+    #canvas,
+    canvas {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      user-select: none;
+    }
+    canvas {
+      background: #000;
+      pointer-events: none;
+    }
+  </style>
+  <body>
+    <script>
+      (async () => {
+        if (!window.WebAssembly) {
+          let e = document.createElement("div");
+          (e.textContent =
+            "WebAssembly is not supported on your browser! Please upgrade your browser to the latest version."),
+            (e.style.position = "absolute"),
+            (e.style.top = "0"),
+            (e.style.width = "100%"),
+            (e.style.padding = "20px"),
+            (e.style.background = "red"),
+            (e.style.color = "white"),
+            (e.style.font = "bold 20px sans-serif"),
+            document.body.appendChild(e);
+          return;
+        }
+
+        var hxh_state = {
+          microcode: [],
+          memory: new Map(),
+
+          reset: () => {
+            hxh_state.microcode = [];
+            hxh_state.memory = new Map();
+          },
+          // currentInstruction: -1,
+        };
+
+        let e = [null, Function],
+          t = (t, a) => {
+            e[t] = a;
+          },
+          a = null,
+          r = () => (
+            (null == a || 0 === a.byteLength) &&
+              (a = new Uint8Array(h.g.buffer)),
+            a
+          ),
+          o = null,
+          n = () => (
+            (null == o || 0 === o.byteLength) &&
+              (o = new Int32Array(h.g.buffer)),
+            o
+          ),
+          l = null,
+          s = new TextEncoder("utf-8"),
+          d = new TextDecoder("utf-8", { ignoreBOM: !0 });
+        d.decode();
+        let i = /^[\x00-\x7f]*$/,
+          c = (e, t) => {
+            if (i.test(t)) {
+              let a = h.d(t.length, 1),
+                o = r();
+              for (let e = 0; e < t.length; e++) o[a + e] = t.charCodeAt(e);
+              n().set([a, t.length], e >> 2);
+            } else u(e, s.encode(t));
+          },
+          u = (e, t) => {
+            let a = h.d(t.length, 1);
+            r().set(t, a), n().set([a, t.length], e >> 2);
+            if(window.poop == 1
+            //  && t.length != 7 && t.length != 31 && t.length != 36 && t.length != 26 && t.length != 13
+            ){
+              if(t.length == window.pee){
+                  console.log(t, [a, t.length], e >> 2);
+                  wasmthing.export_enable_debug();
+                }
+                // if(t.length==7 && t[0] != '['){
+                //   console.log("its 7 all right!");
+                //   // wasmthing.export_enable_bigfunc_trace();
+                //   wasmthing.export_enable_debug();
+                // }
+                // if(t.length == 2900 || t.length == 34){
+                //   console.log("max length chat");
+                //   // wasmthing.export_enable_bigfunc_trace();
+                //   wasmthing.export_enable_debug();
+                // }
+            }
+          },
+          b = [
+            [
+              (t, a, r, o, n, l, s) => {
+                e[t].vertexAttribPointer(a >>> 0, r, o >>> 0, n > 0, l, s);
+              },
+              (t, a) => {
+                e[t].enable(a >>> 0);
+              },
+              () => window.innerWidth,
+              (t, a, r) =>
+                ((e, t) => {
+                  let a = h.d(t.length << 3, 8);
+                  ((null == l || 0 === l.byteLength) &&
+                    (l = new Float64Array(h.g.buffer)),
+                  l).set(t, a >> 3),
+                    n().set([a, t.length], e >> 2);
+                })(t, e[a](e[r])),
+              (t) => {
+                window.addEventListener("beforeunload", e[t]);
+              },
+              (t) => (0 === (t = e[t]).length ? -1 : t.shift()),
+              () => !!navigator.serviceWorker,
+              (t) => {
+                e[t][1] = !0;
+              },
+              (t, a) => e[t][a].maxClients || 0,
+              (t, a, r) => {
+                e[t].blendFunc(a >>> 0, r >>> 0);
+              },
+              (t) => {
+                e[t].lineJoin = "miter";
+              },
+              (t) => {
+                e[t].restore();
+              },
+              (t, a, r, o, n, l) => {
+                e[t].arc(a, r, o, n, l);
+              },
+              (t) => e[t].complete,
+              (t, a, o, n, l) => {
+                e[t].strokeText(d.decode(r().subarray(a, a + o)), n, l);
+              },
+              (t, a, r, o, n) => {
+                e[t].viewport(a, r, o, n);
+              },
+              (t, a, o, n) => {
+                e[t].shaderSource(e[a], d.decode(r().subarray(o, o + n)));
+              },
+              (t, a, r) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.fillStyle = `rgba(${a >> 16},${(a >> 8) & 255},${255 & a},${r})`);
+              },
+              (t) => {
+                e[t].clip();
+              },
+              (t, a) => c(t, e[a].shift()),
+              (a, r, o, n) => t(a, e[r].getProgramParameter(e[o], n >>> 0)),
+              (t, a) => {
+                (t = e[t]), (a = e[a]), t.then((e) => a(e));
+              },
+              (t) => e[t].shift(),
+              () =>
+                new Date(new Date().getFullYear(), 0, 1).getTimezoneOffset(),
+              (t) => e[t][0].timestamp,
+              (t, a, r, o, n, l) => {
+                try {
+                  e[t].drawImage(e[a], r, o, n, l);
+                } catch (e) {}
+              },
+              (t) => {
+                e[t].close();
+              },
+              (t) => {
+                let PARSE_NUM = 9999;
+                let RESET_NUM = 9998;
+                let MICROCODE_OFFSET = 10000;
+                if(t == RESET_NUM){
+                  hxh_state.reset();
+                }
+                else if(t == PARSE_NUM){ // parse and "execute" microcode
+                  switch(hxh_state.microcode.shift()){
+                    case 0: // console.log the rest
+                      console.log(Array.from(hxh_state.microcode));
+                      break;
+                    case 1: // return memory[microcode[0]]
+                      let value = hxh_state.memory[hxh_state.microcode.shift()];
+                      return value || 0;
+                    case 2: // memory[microcode[0]] = microcode[1]
+                      hxh_state.memory[hxh_state.microcode[0]] = hxh_state.microcode[1];
+                      break;
+                    case 3: // console.log the rest as a charcode thing
+                      var temp = []
+                      Array.from(hxh_state.microcode).forEach(function(a, index) {
+                        temp.push(String.fromCharCode(a))
+                      });
+                      console.log(temp.join(""));
+                      break;
+                    case 4: // window.poop = 1
+                      window.poop = 1;
+                      break;
+                    case 5: // window.poop = null
+                      window.poop = null;
+                      break;
+                    case 6: // breakpoint
+                      debugger;
+                      break;
+                    case 7: // reset
+                      hxh_state.reset();
+                      break;
+                  }
+                  hxh_state.microcode = [];
+                }else if(t>=MICROCODE_OFFSET){
+                  let val = t-10000
+                  if(hxh_state.microcode.at(-1) == 123123){val = val + 0.1;hxh_state.microcode.pop();}
+                  else if(hxh_state.microcode.at(-1) == 456456){val = val + 0.2;hxh_state.microcode.pop();}
+                  else if(hxh_state.microcode.at(-1) == 789789){val = val + 0.3;hxh_state.microcode.pop();}
+                  hxh_state.microcode.push(val);
+                  // console.log(val);
+                }
+                
+                return e[t];
+              },
+              (t) => e[t](),
+              (t, a, r, o, n) => {
+                e[t].fillRect(a, r, o, n);
+              },
+              (t, a) => {
+                e[t].enableVertexAttribArray(a >>> 0);
+              },
+              (t, a, r, o, n) => {
+                e[t].blendFuncSeparate(a >>> 0, r >>> 0, o >>> 0, n >>> 0);
+              },
+              (e, t) => WebAssembly.validate(r().subarray(e, e + t)),
+              (t, a, r, o, n) => {
+                e[t].uniform3f(e[a], r, o, n);
+              },
+              (t, a) => u(t, e[a]),
+              (t, a, r, o) => e[t](e[a], r, o),
+              (t, a, r) => {
+                e[t].translate(a, r);
+              },
+              (t, a, o) => {
+                e[t].value = d.decode(r().subarray(a, a + o));
+              },
+              (e) => t(e, []),
+              (t) => e[t].shift() || 0,
+              (t) => "number" == typeof e[t],
+              (t) => {
+                e[t].stroke();
+              },
+              (t, a, r, o, n) => {
+                e[t].blendColor(a, r, o, n);
+              },
+              (a, r) => t(a, Object.values(e[r].shift().status)),
+              (a, o, n, l, s) =>
+                t(a, e[o](e[n], d.decode(r().subarray(l, l + s)))),
+              () => !!window.RTCPeerConnection,
+              (t) => {
+                e[t].style.textAlign = "center";
+              },
+              (t, a, r, o, n) => {
+                e[t].drawElements(a >>> 0, r, o >>> 0, n);
+              },
+              (t, a) => {
+                e[t].font = `bold ${a}px Ubuntu`;
+              },
+              () => !!window.RTCDataChannel,
+              (t) => {
+                e[t].lineCap = "round";
+              },
+              (t, a, o, n, l) => {
+                e[t](
+                  new Blob([r().subarray(a, a + o)], {
+                    type: d.decode(r().subarray(n, n + l)),
+                  }),
+                );
+              },
+              (t, a) => {
+                e[t].font = `${a}px Trebuchet MS`;
+              },
+              (t, a) => {
+                e[t].activeTexture(a >>> 0);
+              },
+              (t, a) => u(t, e[a].shift()),
+              (t) => {
+                e[t] = null;
+              },
+              (e, t) => {
+                location.hash = d.decode(r().subarray(e, e + t));
+              },
+              (t, a, r, o, n, l, s, d, i, c) =>
+                u(t, e[a](r >>> 0, e[o], n, l, s, d, i >>> 0, c >>> 0)),
+              () => !!window.WebTransport,
+              (t, a) => {
+                e[t].linkProgram(e[a]);
+              },
+              (t, a, r) => {
+                e[t].bindTexture(a >>> 0, e[r]);
+              },
+              (t, a) => e[t](e[a]),
+              (a, r, o, n) => t(a, e[r](e[o], n > 0)),
+              (t) => "string" == typeof e[t],
+              (t, a) => {
+                e[t].replaceWith(e[a]);
+              },
+              (t, a, r) => c(t, e[a](e[r])),
+              () => parent !== top,
+              (t, a) => {
+                e[t].disable(a >>> 0);
+              },
+              (t, a, o, n) => c(t, e[a](d.decode(r().subarray(o, o + n)))),
+              () => window.devicePixelRatio,
+              (a, r) => ((r = e[r]), t(a, new Promise((e) => r.toBlob(e)))),
+              (t, a, r, o) => {
+                try {
+                  e[t].drawImage(e[a], r, o);
+                } catch (e) {}
+              },
+              (t, a, o, n) => e[t](d.decode(r().subarray(a, a + o)), e[n], f),
+              (t) => {
+                e[t].save();
+              },
+              (t) => e[t].shift().clients,
+              (t, a) => e[t][a].featured,
+              (e) => t(e, document.createElement("canvas")),
+              (t, a, r, o) => {
+                e[t].drawArrays(a >>> 0, r, o);
+              },
+              (e) => c(e, document.referrer),
+              (e, t) => {
+                location.hash = `#${d.decode(r().subarray(e, e + t))}`;
+              },
+              (t, a, r) => c(t, e[a][r].name),
+              (t) => e[t][0],
+              (t, a, o, n, l) =>
+                e[t](r().subarray(a, a + o), d.decode(r().subarray(n, n + l))),
+              (t) => document.activeElement === e[t],
+              () => "boolean" == typeof window.crossOriginIsolated,
+              (t) => e[t].length,
+              () => {
+                try {
+                  location.reload();
+                } catch (e) {}
+              },
+              (t, a, r, o, n, l, s) => e[t](e[a], r, o, n, l, s),
+              (t, a, o) => e[t](d.decode(r().subarray(a, a + o))),
+              () => performance.now(),
+              (t, a, r) => {
+                e[t].moveTo(a, r);
+              },
+              (a, r, o) => t(a, e[r](e[o], f)),
+              (a, r, o) => t(a, e[r].getParameter(o >>> 0)),
+              (a, o, n, l) => t(a, e[o](d.decode(r().subarray(n, n + l)))),
+              (t) => {
+                e[t].lineJoin = "round";
+              },
+              (t, a, r) => c(t, e[a][r].code),
+              (e) => t(e, window),
+              (t, a, o) => {
+                (t = e[t]),
+                  (a = r().subarray(a, a + o)),
+                  1 === t.readyState && t.send(a);
+              },
+              (t, a, o) => {
+                e[t].style.cursor = d.decode(r().subarray(a, a + o));
+              },
+              (t, a, o, n, l) => {
+                e[t].bufferData(a >>> 0, r().subarray(o, o + n), l >>> 0);
+              },
+              (t, a, r, o, n) => {
+                e[t].strokeRect(a, r, o, n);
+              },
+              (t, a, o) =>
+                e[t].measureText(d.decode(r().subarray(a, a + o))).width,
+              (t) => {
+                (t = e[t]).addEventListener("focus", () => t.select());
+              },
+              (a, o, n, l, s, i) =>
+                t(
+                  a,
+                  e[o](
+                    d.decode(r().subarray(n, n + l)),
+                    d.decode(r().subarray(s, s + i)),
+                  ),
+                ),
+              (t, a) =>
+                ((e, t) => {
+                  null != t && c(e, t);
+                })(t, e[a].pop()),
+              (t, a) => e[t][a].online,
+              (a, o, n, l, s, i, c) =>
+                t(
+                  a,
+                  e[o](
+                    d.decode(r().subarray(n, n + l)),
+                    d.decode(r().subarray(s, s + i)),
+                    e[c],
+                  ),
+                ),
+              (t, a) => {
+                e[t].clear(a >>> 0);
+              },
+              () => !!navigator.gpu,
+              () => window.innerHeight,
+              (t) => e[t].isContextLost(),
+              (t, a) => {
+                e[t].depthFunc(a >>> 0);
+              },
+              (t, a) => c(t, e[a].shift().signature),
+              (t, a) => {
+                e[t].compileShader(e[a]);
+              },
+              (t, a) => {
+                e[t].appendChild(e[a]);
+              },
+              (a, r) => t(a, e[r](f)),
+              (t, a, o) => {
+                e[t].lastValue = d.decode(r().subarray(a, a + o));
+              },
+              (t, a) => e[t][a].hidden,
+              () => crypto.getRandomValues(new Uint32Array(1))[0],
+              (t, a) => c(t, e[a].protocol),
+              (t, a) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.fillStyle = `rgb(${a >> 16},${(a >> 8) & 255},${255 & a})`);
+              },
+              (t, a, r) => {
+                e[t].lineTo(a, r);
+              },
+              (t, a) => e[t][a].clients,
+              (t) => {
+                e[t].closePath();
+              },
+              (t, a, o, n, l) => {
+                e[t].fillText(d.decode(r().subarray(a, a + o)), n, l);
+              },
+              (a, r, o) => t(a, e[r](e[o])),
+              (a, r) => t(a, e[r].createBuffer()),
+              (t) => e[t].readyState,
+              (t, a) => e[t][a].mspt,
+              (t, a) => {
+                e[t].font = `${a}px Ubuntu`;
+              },
+              (t, a, o, n) => {
+                e[t](
+                  new Blob([e[a]], { type: d.decode(r().subarray(o, o + n)) }),
+                );
+              },
+              (e, t) => {
+                open(d.decode(r().subarray(e, e + t)), "_blank", "noopener");
+              },
+              (e) => t(e, document.createElement("div")),
+              (t, a, r) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.strokeStyle = `rgba(${a >> 16},${(a >> 8) & 255},${255 & a},${r})`);
+              },
+              (t) => e[t].pop(),
+              (t, a) => {
+                e[t].useProgram(e[a]);
+              },
+              (t) => "boolean" == typeof e[t],
+              (t) => {
+                e[t].fill();
+              },
+              (e) => c(e, location.hash),
+              (t, a, r, o, n, l, s, d, i, c) => {
+                try {
+                  e[t].drawImage(e[a], r, o, n, l, s, d, i, c);
+                } catch (e) {}
+              },
+              (e, t, a, o) => {
+                var thing = d.decode(r().subarray(e, e + t));
+                if(thing.includes("Stop") || thing.includes("trick")){
+                  console.log("WHAT THE SIGMA");
+                  return;
+                }
+                console.log(
+                  d.decode(r().subarray(e, e + t)),
+                  d.decode(r().subarray(a, a + o)),
+                );
+              },
+              (t, a) => c(t, e[a].value),
+              (t) => {
+                e[t].style.clipPath = "none";
+              },
+              (e) => c(e, navigator.userAgent || ""),
+              (t) => {
+                window.removeEventListener("beforeunload", e[t]);
+              },
+              (t) => {
+                e[t].remove();
+              },
+              (t, a, o, n) =>
+                e[t].getAttribLocation(e[a], d.decode(r().subarray(o, o + n))),
+              (t, a, r) => {
+                e[t].bindBuffer(a >>> 0, e[r]);
+              },
+              () => navigator.hardwareConcurrency || -1,
+              (t, a, r, o, n) => {
+                e[t].style.clipPath = `xywh(${a}px ${r}px ${o}px ${n}px)`;
+              },
+              (t, a, o, n, l) =>
+                e[t](d.decode(r().subarray(a, a + o)), e[n], l >>> 0),
+              (t) => {
+                e[t].focus();
+              },
+              (t, a) => c(t, e[a]()),
+              (t, a) => e[t][a].uptime,
+              (t, a) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.strokeStyle = `rgb(${a >> 16},${(a >> 8) & 255},${255 & a})`);
+              },
+              (a, r) => t(a, e[r].createTexture()),
+              (t, a, r) => {
+                e[t].uniform1i(e[a], r);
+              },
+              () => "boolean" == typeof window.credentialless,
+              () => Date.now(),
+              (t, a, r) => {
+                e[t].pixelStorei(a >>> 0, r);
+              },
+              (t) =>
+                0 === (t = e[t]).length
+                  ? 0
+                  : t[0].status
+                    ? 1
+                    : t[0].signature
+                      ? 2
+                      : 3,
+              (e, t) => {
+                console.log(d.decode(r().subarray(e, e + t)));
+              },
+              (e) => c(e, location.hostname),
+              (t, a, o) => e[t](r().subarray(a, a + o)),
+              (e) => t(e, null),
+              (t) => !e[t],
+              (t, a, r, o, n, l, s, d, i, c, u, b) =>
+                e[t](e[a], r, o, n, l, s, d >>> 0, i, c, u > 0, b > 0),
+              (t, a, r, o, n) => {
+                e[t].rect(a, r, o, n);
+              },
+              (t, a, r, o, n) => {
+                e[t].clearRect(a, r, o, n);
+              },
+              (t, a, r, o) => {
+                e[t].texParameteri(a >>> 0, r >>> 0, o);
+              },
+              () => null != document.fullscreenElement,
+              (a, r, o) => t(a, e[r].getContext("2d", { alpha: o > 0 })),
+              (t, a) => c(t, e[a].lastValue),
+              (t, a) => c(t, e[a]),
+              (t) => {
+                e[t].beginPath();
+              },
+              (a, o, n, l, s) =>
+                t(
+                  a,
+                  e[o].getUniformLocation(
+                    e[n],
+                    d.decode(r().subarray(l, l + s)),
+                  ),
+                ),
+              (t) => {
+                e[t].lineCap = "butt";
+              },
+              (t, a, r) => {
+                e[t].attachShader(e[a], e[r]);
+              },
+              () => window.arrasAdDone,
+              (e, t) => !!WebAssembly[d.decode(r().subarray(e, e + t))],
+              (a, r, o) => t(a, e[r].createShader(o >>> 0)),
+              (a, r) => t(a, e[r]()),
+              (a, r) => t(a, e[r].createProgram()),
+              (t, a) => {
+                e[t].globalAlpha = a;
+              },
+              (t, a, r, o, n, l, s) => {
+                e[t].texImage2D(a >>> 0, r, o >>> 0, n >>> 0, l >>> 0, e[s]);
+              },
+              (t, a, r, o, n) => {
+                e[t].scissor(a, r, o, n);
+              },
+              (t, a) => c(t, e[a][0].ip),
+              (t, a, r, o) => {
+                e[t].uniform2f(e[a], r, o);
+              },
+              (e, t) => {
+                try {
+                  localStorage.setItem(
+                    "arras.io",
+                    d.decode(r().subarray(e, e + t)),
+                  );
+                } catch (e) {}
+              },
+              (t, a, r) => c(t, e[a][r].host),
+              (t, a) => {
+                e[t].lineWidth = a;
+              },
+              (a, r) => t(a, e[r][1]),
+            ],
+          ],
+          y = fetch("./app.wasm"),
+          h = (
+            await (WebAssembly.instantiateStreaming
+              ? WebAssembly.instantiateStreaming(y, b)
+              : WebAssembly.instantiate(await (await y).arrayBuffer(), b))
+          ).instance.exports,
+          f = h.c;
+          console.log(h,b);
+          window.wasmthing = h;
+        h.b();
+      })();
+    </script>
+  </body>
+</html>
