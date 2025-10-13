@@ -2,14 +2,16 @@ import argparse
 import sys
 import re
 import collections
+import os.path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-w", help="app.wat file path", required=True)
 parser.add_argument("-i" ,help="inject.wat file path", required=True)
 parser.add_argument("-f" ,help="index.html file path", required=True)
+parser.add_argument("-a" ,help="indexOverrides directory path", required=True)
 parser.add_argument("-o1" ,help="app.wat.patched file path", required=True)
 parser.add_argument("-o2" ,help="index.html.patched file path", required=True)
-# wasm2wat src/app.wasm -o /tmp/app.wat && python3 scripts/generatePatchedAppWasm.py -w /tmp/app.wat -f mitmoverride/index.html -i inject/inject.wat -o1 mitmoverride/app.wat.patched -o2 mitmoverride/index.html.patched && wat2wasm mitmoverride/app.wat.patched --enable-multi-memory -o mitmoverride/app.wasm
+
 args = parser.parse_args()
 
 seperate_function_prefix = ""
@@ -25,64 +27,217 @@ index_import_injects = [('import_js_debug', """(a)=>{
                          },\n"""),]
 
 class ImportOverride:
-    def __init__(self, locator, override):
-        self.locator = locator
-        self.override = override
+    def __init__(self, name, fileName):
+        self.name = name
+
+        with open(fileName) as f: self.body = f.read()
+
+class IndexImportFunc:
+    def __init__(self, num, body):
+        self.num = num
+        self.body = body
+
+    def __str__(self):
+        return f"<{self.num},'{self.body}'>"
+
+class IndexHtmlStuff:
+    def get_import_inject_index(self, importInjectCode):
+        counter = 0 
+        for item in index_import_injects:
+            if item[0] == importInjectCode:
+                return counter + self.index_html_import_counter
+            counter = counter+1
+        
+        print("fix me", file=sys.stderr)
+        exit(1)
+        return None
+
+    def getNameFromNumMapping(self, numz):
+        for (name, num) in self.index_imports_name_index_mapping.items():
+            # print(f"{name},{num},{numz}")
+            if str(num) == str(numz):
+                return name
+        return None
+
+    def getOverrideByName(self, name):
+        for thing in self.overrides:
+            if thing.name == name: return thing
+        return None
+
+    def __init__(self, indexHtmlContent, mappings):
+        self.indexHtmlContent = indexHtmlContent
+        self.index_imports_name_index_mapping = {}
+        self.overrides = []
+
+        self.import_funcs = []
+
+        self.index_html_import_counter = -1
+        func_body = []
+        in_import_func_section = False
+        parsing_arrow = False
+        parsing_curlybrace = False
+
+        index_content_lines = indexHtmlContent.split("\n")
+        for i in range(len(index_content_lines)):
+            # line_back1 = index_content_lines[i-1]
+            line = index_content_lines[i]
+            # line_forward1 = index_content_lines[i+1]
+            # line_forward2 = index_content_lines[i+2]
+
+            line_ends_with_comma = line.endswith(",")
+            line_ends_with_curlybrace = line.endswith("{")
+            line_ends_with_arrow = line.endswith("=>")
+
+            func_start_line = line[:len("              (")] == "              ("
+            func_curlybrace_end = line[:len("              },")] == "              },"
+
+            if line.startswith("            ["):
+                in_import_func_section = True
+            if in_import_func_section and line.startswith("            ],"):
+                in_import_func_section = False
+
+            if in_import_func_section:
+                if func_start_line:
+                    if parsing_arrow:
+                        func_body[-1] = func_body[-1][:-1]
+                        self.import_funcs.append(IndexImportFunc(self.index_html_import_counter, "\n".join(func_body)))
+                        parsing_arrow = False
+                        func_body = []
+
+                    self.index_html_import_counter = self.index_html_import_counter+1
+                    if line_ends_with_comma:
+                        func_body.append(line[:-1])
+                        self.import_funcs.append(IndexImportFunc(self.index_html_import_counter, "\n".join(func_body)))
+                        func_body = []
+                    elif line_ends_with_curlybrace:
+                        parsing_curlybrace = True
+                        func_body = []
+                        func_body.append(line)
+                    elif line_ends_with_arrow:
+                        parsing_arrow = True
+                        func_body = []
+                        func_body.append(line)
+                elif parsing_curlybrace:
+                    if func_curlybrace_end:
+                        func_body.append(line[:-1])
+                        self.import_funcs.append(IndexImportFunc(self.index_html_import_counter, "\n".join(func_body)))
+                        parsing_curlybrace = False
+                        func_body = []
+                    else:
+                        func_body.append(line)
+                elif parsing_arrow:
+                    func_body.append(line)
+
+
+
+                # for (import_name, import_code) in index_imports_code_mapping.items():
+                #     if line.startswith(import_code):
+                #         self.index_imports_name_index_mapping[import_name] = str(self.index_html_import_counter)
+                #         # print(line, index_html_import_counter)
+            
+            # index_html_patched.append(line)
+
+        for func_thing in self.import_funcs:
+            for (name, match_array) in mappings.items():
+                match_list = list(match_array)
+                # print(f" {func_thing.num} '{name}' {match_array} {match_list}")
+                for line in func_thing.body.split("\n"):
+                    # print(f"'{line}',{match_list}")
+                    if line in match_list:
+                        match_list.remove(line)
+                        # if func_thing.num == 161 and name == "import_consolelog1":
+                        #     print(f"removed '{line}'")
+                    # elif func_thing.num == 161 and name == "import_consolelog1":
+                    #     print(f"did not remove'{line}'")
+
+                if len(match_list) == 0:
+                    # print("YAE")
+                    self.index_imports_name_index_mapping[name] = str(func_thing.num)
+
+                    # also do the import override thing here cuy why not
+                    filePath = f"{args.a}/{name}.js"
+                    if os.path.isfile(filePath):
+                        self.overrides.append(ImportOverride(name, filePath))
+
+
+    def generatePatched(self):
+        patched = []
+
+        in_import_func_section = False
+
+        # first pass
+        index_content_lines = self.indexHtmlContent.split("\n")
+        for i in range(len(index_content_lines)):
+            line = index_content_lines[i]
+
+            if line.startswith("        let e = [null, Function],"):
+                filePath = f"{args.a}/before_let_e.js"
+                if os.path.isfile(filePath):
+                    with open(filePath) as f:
+                        fileContent = f.read()
+                        patched.append(fileContent)
+
+            elif line.startswith("            ["):
+                in_import_func_section = True
+                patched.append(line)
+                patched.append("INSERT_ALL_DA_FUNCS_HERE_MUAHHAAH")
+                continue
+            elif in_import_func_section and line.startswith("            ],"):
+                in_import_func_section = False
+            elif in_import_func_section:
+                # skip because we are adding it with the INSERT_ALL_DA_FUNCS_HERE_MUAHHAAH
+                continue
+
+
+            patched.append(line)
+
+        # process the INSERT_ALL_DA_FUNCS_HERE_MUAHHAAH
+        for i in range(len(patched)):
+            line = patched[i]
+            if line == "INSERT_ALL_DA_FUNCS_HERE_MUAHHAAH":
+                func_bodies = []
+                for index_func_thing in self.import_funcs:
+                    funcName = self.getNameFromNumMapping(index_func_thing.num)
+                    # if funcName != None: print(funcName)
+                    funcOverride = self.getOverrideByName(funcName)
+                    if funcOverride != None:
+                        # print("did it?")
+                        func_bodies.append(f"{funcOverride.body},")
+                    else:
+                        func_bodies.append(f"{index_func_thing.body},")
+                patched[i] = "\n".join(func_bodies)
+
+        return patched
 
 index_imports_code_mapping = {
-    'import_e_t_get': ImportOverride('              (t) => e[t],', ''),
-    'import_e_t_call':'              (t) => e[t](),',
+    'import_e_t_get': ['              (t) => e[t]'],
+    'import_e_t_call':['              (t) => e[t]()'],
+    'import_consolelog1': ['              (e, t) => {','                console.log(d.decode(r().subarray(e, e + t)));'],
+    'import_consolelog2': ['              (e, t, a, o) => {','                console.log('],
 }
 
-index_imports_name_index_mapping = {}
+indexStuff = IndexHtmlStuff(index_html_content, index_imports_code_mapping)
 
-index_html_patched = []
+index_html_patched = indexStuff.generatePatched()
 
-started = False
-index_html_import_counter = -1
+# for funcPooPoo in indexStuff.import_funcs:
+#     print(funcPooPoo)
 
-def get_import_inject_index(importInjectCode):
-    counter = 0 
-    for item in index_import_injects:
-        if item[0] == importInjectCode:
-            return counter + index_html_import_counter
-        counter = counter+1
+
+# print(indexStuff.getOverrideByName("import_e_t_get").body)
+
+for (a,b) in indexStuff.index_imports_name_index_mapping.items():
+    print(f"'{a}':'{b}'")
     
-    print("fix me", file=sys.stderr)
-    exit(1)
-    return None
+# exit(1)
 
-for line in index_html_content.split("\n"):
-    beginning_param = line[:len("              (")] == "              ("
-    
-    if line.startswith("            ["):
-        started = True
-    if started and line.startswith("            ],"):
-        started = False
-
-    if started:
-        if beginning_param:
-            index_html_import_counter = index_html_import_counter+1
-
-        for (import_name, import_code) in index_imports_code_mapping.items():
-            if line.startswith(import_code):
-                index_imports_name_index_mapping[import_name] = str(index_html_import_counter)
-                # print(line, index_html_import_counter)
-    
-
-    
-    index_html_patched.append(line)
-
-# print(f"{index_imports_code_mapping}, {index_imports_name_index_mapping}")
-# exit()
-
-if len(index_imports_code_mapping) != len(index_imports_name_index_mapping):
-    print(f"didnt find all the import code mappings! {index_imports_code_mapping}, {index_imports_name_index_mapping}",file=sys.stderr)
-    exit(1)
 
 index_html_patched = "\n".join(index_html_patched)
 with open(args.o2, "w") as f: f.write(index_html_patched)
 
+if len(index_imports_code_mapping) != len(indexStuff.index_imports_name_index_mapping):
+    print(f"didnt find all the import code mappings! '{index_imports_code_mapping}', '{indexStuff.index_imports_name_index_mapping}'",file=sys.stderr)
+    exit(1)
 # print(index_html_patched,index_html_import_counter)
 
 # exit()
@@ -334,9 +489,9 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 import_name = inject_import.name
                 inject_import_func_num = inject_import.num
 
-                if import_name in index_imports_name_index_mapping:
+                if import_name in indexStuff.index_imports_name_index_mapping:
                     import_type = inject_wat_stuff.getTypeByNum(inject_import.type).param_string
-                    app_import_index = index_imports_name_index_mapping[import_name]
+                    app_import_index = indexStuff.index_imports_name_index_mapping[import_name]
 
                     for app_import in app_wat_stuff.imports:
                         app_import_func_num = app_import.num
