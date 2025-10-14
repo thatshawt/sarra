@@ -187,6 +187,14 @@ class IndexHtmlStuff:
             elif in_import_func_section:
                 # skip because we are adding it with the INSERT_ALL_DA_FUNCS_HERE_MUAHHAAH
                 continue
+            elif line.startswith("          f = h.c;"):
+                filePath = f"{args.a}/after_wasm_instantiate.js"
+                if os.path.isfile(filePath):
+                    with open(filePath) as f:
+                        fileContent = f.read()
+                        patched.append(line)
+                        patched.append(fileContent)
+                        continue
 
 
             patched.append(line)

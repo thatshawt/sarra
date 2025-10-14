@@ -596,6 +596,7 @@ var hxh_state = {
               : WebAssembly.instantiate(await (await y).arrayBuffer(), b))
           ).instance.exports,
           f = h.c;
+window.wasmthing = h;
         h.b();
       })();
     </script>

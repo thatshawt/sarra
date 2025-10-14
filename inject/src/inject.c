@@ -24,14 +24,14 @@
 
 
 #define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 500
+#define DEBUG_MAX_COUNT 1000
 
 #define STATS_FREQUENCIES_SIZE 600
 #define STATS_MAX_COUNT_CONSIDERED 5000
 
-#define BIGFUNC_TRACE_MAX_LINES 2000
+#define BIGFUNC_TRACE_MAX_LINES 8000
 
-#define CHACHA_MAX_TOTAL 30
+#define CHACHA_MAX_TOTAL 2
 #define CHACHA_BUFFER_SIZE 2000
 
 struct{
@@ -93,7 +93,8 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  hxh_CONSOLE_LOG_CHAR_STRING("Banna Turd Labs", 15);
+  char bananaTurd[] = "Banna Turd Labs?! looking for packet parsing rn.";
+  hxh_CONSOLE_LOG_CHAR_STRING(bananaTurd, strlen(bananaTurd));
 
   // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
   // hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
@@ -156,11 +157,11 @@ int _special_bigfunc_beforebranch(int index){
 //   return _special_bigfunc_beforebranch(index);
 // }
 
-void _special_bigfunc_chachabyte_2(int address, int the_byte);
+// void _special_bigfunc_chachabyte_2(int address, int the_byte);
 void _special_bigfunc_chachabyte_1(int address, int the_byte){
   UNIQUEIFER;
-
-  _special_bigfunc_chachabyte_2(address, the_byte);
+  special_arras_memory_i32_store8(address, the_byte);
+  // _special_bigfunc_chachabyte_2(address, the_byte);
 }
 
 void _special_bigfunc_chachabyte_2(int address, int the_byte){
@@ -195,12 +196,12 @@ void _special_bigfunc_chachafinish_1(){
   //   }
   // }
   // _special_bigfunc_chachafinish_2();
-  if(poopState.bigfunc_chacha_enabled){
-    poopState.bigfunc_chacha_byte_i = 0;
-    poopState.bigfunc_chacha_firstbyte = 0;
-    if(poopState.bigfunc_chacha_enabled) hxh_RESET();
-    memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
-  }
+  // if(poopState.bigfunc_chacha_enabled){
+  //   poopState.bigfunc_chacha_byte_i = 0;
+  //   poopState.bigfunc_chacha_firstbyte = 0;
+  //   hxh_RESET();
+  //   memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
+  // }
 }
 
 void _special_bigfunc_chachafinish_2(){
@@ -208,13 +209,17 @@ void _special_bigfunc_chachafinish_2(){
 
   if(poopState.bigfunc_chacha_enabled){
     // char* result = strstr(poopState.bigfunc_chacha_buffer, "123456789");
-    if(poopState.bigfunc_chacha_firstbyte == 'u' /* && result != 0 */){
+    if(poopState.bigfunc_chacha_firstbyte == 'M' /* && result != 0 */){
       hxh_PARSE_EXECUTE();
       // hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
       // memcpy(result, "hi there!", 9);
       // memcpy_i8_to_arras_memory(poopState.bigfunc_chacha_firstaddress+(result-(int)poopState.bigfunc_chacha_buffer),result,9);
       // _hxh_breakpoint();
-      if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
+      _reset_debug();
+      _reset_bigfunc_trace();
+      poopState.debug_enabled = TRUE;
+      poopState.bigfunc_trace_enabled = TRUE;
+      if(++poopState.bigfunc_chacha_count >= poopState.bigfunc_chacha_count_total){
         _reset_chacha();
       }
     }
@@ -240,9 +245,9 @@ void inject_all(){
     _init_all_the_things();
   }
 
-  if(func_num == 271 && poopState.debug_enabled){
-    _hxh_breakpoint();
-  }
+  // if(func_num == 271 && poopState.debug_enabled){
+  //   _hxh_breakpoint();
+  // }
 
   if(poopState.debug_enabled){
     if(TRUE){//blacklist check
