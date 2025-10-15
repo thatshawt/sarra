@@ -163,8 +163,10 @@ var hxh_state = {
     let MICROCODE_OFFSET = 10000;
     if(t == RESET_NUM){
         hxh_state.reset();
+        // console.log("hxh reset");
     }
     else if(t == PARSE_NUM){ // parse and "execute" microcode
+        // console.log("parse num",t);
         switch(hxh_state.microcode.shift()){
         case 0: // console.log the rest
             console.log(Array.from(hxh_state.microcode));
@@ -202,7 +204,7 @@ var hxh_state = {
         else if(hxh_state.microcode.at(-1) == 456456){val = val + 0.2;hxh_state.microcode.pop();}
         else if(hxh_state.microcode.at(-1) == 789789){val = val + 0.3;hxh_state.microcode.pop();}
         hxh_state.microcode.push(val);
-        // console.log(val);
+        // console.log("hxh val",val);
     }
 
     return e[t];
