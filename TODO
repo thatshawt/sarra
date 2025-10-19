@@ -1,3 +1,6 @@
+"locals primitive":
+    implement the special_bigfunc_num() and special_local_get_6() so we can debug in the bigfunc locals...
+
 *figure out where packets get parsed. probably in the bigfunc ngl...
 
 *implement inject_imports? a way to run code before app.wat calls an imported function.

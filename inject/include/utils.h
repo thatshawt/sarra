@@ -35,10 +35,16 @@ extern void special_clear_locals();
 extern int special_func_number();
 extern int special_start_func_number();
 
+// TODO: "locals primitive"
+extern int special_bigfunc_num();
+
 // these are memory instructions that work with arras memory and not my memory
 extern int special_arras_memory_i32_load(int address); // this turns into i32.load
 extern void special_arras_memory_i32_store(int address, int value); // i32.store
 extern void special_arras_memory_i32_store8(int address, int value);// i32.store8
+
+// TODO: "locals primitive"
+extern int special_local_get_6();
 
 
 #define UNIQUEIFER export_nothing(__LINE__)

@@ -31,6 +31,7 @@ struct{
   int bigfunc_chacha_firstaddress;
   int bigfunc_chacha_lastaddress;
   int bigfunc_chacha_byte_i;
+  int bigfunc_chacha_header;
 
   int stats_enabled;
   int stats_total_count;
@@ -68,6 +69,7 @@ void _reset_chacha(){
   memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
   poopState.bigfunc_chacha_byte_i = 0;
   poopState.bigfunc_chacha_firstbyte = 0;
+  poopState.bigfunc_chacha_header = 0;
 }
 
 void _init_all_the_things(){
@@ -93,9 +95,11 @@ void export_enable_stats(){
   poopState.stats_enabled = TRUE;
 }
 
-void export_chacha_enable(){
+void export_chacha_enable(int pleaseWork){
   _reset_chacha();
   poopState.bigfunc_chacha_enabled = TRUE;
+  poopState.bigfunc_chacha_header = pleaseWork;
+  hxh_CONSOLE_LOG_LITERAL(poopState.bigfunc_chacha_header);
 }
 
 void export_enable_debug(){
@@ -124,8 +128,13 @@ int _special_bigfunc_beforebranch(int index){
         hxh_PARSE_EXECUTE();
 
         poopState.bigfunc_trace_count++;
+        
+        if(index == 391){
+          _hxh_breakpoint();
+        }
       }
-  }
+    }
+
   return index;
 }
 
@@ -189,7 +198,7 @@ void _special_bigfunc_chachafinish_2(){
     const int firstByte = poopState.bigfunc_chacha_firstbyte;
     if(
       // (firstByte != 98 && firstByte != 117 && firstByte != 112)
-      (firstByte == 77)
+      (firstByte == poopState.bigfunc_chacha_header)
       && poopState.bigfunc_chacha_byte_i > 0){
       hxh_PARSE_EXECUTE();
       // hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
