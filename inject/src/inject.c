@@ -71,7 +71,7 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  char bananaTurd[] = "Banna Turd Labs?! looking for packet parsing rn.";
+  char bananaTurd[] = "Banna Turd Labs?! still looking.";
   hxh_CONSOLE_LOG_CHAR_STRING(bananaTurd, strlen(bananaTurd));
 
   // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);

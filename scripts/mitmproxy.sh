@@ -1,1 +1,1 @@
-mitmproxy --map-local "|arras.io.?(index.html)?$|/mnt/c/Users/david/OneDrive/Documents/sarra/mitmoverride/index.html" --map-local "|arras.io.app.wasm.*$|/mnt/c/Users/david/OneDrive/Documents/sarra/mitmoverride/app.wasm"
+mitmproxy --map-local "|arras.io.?(index.html)?$|../mitmoverride/index.html" --map-local "|arras.io.app.wasm.*$|../mitmoverride/app.wasm"
