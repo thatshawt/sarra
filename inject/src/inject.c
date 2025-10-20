@@ -73,8 +73,15 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  char bananaTurd[] = "Banna Turd Labs?! still looking.";
-  hxh_CONSOLE_LOG_CHAR_STRING(bananaTurd, strlen(bananaTurd));
+  char beginningMessage[] = "Banna Turd Labs. ";
+  char dateStr[] = __DATE2__;
+
+  char dateTimeStr[sizeof(beginningMessage) + sizeof(dateStr)] = {0};
+
+  strcat(dateTimeStr,beginningMessage);
+  strcat(dateTimeStr, dateStr);
+
+  hxh_CONSOLE_LOG_CHAR_STRING(dateTimeStr, strlen(dateTimeStr));
 
   // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
   // hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
