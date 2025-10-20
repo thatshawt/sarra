@@ -372,7 +372,12 @@ class WatStuff:
             if "  (memory (;" in line:
                 self.memories.append(line)
 
-            if "  (data (;0;)" in line:
+            if "  (data (" in line:
+                regmatch = re.search(r"(\(;\d*;\))",line).group(1)
+                line = line.replace(regmatch, "(;0;)")
+                # print(f"{regmatch}")
+                # if regmatch == "(;1;)":
+                #     exit(1)
                 if line.endswith("))"):
                     self.dataLines.append(line[:-1])
                 else:
