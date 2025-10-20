@@ -74,7 +74,7 @@ void _reset_chacha(){
 
 void _init_all_the_things(){
   char beginningMessage[] = "Banna Turd Labs. ";
-  char dateStr[] = __DATE2__;
+  char dateStr[] = __DATETIME__;
 
   char dateTimeStr[sizeof(beginningMessage) + sizeof(dateStr)] = {0};
 
