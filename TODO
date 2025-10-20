@@ -1,12 +1,18 @@
-"locals primitive":
-    implement the special_bigfunc_num() and special_local_get_6() so we can debug in the bigfunc locals...
-
 *figure out where packets get parsed. probably in the bigfunc ngl...
+
+*chacha1_finish is broken? where are sent packets handled... i know chacha2_finish does received packets...
 
 *implement inject_imports? a way to run code before app.wat calls an imported function.
 
 *maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.
 
 *investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
+
+*learn how to use the adding and setting imports...?
+
+*add a test suite to make sure all the stuff is working bruh... probably gotta add tests injected in the start func... gotta test out a bunch of poopstring.c functions make sure they work properly and memory loads and stores and yea...
+
+*in the long term im gonna need to rewrite the injection thing to make it more general so that i can inject any amount of inject functions into the same wasm function...
+to accomplish this im probably gonna need to write some sort of generic "injector" algorithm thing that accepts an array of inject function or something to inject in order...
 
 *implement injecting table instructions. also call_indirect.

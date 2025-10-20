@@ -1,5 +1,7 @@
 #include "wasmtypes.h"
 
+#define PAGESIZE_BYTES 64000
+
 #define i32LOAD(address) (*((int*)(address)))
 #define i32STORE(address, value) ((*((int*)(address))) = value)
 
@@ -30,21 +32,30 @@ extern int import_e_t_get(int t);
 // (t) => e[t](),
 extern int import_e_t_call(int t);
 
-extern void special_printargs();
-extern void special_clear_locals();
-extern int special_func_number();
-extern int special_start_func_number();
 
-// TODO: "locals primitive"
-extern int special_bigfunc_num();
+
+extern void special_printargs();
+
+
+extern void special_clear_locals();
+extern int special_local_get_6();
+
+extern i64 special_i64_const_10000();
+extern i64 special_i64_const_9999();
+extern i64 special_i64_const_9998();
 
 // these are memory instructions that work with arras memory and not my memory
-extern int special_arras_memory_i32_load(int address); // this turns into i32.load
-extern void special_arras_memory_i32_store(int address, int value); // i32.store
-extern void special_arras_memory_i32_store8(int address, int value);// i32.store8
+extern i32 special_arras_memory_i32_load(i32 address); // i32.load
+extern i64 special_arras_memory_i64_load(i32 address); // i64.load
+extern void special_arras_memory_i32_store(i32 address, int value); // i32.store
+extern void special_arras_memory_i32_store8(i32 address, int value);// i32.store8
+extern i32 special_arras_memory_memory_size(); // memory.size
 
-// TODO: "locals primitive"
-extern int special_local_get_6();
+extern int special_func_number();
+extern int special_start_func_number();
+extern int special_bigfunc_num();
+
+
 
 
 #define UNIQUEIFER export_nothing(__LINE__)
@@ -64,9 +75,15 @@ void memset_i8(char* start, int size, char value);
 
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
 
-#define hxh_PARSE_EXECUTE() (import_e_t_get(9999))
-#define hxh_RESET() (import_e_t_get(9998))
-#define hxh_PUSH_MICROCODE_LITERAL(value) (import_e_t_get(10000+(value)))
+
+
+int hxh_parse_execute();
+#define hxh_PARSE_EXECUTE() (hxh_parse_execute())
+int hxh_reset();
+#define hxh_RESET() (hxh_reset())
+
+int hxh_push_microcode_literal(long value);
+#define hxh_PUSH_MICROCODE_LITERAL(value) (hxh_push_microcode_literal(value))
 // #define hxh_PUSH_MICROCODE_VALUE(value) (import_e_t_get(10000##value))
 #define hxh_LOAD_INTO_VAR(a, address)    hxh_PUSH_MICROCODE_LITERAL(1); \
     hxh_PUSH_MICROCODE_LITERAL(address); \

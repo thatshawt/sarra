@@ -12,4 +12,6 @@ clang-21 \
   -Wl,--initial-memory=$((65536*5))\
   -o /tmp/inject.wasm \
   src/*.c \
- && wasm2wat /tmp/inject.wasm -o inject.wat
+ && echo "Turning inject.wasm into inject.wat..." && \
+ wasm2wat --enable-memory64 /tmp/inject.wasm -o inject.wat && \
+ true

@@ -548,6 +548,28 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
                 # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"{rightSection}")
+            elif import_thing.name.startswith("special_local_get_"):
+                rightSection = import_thing.name.replace("special_local_get_","")
+                # rightSection = rightSection.replace("_", ".", 1)
+
+                # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
+                # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
+                inject_body = replace_instruction_with(inject_body,
+                    f"call {import_thing.num}",
+                    f"local.get {rightSection}")
+                # print(f"replace 'call {import_thing.num}' with 'local.get {rightSection}'")
+                # exit(1)
+            elif import_thing.name.startswith("special_i64_const_"):
+                rightSection = import_thing.name.replace("special_i64_const_","")
+                # rightSection = rightSection.replace("_", ".", 1)
+
+                # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
+                # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
+                inject_body = replace_instruction_with(inject_body,
+                    f"call {import_thing.num}",
+                    f"i64.const {rightSection}")
+                # print(f"{import_thing.num} {rightSection}")
+                # exit(1)
             elif import_thing.name == "special_func_number":
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"FUNC_NUM_CONST_INSTR")
             elif import_thing.name == "special_printargs":
@@ -556,6 +578,8 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_CLEAR_LOCALS")
             elif import_thing.name == "special_start_func_number":
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_START_FUNC_NUM")
+            elif import_thing.name == "special_bigfunc_num":
+                inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_BIGFUNC_NUM")
 
 
         return inject_body
@@ -626,6 +650,7 @@ for line in app_wat_content.split("\n"):
         global on_func
         injecting_code = injecting_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
         injecting_code = injecting_code.replace("SPECIAL_START_FUNC_NUM", f"i32.const {app_wat_stuff.start_func_num}")
+        injecting_code = injecting_code.replace("SPECIAL_BIGFUNC_NUM", f"i32.const {app_wat_stuff.largestFuncNum}")
 
         # if len(locals_list) > 0:
         #     print(f"{injecting_code},{locals_list}")
@@ -879,6 +904,7 @@ for line in app_wat_content.split("\n"):
             hit_large_branch_bigfunc = True
             bigfunc_branch_func = inject_wat_stuff.getFuncByName("_special_bigfunc_beforebranch")
             if bigfunc_branch_func != None:
+                app_wat_patched.append(f"local.get 6")
                 app_wat_patched.append(f"call {seperate_func_mapping[bigfunc_branch_func.num]}")
             elif bigfunc_beforebranch_job != "":
                 # inject the stuff

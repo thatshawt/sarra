@@ -24,7 +24,27 @@ void memset_i8(char* start, int size, char value)
     }
 }
 
+__attribute__((optnone))
+__attribute__((noinline))
+int hxh_parse_execute(){
+    return import_e_t_get(9999);
+}
+
+// __attribute__((optnone))
+__attribute__((noinline))
+int hxh_reset(){
+    return import_e_t_get(9998);
+}
+
+// __attribute__((optnone))
+__attribute__((noinline))
+int hxh_push_microcode_literal(long value){
+    return import_e_t_get(10000+((long)value));
+}
+
 #pragma clang diagnostic push
+//TODO: how do i remove the warning -Wpointer-to-int-cast :sob:
+#pragma clang diagnostic ignored "-Wpointer-to-int-cast"
 #pragma clang diagnostic ignored "-Wpointer-sign"
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
     unsigned char *d = dest;
@@ -77,7 +97,8 @@ void _hxh_breakpoint(){
 }
 
 struct{int what_the_sigma;}nothing_state;
-__attribute__((noinline)) void export_nothing(int a){
+__attribute__((noinline))
+void export_nothing(int a){
     //what does it really do... i dont know...
     nothing_state.what_the_sigma += special_arras_memory_i32_load(123456) + a;
 }
