@@ -82,11 +82,30 @@ void *memchr(const void *src, int c, size_t n)
 
 // str
 
+char *__stpcpy(char *restrict d, const char *restrict s)
+{
+	for (; (*d=*s); s++, d++);
+
+	return d;
+}
+
+char *strcpy(char *restrict dest, const char *restrict src)
+{
+	__stpcpy(dest, src);
+	return dest;
+}
+
 size_t strlen(const char *s)
 {
 	const char *a = s;
 	for (; *s; s++);
 	return s-a;
+}
+
+char *strcat(char *restrict dest, const char *restrict src)
+{
+	strcpy(dest + strlen(dest), src);
+	return dest;
 }
 
 char *__strchrnul(const char *s, int c)
