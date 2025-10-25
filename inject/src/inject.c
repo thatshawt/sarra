@@ -122,7 +122,9 @@ void export_enable_bigfunc_trace(){
   poopState.debug_enabled = TRUE;
 }
 
-int _special_bigfunc_beforebranch(const int index, const int local6){
+#define VALID_ARRAS_MEMLOCATION(x) ((x) > 10000 && (x) < (special_arras_memory_memory_size()*PAGESIZE_BYTES))
+
+int _special_bigfunc_beforebranch(const int index, const i32 local6, const i64 local127){
   UNIQUEIFER;
     if(poopState.bigfunc_trace_enabled){
       if(poopState.bigfunc_trace_count >= poopState.bigfunc_trace_max_count){
@@ -133,17 +135,33 @@ int _special_bigfunc_beforebranch(const int index, const int local6){
         hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
         hxh_PUSH_MICROCODE_LITERAL(poopState.bigfunc_trace_count);
         hxh_PUSH_MICROCODE_LITERAL(index);
+        
         hxh_PUSH_MICROCODE_LITERAL(local6);
-        int local6Deref = special_arras_memory_i32_load(local6);
-        hxh_PUSH_MICROCODE_LITERAL(local6Deref);
-        if(local6Deref > 10000 && local6Deref < (special_arras_memory_memory_size()*PAGESIZE_BYTES)){
-          hxh_PUSH_MICROCODE_LITERAL(special_arras_memory_i32_load(local6Deref));
+        if(VALID_ARRAS_MEMLOCATION(local6)){
+          int temp = special_arras_memory_i32_load(local6);
+          hxh_PUSH_MICROCODE_LITERAL(temp);
+          if(VALID_ARRAS_MEMLOCATION(temp)){
+            hxh_PUSH_MICROCODE_LITERAL(special_arras_memory_i32_load(temp));
+          }
         }
+
+        hxh_PUSH_MICROCODE_LITERAL(11111111);
+
+        hxh_PUSH_MICROCODE_LITERAL(local127);
+        if(VALID_ARRAS_MEMLOCATION(local127)){
+          int temp = special_arras_memory_i32_load((i32)local127);
+          hxh_PUSH_MICROCODE_LITERAL(temp);
+          if(VALID_ARRAS_MEMLOCATION(temp)){
+            hxh_PUSH_MICROCODE_LITERAL(special_arras_memory_i32_load(temp));
+          }
+        }
+
         hxh_PARSE_EXECUTE();
+        hxh_reset();
 
         poopState.bigfunc_trace_count++;
         
-        // if(index == 391){
+        // if(index == 550){
         //   _hxh_breakpoint();
         // }
       }

@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-# python3 bigSwitchIndexFile.py -d ../src/app.decomp -c ../src/app.section.code -i ./arras.io-1757563887084.log.2again 
+# python3 bigSwitchIndexFile.py -d ../src/app.decomp -c ../src/app.section.code -i indexesfileHERE
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", help="big switch index file path", required=True)

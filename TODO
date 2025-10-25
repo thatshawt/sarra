@@ -1,14 +1,14 @@
-*figure out where packets get parsed. probably in the bigfunc ngl...
-
 *chacha1_finish is broken? where are sent packets handled... i know chacha2_finish does received packets...
+
+* update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
+
+*feature1: for _special_bigfunc_beforebranch add a way to access every local. probably gonna call the special functions i added in the special.h on every local before calling _special_bigfunc_beforebranch.
 
 *implement inject_imports? a way to run code before app.wat calls an imported function.
 
 *maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.
 
 *investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
-
-*learn how to use the adding and setting imports...?
 
 *add a test suite to make sure all the stuff is working bruh... probably gotta add tests injected in the start func... gotta test out a bunch of poopstring.c functions make sure they work properly and memory loads and stores and yea...
 

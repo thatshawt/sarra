@@ -269,15 +269,26 @@ class TypeThing:
         self.param_string = param_string
         self.full_string = full_string
 
+class LocalThing:
+    def __init__(self, type, index):
+        self.type = type
+        self.index = index
+
 class FuncThing:
-    def __init__(self, num, header_line, param, body):
+    def __init__(self, num, header_line, param, body, locals_line):
         self.num = num
-        self.param = param
         self.header_line = header_line
+        self.param = param
         self.body = body
-        # self.params = header_line
-        # print(header_line)
-        # exit()
+        self.locals_line = locals_line
+        #    (local i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32)\n
+        self.locals = {}
+
+        if len(self.param) > 0 and len(self.locals_line) > 0:
+            print(f"|{self.param}|{self.locals_line}|")
+            exit(1)
+
+
 
 class WatStuff:
     def getFuncByName(self, name):
@@ -325,6 +336,7 @@ class WatStuff:
         func_body = []
         func_param = None
         func_header_line = None
+        func_locals = ""
         # func_locals = []
 
         for line in wat_content.split("\n"):
@@ -340,13 +352,14 @@ class WatStuff:
                         func_body[-1] = func_body[-1][0:-1] + '\n' # remove closing parens
                         if debug: print("added func", func_current_name, len(func_body))
                         # self.func_bodies[int(func_current_name)] = "\n".join(func_body)
-                        self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body)))
+                        self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body), func_locals))
                         # print(f"params: {func_param}")
                         # exit()
 
                         in_func_body = False
                         func_param = None
                         func_body = []
+                        func_locals = ""
                         continue
                     else:
                         continue
@@ -386,6 +399,12 @@ class WatStuff:
             if "  (global (" in line:
                 self.globals.append(line)
 
+            if "(local " in line:
+                func_locals = line
+                print(f"{func_locals}")
+                exit(1)
+                continue
+
             if "  (export \"" in line and "func" in line:#  (export "inject_into_all_func_top_part" (func 2))
                 func_name = line[line.find(' "')+2:line.find('" ')]
                 func_num = int(line[line.find("(func ")+6:line.find("))")])
@@ -413,15 +432,17 @@ class WatStuff:
                     func_body = "\n"
                     func_header_line = line[:-1] # remove the last ) cus yea, we dont liek that
                     if debug: print("added func", func_current_name, len(func_body))
-                    self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body)))
+                    self.funcs.append(FuncThing(int(func_current_name), func_header_line, func_param, "\n".join(func_body), func_locals))
 
                     func_param = None
                     func_body = []
                     in_func_body = False
+                    func_locals = ""
                 else:
                     func_header_line = line
                     func_body = []
                     in_func_body = True
+                    func_locals = ""
 
                 continue
         
@@ -903,8 +924,19 @@ for line in app_wat_content.split("\n"):
         if len(line) > 6000 and "br_table" in line and hit_large_branch_bigfunc == False:
             hit_large_branch_bigfunc = True
             bigfunc_branch_func = inject_wat_stuff.getFuncByName("_special_bigfunc_beforebranch")
+            bigfunc_localseti32 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_i32")
+            bigfunc_localseti64 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_i64")
+            bigfunc_localsetf32 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_f32")
+            bigfunc_localsetf64 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_f64")
             if bigfunc_branch_func != None:
-                app_wat_patched.append(f"local.get 6")
+                if bigfunc_localseti32 == None or bigfunc_localseti64 == None or bigfunc_localsetf32 == None or bigfunc_localsetf64 == None:
+                    print(f"hell nah pongebob, missing one of the _special_bigfunc_localset_ functions!",file=sys.stderr)
+                    exit(1)
+                # and here is index... already here dont gotta do anything...
+                # for i in range():
+                #     pass
+                # app_wat_patched.append(f"local.get 6")
+                # app_wat_patched.append(f"local.get 127")
                 app_wat_patched.append(f"call {seperate_func_mapping[bigfunc_branch_func.num]}")
             elif bigfunc_beforebranch_job != "":
                 # inject the stuff

@@ -56,8 +56,6 @@ extern int special_start_func_number();
 extern int special_bigfunc_num();
 
 
-
-
 #define UNIQUEIFER export_nothing(__LINE__)
 
 #define HXH_ARRAY_CONSOLE_LOG 0
