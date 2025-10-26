@@ -45,7 +45,7 @@
         else if(hxh_state.microcode.at(-1) == 456456){val = val + 0.2;hxh_state.microcode.pop();}
         else if(hxh_state.microcode.at(-1) == 789789){val = val + 0.3;hxh_state.microcode.pop();}
         hxh_state.microcode.push(val);
-        // console.log("hxh val",val);
+        console.log("hxh val",val);
     }
 
     return e[t];

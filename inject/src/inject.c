@@ -122,34 +122,61 @@ void export_enable_bigfunc_trace(){
   poopState.debug_enabled = TRUE;
 }
 
-#define VALID_ARRAS_MEMLOCATION(x) ((x) > 10000 && (x) < (special_arras_memory_memory_size()*PAGESIZE_BYTES))
+void export_wasm_arras_memsize(){
+  hxh_CONSOLE_LOG_LITERAL(special_arras_memory_memory_size());
+}
 
-int _special_bigfunc_beforebranch(const int index, const i32 local6, const i64 local127){
+#define VALID_ARRAS_MEMLOCATION(x) ( ((x) > 0) && ((x) < special_arras_memory_memory_size()*PAGESIZE_BYTES) )
+
+int _special_bigfunc_beforebranch(const int index){
   UNIQUEIFER;
     if(poopState.bigfunc_trace_enabled){
       if(poopState.bigfunc_trace_count >= poopState.bigfunc_trace_max_count){
         _reset_bigfunc_trace();
         _reset_debug();
       }else{
+        
+        i32 var_r = special_bigfunc_localget_i32(17);
+        i32 var_y = special_bigfunc_localget_i32(24);
+        i32 var_fa = special_bigfunc_localget_i32(31);
+        i32 var_n = special_bigfunc_localget_i32(13);
+        
+        i32 var_g = special_bigfunc_localget_i32(6);
+        i64 var_xd = special_bigfunc_localget_i64(127);
+        
+
         hxh_reset();
         hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
         hxh_PUSH_MICROCODE_LITERAL(poopState.bigfunc_trace_count);
-        hxh_PUSH_MICROCODE_LITERAL(index);
+        // hxh_PUSH_MICROCODE_LITERAL(index);
+        hxh_PUSH_MICROCODE_LITERAL(11111111);
+        hxh_PUSH_MICROCODE_LITERAL(var_fa);
+        hxh_PUSH_MICROCODE_LITERAL(var_y);
+        hxh_PUSH_MICROCODE_LITERAL(var_r);
+        hxh_PUSH_MICROCODE_LITERAL(22222222);
+        hxh_PUSH_MICROCODE_LITERAL(var_n);
+        if(VALID_ARRAS_MEMLOCATION(var_n)){
+          i32 temp = special_arras_memory_i32_load(var_n);
+          hxh_PUSH_MICROCODE_LITERAL(1337);
+          hxh_PUSH_MICROCODE_LITERAL(temp);
+          hxh_PUSH_MICROCODE_LITERAL(1337);
+        }
+        hxh_PUSH_MICROCODE_LITERAL(33333333);
         
-        hxh_PUSH_MICROCODE_LITERAL(local6);
-        if(VALID_ARRAS_MEMLOCATION(local6)){
-          int temp = special_arras_memory_i32_load(local6);
+        hxh_PUSH_MICROCODE_LITERAL(var_g);
+        if(VALID_ARRAS_MEMLOCATION(var_g)){
+          int temp = special_arras_memory_i32_load(var_g);
           hxh_PUSH_MICROCODE_LITERAL(temp);
           if(VALID_ARRAS_MEMLOCATION(temp)){
             hxh_PUSH_MICROCODE_LITERAL(special_arras_memory_i32_load(temp));
           }
         }
 
-        hxh_PUSH_MICROCODE_LITERAL(11111111);
+        hxh_PUSH_MICROCODE_LITERAL(44444444);
 
-        hxh_PUSH_MICROCODE_LITERAL(local127);
-        if(VALID_ARRAS_MEMLOCATION(local127)){
-          int temp = special_arras_memory_i32_load((i32)local127);
+        hxh_PUSH_MICROCODE_LITERAL(var_xd);
+        if(VALID_ARRAS_MEMLOCATION(var_xd)){
+          int temp = special_arras_memory_i32_load((i32)var_xd);
           hxh_PUSH_MICROCODE_LITERAL(temp);
           if(VALID_ARRAS_MEMLOCATION(temp)){
             hxh_PUSH_MICROCODE_LITERAL(special_arras_memory_i32_load(temp));

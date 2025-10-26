@@ -1,6 +1,6 @@
 #include "wasmtypes.h"
 
-#define PAGESIZE_BYTES 64000
+#define PAGESIZE_BYTES (65536)
 
 #define i32LOAD(address) (*((int*)(address)))
 #define i32STORE(address, value) ((*((int*)(address))) = value)
@@ -36,9 +36,18 @@ extern int import_e_t_call(int t);
 
 extern void special_printargs();
 
-
 extern void special_clear_locals();
 extern int special_local_get_6();
+
+void _special_bigfunc_localset_i32(i32 index, i32 value);
+void _special_bigfunc_localset_i64(i32 index, i64 value);
+void _special_bigfunc_localset_f32(i32 index, f32 value);
+void _special_bigfunc_localset_f64(i32 index, f64 value);
+
+i32 special_bigfunc_localget_i32(i32 index);
+i64 special_bigfunc_localget_i64(i32 index);
+f32 special_bigfunc_localget_f32(i32 index);
+f64 special_bigfunc_localget_f64(i32 index);
 
 extern i64 special_i64_const_10000();
 extern i64 special_i64_const_9999();

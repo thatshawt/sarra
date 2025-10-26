@@ -269,10 +269,35 @@ class TypeThing:
         self.param_string = param_string
         self.full_string = full_string
 
-class LocalThing:
-    def __init__(self, type, index):
-        self.type = type
-        self.index = index
+        self.params = {}
+        self.result = ""
+        
+        # if len(self.param_string) > 40:
+
+        hasParam = "(param " in self.param_string
+        hasResult = "(result " in self.param_string
+
+        if hasParam:
+            # isolate (param i32 i32
+            paramStartLoc = self.param_string.find("(param ")
+            paramEndLoc = self.param_string[paramStartLoc:-1].find(")")+paramStartLoc
+            paramParamStr = self.param_string[paramStartLoc:paramEndLoc]
+            # remove (param 
+            paramParamStr = paramParamStr[len("(param "):]
+            paramSplitted = paramParamStr.split(" ")
+            for i in range(len(paramSplitted)):
+                paramStrStr = paramSplitted[i]
+                self.params[i] = paramStrStr
+
+        #(func (param i32 f64 i32 i32) (result i32))
+        if hasResult:
+            resultStartLoc = self.param_string.find("(result ") + len("(result ")
+            resultEndLoc = resultStartLoc+len("i64")
+            self.result = self.param_string[resultStartLoc:resultEndLoc]
+
+        # print(f"|{self.param_string}|{self.params}|{self.result}|")
+
+            # exit(1)
 
 class FuncThing:
     def __init__(self, num, header_line, param, body, locals_line):
@@ -281,14 +306,24 @@ class FuncThing:
         self.param = param
         self.body = body
         self.locals_line = locals_line
-        #    (local i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32)\n
+
         self.locals = {}
 
-        if len(self.param) > 0 and len(self.locals_line) > 0:
-            print(f"|{self.param}|{self.locals_line}|")
-            exit(1)
+        if locals_line != "":
+            # remove parents and discard '   (local'
+            splitted = self.locals_line.replace(")","").split(" ")[5:]
+            # if len(splitted) > 50:
+            for i in range(len(splitted)):
+                localStr = splitted[i]
+                self.locals[i] = localStr
+                # print(f"|{self.locals_line}|{splitted}|")
+                # exit(1)
+        #    (local i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32 i32)\n
+        # self.locals = {}
 
-
+        # if len(self.param) > 0 and len(self.locals_line) > 0:
+        # print(f"|{self.param}|{self.locals_line}|")
+            # exit(1)
 
 class WatStuff:
     def getFuncByName(self, name):
@@ -339,9 +374,17 @@ class WatStuff:
         func_locals = ""
         # func_locals = []
 
+        # parse the wat file's lines
         for line in wat_content.split("\n"):
             if in_func_body:
                 func_body.append(line)
+
+                if "(local " in line:
+                    func_locals = line
+                    # print(f"{func_locals}")
+                    # exit(1)
+                    continue
+
                 if line[-1] == ')':
                     lparens = 0
                     rparens = 0
@@ -399,12 +442,6 @@ class WatStuff:
             if "  (global (" in line:
                 self.globals.append(line)
 
-            if "(local " in line:
-                func_locals = line
-                print(f"{func_locals}")
-                exit(1)
-                continue
-
             if "  (export \"" in line and "func" in line:#  (export "inject_into_all_func_top_part" (func 2))
                 func_name = line[line.find(' "')+2:line.find('" ')]
                 func_num = int(line[line.find("(func ")+6:line.find("))")])
@@ -448,9 +485,11 @@ class WatStuff:
         
         self._calculate_largest_func()
 
+        # generate mapping from func name to number
         for (export_name, export_num) in self.exports.items():
             self.funcNameMap[export_name] = export_num
 
+        # count how many nums are exported
         counts = {}
         for (export_name, export_num) in self.exports.items():
             if export_num in counts:
@@ -458,9 +497,12 @@ class WatStuff:
             else:
                 counts[export_num] = 1
 
+        # error if more than one export use the same num
         for (func_num, count) in counts.items():
             if count > 1:
                 print(f"WARNING: more than one export point to the same function {func_num}", file=sys.stderr)
+
+        # give all the FuncThing's their param thing?
 
 inject_wat_content = ""
 with open(args.i) as f: inject_wat_content = f.read()
@@ -475,7 +517,9 @@ app_wat_stuff = WatStuff(app_wat_content, debug=False)
 # print(f"{app_wat_stuff.exports}\n{app_wat_stuff.imports}\n{app_wat_stuff.types}")
 # exit()
 
-# print(f"largest func in appwat: {app_wat_stuff.largestFuncNum}")
+# largestFuncNum = app_wat_stuff.largestFuncNum
+# largestFunc = app_wat_stuff.getFuncByNum(largestFuncNum)
+# print(f"|{largestFuncNum}|{largestFunc}|{len(largestFunc.locals_line.split(" "))}|")
 # exit(1)
 
 seperate_function_jobs = {}
@@ -523,10 +567,14 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 import_name = inject_import.name
                 inject_import_func_num = inject_import.num
 
+                # translate app wat import calls
                 if import_name in indexStuff.index_imports_name_index_mapping:
                     import_type = inject_wat_stuff.getTypeByNum(inject_import.type).param_string
+
+                    # see if the imported func has a mapping to the app wat imports
                     app_import_index = indexStuff.index_imports_name_index_mapping[import_name]
 
+                    # check every import in app wat to find if one is matching the inject wat import call
                     for app_import in app_wat_stuff.imports:
                         app_import_func_num = app_import.num
                         app_import_type = app_wat_stuff.getTypeByNum(app_import.type).param_string
@@ -937,6 +985,35 @@ for line in app_wat_content.split("\n"):
                 #     pass
                 # app_wat_patched.append(f"local.get 6")
                 # app_wat_patched.append(f"local.get 127")
+                appWatBiggestFunc = app_wat_stuff.getFuncByNum(app_wat_stuff.largestFuncNum)
+
+                for (localIndex, localTypeStr) in appWatBiggestFunc.locals.items():
+                    chosenFuncNum = -1
+                    if localTypeStr == "i32":
+                        chosenFuncNum = bigfunc_localseti32.num
+                    elif localTypeStr == "i64":
+                        chosenFuncNum = bigfunc_localseti64.num
+                    elif localTypeStr == "f32":
+                        chosenFuncNum = bigfunc_localsetf32.num
+                    elif localTypeStr == "f64":
+                        chosenFuncNum = bigfunc_localsetf64.num
+
+                    if chosenFuncNum == -1:
+                        print(f"error: '{localTypeStr}' type is not a thing?")
+                        exit(1)
+                    
+                    funcType = int(appWatBiggestFunc.param)
+                    # print(funcType)
+                    funcParams = app_wat_stuff.getTypeByNum(funcType)
+                    # print(funcParams)
+                    updatedIndex = localIndex + len(funcParams.params)
+
+                    app_wat_patched.append(f"i32.const {updatedIndex}")
+                    app_wat_patched.append(f"local.get {updatedIndex}")
+                    app_wat_patched.append(f"call {seperate_func_mapping[chosenFuncNum]}")
+
+                    # print(f"index {updatedIndex}|")
+
                 app_wat_patched.append(f"call {seperate_func_mapping[bigfunc_branch_func.num]}")
             elif bigfunc_beforebranch_job != "":
                 # inject the stuff

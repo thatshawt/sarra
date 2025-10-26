@@ -11,8 +11,8 @@
 211 #  h = i32_wrap_i64(xd); xd = i64_extend_i32_u(h); continue L_b;
 629 #  g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68); continue L_b;
 468 #  g = g - 8; xd = i64_extend_i32_u(g[0]:int == i32_wrap_i64(xd)); continue L_b;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
 746 #  let t73 = i32_wrap_i64(xd); xd = (g = g - 8)[0]:long; n = if (t73) {          y = 1;
           n[0] + fa;
         } else {
@@ -39,8 +39,8 @@
 114 #  g = g + 8; (g - 8)[0]:long = xd; xd = i64_extend_i32_u(h); continue L_b;
 482 #  ka = i32_wrap_i64(xd); xd = i64_extend_i32_u(ka); continue L_b;
 391 #  g = g - 8; xd = g[0]:long; continue L_b;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
 373 #  n = n[0] + fa; y = 1; continue L_b;
 717 #  g = g + 8; (g - 8)[0]:long = xd; if (y == 1) {      r = n[0] + fa;
       n = n + 4;
@@ -52,7 +52,7 @@
 629 #  g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68); continue L_b;
 468 #  g = g - 8; xd = i64_extend_i32_u(g[0]:int == i32_wrap_i64(xd)); continue L_b;
 383 #  fa = n[0] + fa; n = n + 4; continue L_b;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
 746 #  let t73 = i32_wrap_i64(xd); xd = (g = g - 8)[0]:long; n = if (t73) {          y = 1;
           n[0] + fa;
         } else {
@@ -63,8 +63,8 @@
 383 #  fa = n[0] + fa; n = n + 4; continue L_b;
 629 #  g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68); continue L_b;
 468 #  g = g - 8; xd = i64_extend_i32_u(g[0]:int == i32_wrap_i64(xd)); continue L_b;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
 746 #  let t73 = i32_wrap_i64(xd); xd = (g = g - 8)[0]:long; n = if (t73) {          y = 1;
           n[0] + fa;
         } else {
@@ -75,7 +75,7 @@
 429 #  g = g + 8; (g - 8)[0]:long = xd; xd = i64_extend_i32_u(ka); continue L_b;
 629 #  g = g + 8; (g - 8)[0]:long = xd; let t68 = n[0] + fa; n = n + 4; xd = i64_extend_i32_u(t68); continue L_b;
 501 #  g = g - 8; xd = i64_extend_i32_u(g[0]:int != i32_wrap_i64(xd)); continue L_b;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
 746 #  let t73 = i32_wrap_i64(xd); xd = (g = g - 8)[0]:long; n = if (t73) {          y = 1;
           n[0] + fa;
         } else {
@@ -167,8 +167,8 @@
 222 #  g = g - 8; xd = g[0]:long ^ xd; continue L_b;
 117 #  xd = i64_extend_i32_u(clz(i32_wrap_i64(xd))); continue L_b;
 669 #  w = i32_wrap_i64(xd); xd = i64_extend_i32_u(w); continue L_b;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
-286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, B_ah, B_naa, B_cc, B_xq, B_md, B_ff, B_uda, B_vc, B_ji, B_kx, B_jn, B...;
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
+286 #  if (y == 1) { r = n[0] + fa; n = n + 4; y = r / 1625 + 2640625; r = r % 1625; } else { r = y % 1625; y = y / 1625; } br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b](      r)
 780 #  r = i32_wrap_i64(xd); g = g - 8; xd = g[0]:long; zb = if (y == 1) {           let t21 = n[0] + fa;
            n = n + 4;
            t21 % 1625;

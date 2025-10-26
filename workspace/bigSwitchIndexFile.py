@@ -5,7 +5,8 @@ import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", help="big switch index file path", required=True)
-parser.add_argument("-n" ,help="number of lines to grab from app.decomp", default=10, type=int)
+parser.add_argument("-n" ,help="number of lines to grab from app.decomp", default=12, type=int)
+# parser.add_argument("-z" ,help="max number of lines per index", default=12, type=int)
 parser.add_argument("-d", help="app.decomp file path", required=True)
 parser.add_argument("-c" ,help="app.section.code file path", required=True)
 # parser.add_argument("-l" ,help="loop label above branch locator")
@@ -130,16 +131,22 @@ with open(args.d) as f:
                 i = 0
                 long_count = 0
                 start_spacing = len(line) - len(line.lstrip())
+                hit_big_branch = False
                 while i < args.n and long_count < 123: # 123 inner lines why not
                     line_b = f.readline()
                     spacing = len(line_b) - len(line_b.lstrip())
 
                     if spacing <= start_spacing or f.tell() <= branch_table_pos:
                         if len(line_b) > 100:
-                            line_b = line_b[:100] + "...;"
-
                             if line_b.strip().startswith("br_table"):
-                                i = args.n
+                                # i = args.n
+                                line_b = line_b[:30] + " ... " + line_b[-30:]
+                                # print(f"# {i}|{line_b}")
+                                # exit(1)
+                                hit_big_branch = True
+                                long_count = 123-1
+                            else:
+                                line_b = line_b[:100] + "...;"
 
                         if line_b.strip().startswith("continue ") and line_b.strip().endswith(";"):
                             i = args.n
@@ -148,6 +155,9 @@ with open(args.d) as f:
                     else:
                         if len(line_b) > 100:
                             line_b = line_b[:100] + "...;" + "\n"
+
+                        if hit_big_branch:
+                            line_b = line_b.replace("\n","")
                         indexes_result[index] = indexes_result[index] + line_b
                         long_count = long_count + 1
                 f.seek(temp)
