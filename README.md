@@ -3,6 +3,6 @@ This is me attempting to make a mod for the online browser game "arras.io". Ther
 
 # Copyright Stuff
 
-I copied portions of code from musl. I put that code into these files: inject/src/poopstrings.c, inject/include/poopstrings.h,poopint.h.
+I copied portions of code from musl. I put that code into these files: inject/src/poopstrings.c|poopmath.c, inject/include/poopstrings.h|poopint.h|poopmath.h.
 
 The copyright notice that musl provided is in the file "MUSL_COPYRIGHT".

@@ -2,8 +2,6 @@
 
 * update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
 
-*make a printf
-
 *implement inject_imports? a way to run code before app.wat calls an imported function.
 
 *maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.

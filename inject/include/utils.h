@@ -33,7 +33,6 @@ extern int import_e_t_get(int t);
 extern int import_e_t_call(int t);
 
 
-
 extern void special_printargs();
 
 extern void special_clear_locals();
@@ -75,17 +74,15 @@ void export_nothing(int a);
 void _hxh_add_int_string_microcode(int* value, int size);
 void _hxh_add_char_string_microcode(char* value, int size);
 
-i32 max_i32(i32 a, i32 b);
-i32 min_i32(i32 a, i32 b);
 void memset_i32(int* start, int size, int value);
 void memset_i8(char* start, int size, char value);
 
 //the one and only
 void poopf(char* format, ...);
+void spoopf(char* dest, int max, char* format, ...);
+void vspoopf(char* dest, int max, char* format, __builtin_va_list argp);
 
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
-
-
 
 int hxh_parse_execute();
 #define hxh_PARSE_EXECUTE() (hxh_parse_execute())

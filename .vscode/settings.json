@@ -34,6 +34,8 @@
         "variant": "c",
         "cstdint": "c",
         "special.h": "c",
-        "wasmtypes.h": "c"
+        "wasmtypes.h": "c",
+        "poopmath.h": "c",
+        "limits": "c"
     }
 }

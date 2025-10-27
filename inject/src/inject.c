@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "poopstrings.h"
+#include "poopmath.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
 #define DEBUG_MAX_COUNT 500
@@ -75,6 +76,8 @@ void _reset_chacha(){
 void _init_all_the_things(){
   poopf("%s\n\n%s","Welcome to Bananan Turd Labs.", __DATETIME__);
 
+  poopf("what da-|%d %d|-number!?", 123, -1234);
+
   _reset_debug();
   _reset_stats();
   _reset_bigfunc_trace();
@@ -135,7 +138,6 @@ int _special_bigfunc_beforebranch(const int index){
         i32 var_g = special_bigfunc_localget_i32(6);
         i64 var_xd = special_bigfunc_localget_i64(127);
         
-
         hxh_reset();
         hxh_extended_literals_on();
         hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);

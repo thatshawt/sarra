@@ -1,16 +1,6 @@
 #include "utils.h"
 #include "poopstrings.h"
 
-i32 max_i32(i32 a, i32 b)
-{
-    return a > b ? a:b;
-}
-
-i32 min_i32(i32 a, i32 b)
-{
-    return a < b ? a:b;
-}
-
 void memset_i32(int* start, int size, int value)
 {
     for(int i=0;i<size;i++){
@@ -23,44 +13,6 @@ void memset_i8(char* start, int size, char value)
     for(int i=0;i<size;i++){
         i8STORE(start+i, value);
     }
-}
-
-// o yea
-char printf_buffer[500] = {0};
-// aint no way...
-// borrowed from this website some code https://jameshfisher.com/2016/11/23/c-varargs/
-void poopf(char* format, ...)
-{
-    int outi = 0;
-  __builtin_va_list argp;
-  __builtin_va_start(argp, format);
-  while (*format != '\0' && outi < sizeof(printf_buffer)) {
-    if (*format == '%') {
-      format++;
-      if (*format == '%') {
-        printf_buffer[outi++] = '%';
-      } else if (*format == 'c') {
-        char char_to_print = __builtin_va_arg(argp, int);
-        printf_buffer[outi++] = char_to_print;
-      } else if(*format == 's'){
-        char* string_to_print = __builtin_va_arg(argp, char*);
-        const int string_length = strlen(string_to_print);
-        strcat(printf_buffer+(outi), string_to_print);
-        outi += string_length;
-      } else {
-        // fputs("Not implemented", stdout);
-        // idk vro :skull:
-      }
-    } else {
-        printf_buffer[outi++] = *format;
-    }
-    format++;
-  }
-
-  hxh_CONSOLE_LOG_CHAR_STRING(printf_buffer, outi);
-
-  __builtin_va_end(argp);
-  memset_i8(printf_buffer, sizeof(printf_buffer), 0);
 }
 
 __attribute__((optnone))
