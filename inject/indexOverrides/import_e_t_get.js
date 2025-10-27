@@ -1,10 +1,33 @@
 (t) => {
+    let hxhpush = (val) => {
+        // let val = t-10000
+        const before1 = hxh_state.microcode.at(-1);
+        if(before1 == 123123){val = val + 0.1;hxh_state.microcode.pop();}
+        else if(before1 == 456456){val = val + 0.2;hxh_state.microcode.pop();}
+        else if(before1 == 789789){val = val + 0.3;hxh_state.microcode.pop();}
+        hxh_state.microcode.push(val);
+        // console.log("hxh val",val);
+    };
+
+    let MICROCODE_OFFSET = 10000; //deprecated...?
+
     let PARSE_NUM = 9999;
     let RESET_NUM = 9998;
-    let MICROCODE_OFFSET = 10000;
+    let EXTEND_LITERALS_ON = 9997;
+    let EXTEND_LITERALS_OFF = 9996;
+    let EXTEND_LITERALS_STATUS = 9995;
     if(t == RESET_NUM){
         hxh_state.reset();
         // console.log("hxh reset");
+    }
+    else if(t == EXTEND_LITERALS_ON){
+        hxh_state.extended_literals = true;
+    }
+    else if(t == EXTEND_LITERALS_OFF){
+        hxh_state.extended_literals = false;
+    }
+    else if(t == EXTEND_LITERALS_STATUS){
+        return hxh_state.extended_literals ? TRUE : FALSE;
     }
     else if(t == PARSE_NUM){ // parse and "execute" microcode
         // console.log("parse num",t);
@@ -39,13 +62,14 @@
             break;
         }
         hxh_state.microcode = [];
-    }else if(t>=MICROCODE_OFFSET){
-        let val = t-10000
-        if(hxh_state.microcode.at(-1) == 123123){val = val + 0.1;hxh_state.microcode.pop();}
-        else if(hxh_state.microcode.at(-1) == 456456){val = val + 0.2;hxh_state.microcode.pop();}
-        else if(hxh_state.microcode.at(-1) == 789789){val = val + 0.3;hxh_state.microcode.pop();}
-        hxh_state.microcode.push(val);
-        console.log("hxh val",val);
+    }
+    //this goes after parsing :P...
+    else if(hxh_state.extended_literals){
+        hxhpush(t);
+    }
+    else if(t>=MICROCODE_OFFSET){ // note, only supports values >= MICROCODE_OFFSET
+        let val = t-10000;
+        hxhpush(val);
     }
 
     return e[t];

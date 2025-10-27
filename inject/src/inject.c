@@ -73,20 +73,7 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  char beginningMessage[] = "Banna Turd Labs. ";
-  char dateStr[] = __DATETIME__;
-
-  char dateTimeStr[sizeof(beginningMessage) + sizeof(dateStr)] = {0};
-
-  strcat(dateTimeStr,beginningMessage);
-  strcat(dateTimeStr, dateStr);
-
-  hxh_CONSOLE_LOG_CHAR_STRING(dateTimeStr, strlen(dateTimeStr));
-
-  // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-  // hxh_PUSH_MICROCODE_LITERAL(strncmp("123123","123123",6));
-  // hxh_PUSH_MICROCODE_LITERAL((int)strstr("123123","abdcef"));
-  // hxh_PARSE_EXECUTE();
+  poopf("%s\n\n%s","Welcome to Bananan Turd Labs.", __DATETIME__);
 
   _reset_debug();
   _reset_stats();
@@ -95,6 +82,10 @@ void _init_all_the_things(){
 
   hxh_PUSH_MICROCODE_LITERAL(HXH_WINDOW_POOP_SET_NULL);
   hxh_PARSE_EXECUTE();
+  
+  // hxh_reset();
+  // poopf("aint no way?! |%c%c%c%c|", 'H','I','!','!');
+  // poopf("what the |%s|?!", "FISHY WISHY");
 }
 
 void export_enable_stats(){
@@ -146,22 +137,21 @@ int _special_bigfunc_beforebranch(const int index){
         
 
         hxh_reset();
+        hxh_extended_literals_on();
         hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
         hxh_PUSH_MICROCODE_LITERAL(poopState.bigfunc_trace_count);
         // hxh_PUSH_MICROCODE_LITERAL(index);
-        hxh_PUSH_MICROCODE_LITERAL(11111111);
+        hxh_PUSH_MICROCODE_LITERAL(111);
         hxh_PUSH_MICROCODE_LITERAL(var_fa);
         hxh_PUSH_MICROCODE_LITERAL(var_y);
         hxh_PUSH_MICROCODE_LITERAL(var_r);
-        hxh_PUSH_MICROCODE_LITERAL(22222222);
+        hxh_PUSH_MICROCODE_LITERAL(222);
         hxh_PUSH_MICROCODE_LITERAL(var_n);
         if(VALID_ARRAS_MEMLOCATION(var_n)){
           i32 temp = special_arras_memory_i32_load(var_n);
-          hxh_PUSH_MICROCODE_LITERAL(1337);
           hxh_PUSH_MICROCODE_LITERAL(temp);
-          hxh_PUSH_MICROCODE_LITERAL(1337);
         }
-        hxh_PUSH_MICROCODE_LITERAL(33333333);
+        hxh_PUSH_MICROCODE_LITERAL(333);
         
         hxh_PUSH_MICROCODE_LITERAL(var_g);
         if(VALID_ARRAS_MEMLOCATION(var_g)){
@@ -172,7 +162,7 @@ int _special_bigfunc_beforebranch(const int index){
           }
         }
 
-        hxh_PUSH_MICROCODE_LITERAL(44444444);
+        hxh_PUSH_MICROCODE_LITERAL(444);
 
         hxh_PUSH_MICROCODE_LITERAL(var_xd);
         if(VALID_ARRAS_MEMLOCATION(var_xd)){

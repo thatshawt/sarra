@@ -80,6 +80,9 @@ i32 min_i32(i32 a, i32 b);
 void memset_i32(int* start, int size, int value);
 void memset_i8(char* start, int size, char value);
 
+//the one and only
+void poopf(char* format, ...);
+
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
 
 
@@ -88,6 +91,10 @@ int hxh_parse_execute();
 #define hxh_PARSE_EXECUTE() (hxh_parse_execute())
 int hxh_reset();
 #define hxh_RESET() (hxh_reset())
+
+void hxh_extended_literals_on();
+void hxh_extended_literals_off();
+int hxh_extended_literals_status();
 
 int hxh_push_microcode_literal(long value);
 #define hxh_PUSH_MICROCODE_LITERAL(value) (hxh_push_microcode_literal(value))

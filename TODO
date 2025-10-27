@@ -1,12 +1,8 @@
-* allow import_e_get() to accept negative values... probbaly gonna have to some mutex type thing. like hxh_literal_mode_enable() and hxh_literal_mode_disable()?
-
 *chacha1_finish is broken? where are sent packets handled... i know chacha2_finish does received packets...
 
 * update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
 
 *make a printf
-
-*feature1: for _special_bigfunc_beforebranch add a way to access every local. probably gonna call the special functions i added in the special.h on every local before calling _special_bigfunc_beforebranch.
 
 *implement inject_imports? a way to run code before app.wat calls an imported function.
 

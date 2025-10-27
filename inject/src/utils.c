@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "poopstrings.h"
 
 i32 max_i32(i32 a, i32 b)
 {
@@ -24,6 +25,44 @@ void memset_i8(char* start, int size, char value)
     }
 }
 
+// o yea
+char printf_buffer[500] = {0};
+// aint no way...
+// borrowed from this website some code https://jameshfisher.com/2016/11/23/c-varargs/
+void poopf(char* format, ...)
+{
+    int outi = 0;
+  __builtin_va_list argp;
+  __builtin_va_start(argp, format);
+  while (*format != '\0' && outi < sizeof(printf_buffer)) {
+    if (*format == '%') {
+      format++;
+      if (*format == '%') {
+        printf_buffer[outi++] = '%';
+      } else if (*format == 'c') {
+        char char_to_print = __builtin_va_arg(argp, int);
+        printf_buffer[outi++] = char_to_print;
+      } else if(*format == 's'){
+        char* string_to_print = __builtin_va_arg(argp, char*);
+        const int string_length = strlen(string_to_print);
+        strcat(printf_buffer+(outi), string_to_print);
+        outi += string_length;
+      } else {
+        // fputs("Not implemented", stdout);
+        // idk vro :skull:
+      }
+    } else {
+        printf_buffer[outi++] = *format;
+    }
+    format++;
+  }
+
+  hxh_CONSOLE_LOG_CHAR_STRING(printf_buffer, outi);
+
+  __builtin_va_end(argp);
+  memset_i8(printf_buffer, sizeof(printf_buffer), 0);
+}
+
 __attribute__((optnone))
 __attribute__((noinline))
 int hxh_parse_execute(){
@@ -39,7 +78,26 @@ int hxh_reset(){
 // __attribute__((optnone))
 __attribute__((noinline))
 int hxh_push_microcode_literal(long value){
-    return import_e_t_get(10000+((long)value));
+    int status = hxh_extended_literals_status();
+    if(status == TRUE){
+        return import_e_t_get(value);
+    }else{
+        return import_e_t_get(10000+((long)value));
+    }
+}
+__attribute__((noinline))
+void hxh_extended_literals_on(){
+    import_e_t_get(9997);
+}
+
+__attribute__((noinline))
+void hxh_extended_literals_off(){
+    import_e_t_get(9996);
+}
+
+__attribute__((noinline))
+int hxh_extended_literals_status(){
+    return import_e_t_get(9995);
 }
 
 #pragma clang diagnostic push
