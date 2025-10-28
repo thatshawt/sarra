@@ -78,8 +78,11 @@ void memset_i32(int* start, int size, int value);
 void memset_i8(char* start, int size, char value);
 
 //the one and only
-void poopf(char* format, ...);
-void spoopf(char* dest, int max, char* format, ...);
+void _poopf(char* format, ...);
+#define poopf(format, ...) _poopf((format), (i32)0, ##__VA_ARGS__)
+
+void _spoopf(char* dest, int max, char* format, ...);
+#define spoopf(dest, max, format, ...) _spoopf((dest), (max), (format), (i32)0, ##__VA_ARGS__)
 void vspoopf(char* dest, int max, char* format, __builtin_va_list argp);
 
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
