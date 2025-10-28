@@ -24,13 +24,18 @@ void vspoopf(char* dest, int max, char* format, __builtin_va_list argp)
                 const int string_length = strlen(string_to_print);
                 strcat(dest+outi, string_to_print);
                 outi += string_length;
-            }else if(*format == 'd'){ //i32 i guess
-                int the_int = __builtin_va_arg(argp, int);
+            }else if(*format == 'd'){ //i32
+                int the_int = __builtin_va_arg(argp, i32);
                 //put the number here i guess fam
                 int printed = int_to_str(dest+outi, the_int);
                 // const int digits = digits10(the_int);
                 outi += printed;
-
+            }else if(*format == 'l'){ //i64
+                i64 the_i64 = __builtin_va_arg(argp, i64);
+                //put the number here i guess fam
+                int printed = i64_to_str(dest+outi, the_i64);
+                // const int digits = digits10(the_int);
+                outi += printed;
             } else {
             // fputs("Not implemented", stdout);
             // idk vro :skull:

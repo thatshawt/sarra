@@ -74,9 +74,9 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  poopf("%s\n\n%s","Welcome to Bananan Turd Labs.", __DATETIME__);
+  poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
-  poopf("what da-|%d %d|-number!?", 123, -1234);
+  poopf("what da-|%d %d %l|-number!?", 123, -1234, 123456789123123123L);
 
   _reset_debug();
   _reset_stats();
