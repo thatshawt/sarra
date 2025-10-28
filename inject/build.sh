@@ -9,7 +9,7 @@ clang-21 \
   -Wl,--allow-undefined \
   -Wl,--export-all \
   -Wl,--strip-debug \
-  -Wl,--initial-memory=$((65536*5))\
+  -Wl,--initial-memory=$((65536 * 10))\
   -o /tmp/inject.wasm \
   src/*.c \
  && echo "Turning inject.wasm into inject.wat..." && \
