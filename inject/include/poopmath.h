@@ -1,17 +1,17 @@
 #include "wasmtypes.h"
 
-int absi(int a);
+s32 absi(s32 a);
 
-i32 max_i32(i32 a, i32 b);
-i32 min_i32(i32 a, i32 b);
+s32 max_i32(s32 a, s32 b);
+s32 min_i32(s32 a, s32 b);
 
-i32 pow_i32(i32 a, i32 b);
-i64 pow_i64(i64 a, i64 b);
+s32 pow_i32(s32 a, s32 b);
+s64 pow_i64(s64 a, s64 b);
 
-int digits10(int num);
-int digits10i64(i64 num);
-int ithDigit10(int num, int i);
-int ithDigit10i64(i64 num, int i);
+s32 digits10(s32 num);
+s64 digits10i64(s64 num);
+s32 ithDigit10(s32 num, s32 i);
+s64 ithDigit10i64(s64 num, s64 i);
 
-int int_to_str(char* dest, int num);
-int i64_to_str(char* dest, i64 num);
+s32 int_to_str(u8* dest, s32 num);
+s32 i64_to_str(u8* dest, s64 num);

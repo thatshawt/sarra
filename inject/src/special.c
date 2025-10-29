@@ -6,13 +6,13 @@ void _special_printargs_begin()
 }
 
 __attribute__((noinline))
-void _special_printargs_per_arg_i32(i32 a)
+void _special_printargs_per_arg_i32(s32 a)
 {
     hxh_PUSH_MICROCODE_LITERAL((int)a);
 }
 
 __attribute__((noinline))
-void _special_printargs_per_arg_i64(i64 a)
+void _special_printargs_per_arg_i64(s64 a)
 {
     hxh_PUSH_MICROCODE_LITERAL(789789);
     hxh_PUSH_MICROCODE_LITERAL((int)a);
@@ -43,34 +43,34 @@ void _special_printargs_end()
 #define MAX_F64_LOCALS 500
 
 struct{
-    i32 i32Locals[MAX_I32_LOCALS];
+    s32 i32Locals[MAX_I32_LOCALS];
     f32 f32Locals[MAX_F32_LOCALS];
-    i64 i64Locals[MAX_I64_LOCALS];
+    s64 i64Locals[MAX_I64_LOCALS];
     f64 f64Locals[MAX_F64_LOCALS];
 }locals_struct;
 
-void _special_bigfunc_localset_i32(i32 index, i32 value){
+void _special_bigfunc_localset_i32(s32 index, s32 value){
     locals_struct.i32Locals[index] = value;
 }
-void _special_bigfunc_localset_i64(i32 index, i64 value){
+void _special_bigfunc_localset_i64(s32 index, s64 value){
     locals_struct.i64Locals[index] = value;
 }
-void _special_bigfunc_localset_f32(i32 index, f32 value){
+void _special_bigfunc_localset_f32(s32 index, f32 value){
     locals_struct.f32Locals[index] = value;
 }
-void _special_bigfunc_localset_f64(i32 index, f64 value){
+void _special_bigfunc_localset_f64(s32 index, f64 value){
     locals_struct.f64Locals[index] = value;
 }
 
-i32 special_bigfunc_localget_i32(i32 index){
+s32 special_bigfunc_localget_i32(s32 index){
     return locals_struct.i32Locals[index];
 }
-i64 special_bigfunc_localget_i64(i32 index){
+s64 special_bigfunc_localget_i64(s32 index){
     return locals_struct.i64Locals[index];
 }
-f32 special_bigfunc_localget_f32(i32 index){
+f32 special_bigfunc_localget_f32(s32 index){
     return locals_struct.f32Locals[index];
 }
-f64 special_bigfunc_localget_f64(i32 index){
+f64 special_bigfunc_localget_f64(s32 index){
     return locals_struct.f64Locals[index];
 }

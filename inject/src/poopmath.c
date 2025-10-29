@@ -1,51 +1,51 @@
 #include "poopmath.h"
 
-int absi(int a)
+s32 absi(s32 a)
 {
     if(a < 0)return -1*a;
     else return a;
 }
 
-i64 absi64(i64 a)
+s64 absi64(s64 a)
 {
     if(a < 0)return -1*a;
     else return a;
 }
 
-i32 max_i32(i32 a, i32 b)
+s32 max_i32(s32 a, s32 b)
 {
     return a > b ? a:b;
 }
 
-i32 min_i32(i32 a, i32 b)
+s32 min_i32(s32 a, s32 b)
 {
     return a < b ? a:b;
 }
 
-i32 pow_i32(i32 a, i32 b)
+s32 pow_i32(s32 a, s32 b)
 {
     if(b == 0) return 1;
-    i32 result = a;
+    s32 result = a;
     for(int i=1;i<b;i++){
         result *= a;
     }
     return result;
 }
 
-i64 pow_i64(i64 a, i64 b)
+s64 pow_i64(s64 a, s64 b)
 {
     if(b == 0) return 1;
-    i64 result = a;
+    s64 result = a;
     for(int i=1;i<b;i++){
         result *= a;
     }
     return result;
 }
 
-int digits10(int num)
+s32 digits10(s32 num)
 {
-    int i = 0;
-    int powerTen = 1;
+    s32 i = 0;
+    s32 powerTen = 1;
     while(num/powerTen != 0){
         powerTen *= 10;
         i++;
@@ -53,10 +53,10 @@ int digits10(int num)
     return i;
 }
 
-int digits10i64(i64 num)
+s64 digits10i64(s64 num)
 {
-    int i = 0;
-    i64 powerTen = 1;
+    s32 i = 0;
+    s64 powerTen = 1;
     while(num/powerTen != 0){
         powerTen *= 10;
         i++;
@@ -64,21 +64,27 @@ int digits10i64(i64 num)
     return i;
 }
 
-int ithDigit10(int num, int i)
+s32 ithDigit10(s32 num, s32 i)
 {
-    return absi(num/(int)pow_i32(10,i) % 10);
+    return absi(num/pow_i32(10,i) % 10);
 }
 
-int ithDigit10i64(i64 num, int i)
+s64 ithDigit10i64(s64 num, s64 i)
 {
-    return absi64(num/pow_i64(10,(i64)i) % 10);
+    return absi64(num/pow_i64(10,(s64)i) % 10);
 }
 
-char digitCharMap[] = "0123456789";
-int int_to_str(char* dest, int num)
+u8 digitCharMap[] = "0123456789";
+s32 int_to_str(u8* dest, s32 num)
 {
-    const int digits = digits10(num);
     int j = 0;
+    
+    if(num == 0){
+        dest[j++] = '0';
+        return j;
+    }
+
+    const int digits = digits10(num);
     
     if(num < 0){
         dest[j++] = '-';
@@ -94,10 +100,15 @@ int int_to_str(char* dest, int num)
     return j;
 }
 
-int i64_to_str(char* dest, i64 num)
+s32 i64_to_str(u8* dest, s64 num)
 {
     const int digits = digits10i64(num);
     int j = 0;
+
+    if(num == 0){
+        dest[j++] = '0';
+        return j;
+    }
     
     if(num < 0){
         dest[j++] = '-';
@@ -105,7 +116,7 @@ int i64_to_str(char* dest, i64 num)
     
     for(int i=digits-1; i>=0; i--){
         char theDigitChar = '?';
-        int theDigit = ithDigit10i64(num, i);
+        s64 theDigit = ithDigit10i64(num, i);
         theDigitChar = digitCharMap[theDigit];
         dest[j++] = theDigitChar;
     }

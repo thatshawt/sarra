@@ -1,4 +1,5 @@
-#include "poopint.h"
+// #include "poopint.h"
+#include "wasmtypes.h"
 
 void *memset(void *dest, int c, size_t n);
 int memcmp(const void *vl, const void *vr, size_t n);

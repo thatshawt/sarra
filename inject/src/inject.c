@@ -14,31 +14,31 @@
 #define CHACHA_BUFFER_SIZE 2000
 
 struct{
-  int debug_enabled;
-  int debug_count;
-  int debug_max_count;
-  int debug_blacklist[DEBUG_BLACKLIST_SIZE];
+  s32 debug_enabled;
+  s32 debug_count;
+  s32 debug_max_count;
+  s32 debug_blacklist[DEBUG_BLACKLIST_SIZE];
 
-  int bigfunc_trace_enabled;
-  int bigfunc_trace_count;
-  int bigfunc_trace_max_count;
+  s32 bigfunc_trace_enabled;
+  s32 bigfunc_trace_count;
+  s32 bigfunc_trace_max_count;
   
-  int bigfunc_chacha_enabled;
-  int bigfunc_chacha_count;
-  int bigfunc_chacha_count_total;
-  char bigfunc_chacha_buffer[CHACHA_BUFFER_SIZE];
-  // int bigfunc_chacha_buffer_i;
-  int bigfunc_chacha_firstbyte;
-  int bigfunc_chacha_firstaddress;
-  int bigfunc_chacha_lastaddress;
-  int bigfunc_chacha_byte_i;
-  int bigfunc_chacha_header;
+  s32 bigfunc_chacha_enabled;
+  s32 bigfunc_chacha_count;
+  s32 bigfunc_chacha_count_total;
+  u8 bigfunc_chacha_buffer[CHACHA_BUFFER_SIZE];
+  // s32 bigfunc_chacha_buffer_i;
+  s32 bigfunc_chacha_firstbyte;
+  s32 bigfunc_chacha_firstaddress;
+  s32 bigfunc_chacha_lastaddress;
+  s32 bigfunc_chacha_byte_i;
+  s32 bigfunc_chacha_header;
 
-  int stats_enabled;
-  int stats_total_count;
-  int stats_max_count;
-  int stats_max_encountered_funcnum;
-  int stats_frequencies[STATS_FREQUENCIES_SIZE];
+  s32 stats_enabled;
+  s32 stats_total_count;
+  s32 stats_max_count;
+  s32 stats_max_encountered_funcnum;
+  s32 stats_frequencies[STATS_FREQUENCIES_SIZE];
 }poopState;
 
 void _reset_stats(){
@@ -77,12 +77,6 @@ void _init_all_the_things(){
   poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
   // poopf("what da-|%d %d %l|-number!?", 123, -1234, 123456789123123123L);
-  _poopf("heehee...");
-  _poopf("heehee...");
-  _poopf("heehee...");
-  _poopf("heehee...");
-  _poopf("heehee...");
-
 
   _reset_debug();
   _reset_stats();
@@ -138,25 +132,19 @@ int _special_bigfunc_beforebranch(const int index){
       _reset_bigfunc_trace();
       _reset_debug();
     }else{
+      s32 var_r = special_bigfunc_localget_i32(17);
+      s32 var_y = special_bigfunc_localget_i32(24);
+      s32 var_fa = special_bigfunc_localget_i32(31);
+      s32 var_n = special_bigfunc_localget_i32(13);
       
-      // poopf("wat");
-      
-      i32 var_r = special_bigfunc_localget_i32(17);
-      i32 var_y = special_bigfunc_localget_i32(24);
-      i32 var_fa = special_bigfunc_localget_i32(31);
-      i32 var_n = special_bigfunc_localget_i32(13);
-      
-      i32 var_g = special_bigfunc_localget_i32(6);
-      i64 var_xd = special_bigfunc_localget_i64(127);
+      s32 var_g = special_bigfunc_localget_i32(6);
+      s64 var_xd = special_bigfunc_localget_i64(127);
       
       hxh_reset();
-      // hxh_extended_literals_on();
 
-      static char n_point[50] = {0};
-      static char g_point[50] = {0};
-      static char xd_point[50] = {0};
-
-      // poopf("here now");
+      static u8 n_point[100] = {0};
+      static u8 g_point[100] = {0};
+      static u8 xd_point[100] = {0};
 
       memset(n_point, 0, sizeof(n_point));
       memset(g_point, 0, sizeof(g_point));
@@ -180,8 +168,8 @@ int _special_bigfunc_beforebranch(const int index){
 
       // poopf("loaded g");
 
-      if(VALID_ARRAS_MEMLOCATION((i32)var_xd)){
-        int_to_str(xd_point, special_arras_memory_i32_load((i32)var_xd));
+      if(VALID_ARRAS_MEMLOCATION((s32)var_xd)){
+        int_to_str(xd_point, special_arras_memory_i32_load((s32)var_xd));
       }
       // else{
       //   strcat(xd_point, "nothing");
@@ -189,15 +177,16 @@ int _special_bigfunc_beforebranch(const int index){
 
       // poopf("loaded xd");
       
+      poopf("fa test=%d, digits=%d, ", var_fa,  digits10(var_fa));
+
       // poopf("got this far");
-      poopf("%d| fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
+      poopf((u8*)"%d| fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
         poopState.bigfunc_trace_count,
         var_fa, var_y, var_r,
         var_n, n_point,
         var_g, g_point,
         var_xd, xd_point
       );
-      hxh_reset();
 
       poopState.bigfunc_trace_count++;
       
@@ -343,7 +332,7 @@ void _special_bigfunc_chachafinish_2(){
 void inject_all(){
   UNIQUEIFER;
 
-  int func_num = special_func_number();
+  s32 func_num = special_func_number();
 
   if(func_num == special_start_func_number()){
     // _hxh_breakpoint();
@@ -370,29 +359,29 @@ void inject_all(){
       }
     }
   }
-  if(poopState.stats_enabled){
-    if(poopState.stats_total_count >= poopState.stats_max_count){
-      poopState.stats_enabled = FALSE;
-      //print out all the frequencies?
-      hxh_CONSOLE_LOG_CHAR_STRING("The total is...", 15);
-      hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-      hxh_PUSH_MICROCODE_LITERAL(poopState.stats_total_count);
-      hxh_PARSE_EXECUTE();
-      for(int i=0;i<STATS_FREQUENCIES_SIZE;i++){
-        int freq = poopState.stats_frequencies[i];
-        if(freq > 0){
-          hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-          hxh_PUSH_MICROCODE_LITERAL(i);
-          hxh_PUSH_MICROCODE_LITERAL(freq);
-          hxh_PARSE_EXECUTE();
-        }
-      }
-    }else{
-      poopState.stats_frequencies[func_num]++;
-      poopState.stats_total_count++;
-      poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
-    }
-  }
+  // if(poopState.stats_enabled){
+  //   if(poopState.stats_total_count >= poopState.stats_max_count){
+  //     poopState.stats_enabled = FALSE;
+  //     //print out all the frequencies?
+  //     hxh_CONSOLE_LOG_CHAR_STRING("The total is...", 15);
+  //     hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
+  //     hxh_PUSH_MICROCODE_LITERAL(poopState.stats_total_count);
+  //     hxh_PARSE_EXECUTE();
+  //     for(s32 i=0;i<STATS_FREQUENCIES_SIZE;i++){
+  //       s32 freq = poopState.stats_frequencies[i];
+  //       if(freq > 0){
+  //         hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
+  //         hxh_PUSH_MICROCODE_LITERAL(i);
+  //         hxh_PUSH_MICROCODE_LITERAL(freq);
+  //         hxh_PARSE_EXECUTE();
+  //       }
+  //     }
+  //   }else{
+  //     poopState.stats_frequencies[func_num]++;
+  //     poopState.stats_total_count++;
+  //     poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
+  //   }
+  // }
   special_clear_locals();
 }
 

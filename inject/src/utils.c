@@ -1,14 +1,14 @@
 #include "utils.h"
 #include "poopstrings.h"
 
-void memset_i32(int* start, int size, int value)
+void memset_i32(s32* start, int size, s32 value)
 {
     for(int i=0;i<size;i++){
         i32STORE(start+i, value);
     }
 }
 
-void memset_i8(char* start, int size, char value)
+void memset_i8(u8* start, int size, u8 value)
 {
     for(int i=0;i<size;i++){
         i8STORE(start+i, value);
@@ -29,7 +29,8 @@ int hxh_reset(){
 
 // __attribute__((optnone))
 __attribute__((noinline))
-int hxh_push_microcode_literal(long value){
+int hxh_push_microcode_literal(s64 value)
+{
     int status = hxh_extended_literals_status();
     if(status == TRUE){
         return import_e_t_get(value);
@@ -89,7 +90,8 @@ char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
 #pragma clang diagnostic pop
 
 
-void _hxh_add_char_string_microcode(char* value, int size){
+void _hxh_add_char_string_microcode(u8* value, s32 size)
+{
     for(int i=0;i<size;i++){
         hxh_PUSH_MICROCODE_LITERAL(*(value+i));
     }
@@ -106,9 +108,9 @@ void _hxh_breakpoint(){
     hxh_PARSE_EXECUTE();
 }
 
-struct{int what_the_sigma;}nothing_state;
+struct{s32 what_the_sigma;}nothing_state;
 __attribute__((noinline))
-void export_nothing(int a){
+void export_nothing(s32 a){
     //what does it really do... i dont know...
     nothing_state.what_the_sigma += special_arras_memory_i32_load(123456) + a;
 }

@@ -18,8 +18,8 @@
 #define INT32_BYTE2(n) ((n >> 8) & 0xFF)
 #define INT32_BYTE3(n) (n & 0xFF)
 
-#define TRUE 1
-#define FALSE 0
+#define TRUE ((s32)1)
+#define FALSE ((s32)0)
 
 // (t) => {
 //   e[t] = null;
@@ -27,10 +27,10 @@
 // extern void import_e_t_set_null(int t);
 
 // (t) => e[t],
-extern int import_e_t_get(int t);
+extern s32 import_e_t_get(s32 t);
 
 // (t) => e[t](),
-extern int import_e_t_call(int t);
+extern s32 import_e_t_call(s32 t);
 
 
 extern void special_printargs();
@@ -38,87 +38,87 @@ extern void special_printargs();
 extern void special_clear_locals();
 extern int special_local_get_6();
 
-void _special_bigfunc_localset_i32(i32 index, i32 value);
-void _special_bigfunc_localset_i64(i32 index, i64 value);
-void _special_bigfunc_localset_f32(i32 index, f32 value);
-void _special_bigfunc_localset_f64(i32 index, f64 value);
+void _special_bigfunc_localset_i32(s32 index, s32 value);
+void _special_bigfunc_localset_i64(s32 index, s64 value);
+void _special_bigfunc_localset_f32(s32 index, f32 value);
+void _special_bigfunc_localset_f64(s32 index, f64 value);
 
-i32 special_bigfunc_localget_i32(i32 index);
-i64 special_bigfunc_localget_i64(i32 index);
-f32 special_bigfunc_localget_f32(i32 index);
-f64 special_bigfunc_localget_f64(i32 index);
+s32 special_bigfunc_localget_i32(s32 index);
+s64 special_bigfunc_localget_i64(s32 index);
+f32 special_bigfunc_localget_f32(s32 index);
+f64 special_bigfunc_localget_f64(s32 index);
 
-extern i64 special_i64_const_10000();
-extern i64 special_i64_const_9999();
-extern i64 special_i64_const_9998();
+extern s64 special_i64_const_10000();
+extern s64 special_i64_const_9999();
+extern s64 special_i64_const_9998();
 
 // these are memory instructions that work with arras memory and not my memory
-extern i32 special_arras_memory_i32_load(i32 address); // i32.load
-extern i64 special_arras_memory_i64_load(i32 address); // i64.load
-extern void special_arras_memory_i32_store(i32 address, int value); // i32.store
-extern void special_arras_memory_i32_store8(i32 address, int value);// i32.store8
-extern i32 special_arras_memory_memory_size(); // memory.size
+extern s32 special_arras_memory_i32_load(s32 address); // i32.load
+extern s64 special_arras_memory_i64_load(s32 address); // i64.load
+extern void special_arras_memory_i32_store(s32 address, int value); // i32.store
+extern void special_arras_memory_i32_store8(s32 address, int value);// i32.store8
+extern s32 special_arras_memory_memory_size(); // memory.size
 
-extern int special_func_number();
-extern int special_start_func_number();
-extern int special_bigfunc_num();
+extern s32 special_func_number();
+extern s32 special_start_func_number();
+extern s32 special_bigfunc_num();
 
 
-#define UNIQUEIFER export_nothing(__LINE__)
+#define UNIQUEIFER export_nothing((s32) __LINE__)
 
 #define HXH_ARRAY_CONSOLE_LOG 0
 #define HXH_WINDOW_POOP_SET_NULL 5
 
 void _hxh_breakpoint();
-void export_nothing(int a);
-void _hxh_add_int_string_microcode(int* value, int size);
-void _hxh_add_char_string_microcode(char* value, int size);
+void export_nothing(s32 a);
+void _hxh_add_int_string_microcode(s32* value, s32 size);
+void _hxh_add_char_string_microcode(u8* value, s32 size);
 
-void memset_i32(int* start, int size, int value);
-void memset_i8(char* start, int size, char value);
+void memset_i32(s32* start, s32 size, s32 value);
+void memset_i8(u8* start, s32 size, u8 value);
 
 //the one and only
-void _poopf(char* format, ...);
-#define poopf(format, ...) _poopf((format), (i32)0, ##__VA_ARGS__)
+void _poopf(u8* format, ...);
+#define poopf(format, ...) _poopf((format), (s32)0, ##__VA_ARGS__)
 
-void _spoopf(char* dest, int max, char* format, ...);
-#define spoopf(dest, max, format, ...) _spoopf((dest), (max), (format), (i32)0, ##__VA_ARGS__)
-void vspoopf(char* dest, int max, char* format, __builtin_va_list argp);
+void _spoopf(u8* dest, s32 max, u8* format, ...);
+#define spoopf(dest, max, format, ...) _spoopf((dest), (max), (format), (s32)0, ##__VA_ARGS__)
+void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp);
 
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
 
-int hxh_parse_execute();
-#define hxh_PARSE_EXECUTE() (hxh_parse_execute())
-int hxh_reset();
-#define hxh_RESET() (hxh_reset())
+s64 hxh_parse_execute();
+// #define hxh_PARSE_EXECUTE() (hxh_parse_execute())
+s64 hxh_reset();
+// #define hxh_RESET() (hxh_reset())
 
 void hxh_extended_literals_on();
 void hxh_extended_literals_off();
 int hxh_extended_literals_status();
 
-int hxh_push_microcode_literal(long value);
-#define hxh_PUSH_MICROCODE_LITERAL(value) (hxh_push_microcode_literal(value))
+s64 hxh_push_microcode_literal(s64 value);
+// #define hxh_PUSH_MICROCODE_LITERAL(value) (hxh_push_microcode_literal(value))
 // #define hxh_PUSH_MICROCODE_VALUE(value) (import_e_t_get(10000##value))
-#define hxh_LOAD_INTO_VAR(a, address)    hxh_PUSH_MICROCODE_LITERAL(1); \
-    hxh_PUSH_MICROCODE_LITERAL(address); \
-    a = (int)hxh_PARSE_EXECUTE();
+// #define hxh_LOAD_INTO_VAR(a, address)    hxh_push_microcode_literal(1); \
+//     hxh_push_microcode_literal(address); \
+//     a = hxh_parse_execute();
 
-#define hxh_STORE(address, value) hxh_PUSH_MICROCODE_LITERAL(2); \
-    hxh_PUSH_MICROCODE_LITERAL(address); \
-    hxh_PUSH_MICROCODE_LITERAL(value); \
-    hxh_PARSE_EXECUTE();
+// #define hxh_STORE(address, value) hxh_push_microcode_literal(2); \
+//     hxh_push_microcode_literal(address); \
+//     hxh_push_microcode_literal(value); \
+//     hxh_PARSE_EXECUTE();
 
 // TODO allow multiple values
-#define hxh_CONSOLE_LOG_LITERAL(value) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
-    hxh_PUSH_MICROCODE_LITERAL(value); \
-    hxh_PARSE_EXECUTE();
+// #define hxh_CONSOLE_LOG_LITERAL(value) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
+//     hxh_PUSH_MICROCODE_LITERAL(value); \
+//     hxh_PARSE_EXECUTE();
 
-#define hxh_CONSOLE_LOG_INT_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
-    _hxh_add_int_string_microcode(value, size); \
-    hxh_PARSE_EXECUTE();
+// #define hxh_CONSOLE_LOG_INT_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
+//     _hxh_add_int_string_microcode(value, size); \
+//     hxh_PARSE_EXECUTE();
 
-#define hxh_CONSOLE_LOG_CHAR_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(3); \
-    _hxh_add_char_string_microcode(value, size); \
-    hxh_PARSE_EXECUTE();
+// #define hxh_CONSOLE_LOG_CHAR_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(3); \
+//     _hxh_add_char_string_microcode(value, size); \
+//     hxh_PARSE_EXECUTE();
 
 
