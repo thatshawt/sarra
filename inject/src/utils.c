@@ -17,40 +17,54 @@ void memset_i8(u8* start, int size, u8 value)
 
 __attribute__((optnone))
 __attribute__((noinline))
-int hxh_parse_execute(){
+s64 hxh_parse_execute(){
     return import_e_t_get(9999);
 }
 
 // __attribute__((optnone))
 __attribute__((noinline))
-int hxh_reset(){
+s64 hxh_reset(){
     return import_e_t_get(9998);
 }
 
 // __attribute__((optnone))
 __attribute__((noinline))
-int hxh_push_microcode_literal(s64 value)
+s64 hxh_push_microcode_literal(s64 value)
 {
-    int status = hxh_extended_literals_status();
+    s64 status = hxh_extended_literals_status();
     if(status == TRUE){
         return import_e_t_get(value);
     }else{
-        return import_e_t_get(10000+((long)value));
+        return import_e_t_get(10000L+((s64)value));
     }
 }
 __attribute__((noinline))
 void hxh_extended_literals_on(){
-    import_e_t_get(9997);
+    import_e_t_get(9997L);
 }
 
 __attribute__((noinline))
 void hxh_extended_literals_off(){
-    import_e_t_get(9996);
+    import_e_t_get(9996L);
 }
 
 __attribute__((noinline))
-int hxh_extended_literals_status(){
-    return import_e_t_get(9995);
+s64 hxh_extended_literals_status(){
+    return import_e_t_get(9995L);
+}
+
+void hxh_console_log_char_string(u8* str, s32 size)
+{
+    hxh_push_microcode_literal(3);
+    _hxh_add_char_string_microcode(str, size);
+    hxh_parse_execute();
+}
+
+void hxh_console_log_literal(s64 value)
+{
+    hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+    hxh_push_microcode_literal(value);
+    hxh_parse_execute();
 }
 
 #pragma clang diagnostic push
@@ -83,7 +97,7 @@ char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
         special_arras_memory_i32_store((int)dest + (i/4)*4, dval);
     } 
 
-    hxh_PARSE_EXECUTE();
+    hxh_parse_execute();
 
 	return dest;
 }
@@ -93,19 +107,19 @@ char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
 void _hxh_add_char_string_microcode(u8* value, s32 size)
 {
     for(int i=0;i<size;i++){
-        hxh_PUSH_MICROCODE_LITERAL(*(value+i));
+        hxh_push_microcode_literal(*(value+i));
     }
 }
 
 void _hxh_add_int_string_microcode(int* value, int size){
     for(int i=0;i<size;i++){
-        hxh_PUSH_MICROCODE_LITERAL(*(value+i));
+        hxh_push_microcode_literal(*(value+i));
     }
 }
 
 void _hxh_breakpoint(){
-    hxh_PUSH_MICROCODE_LITERAL(6);
-    hxh_PARSE_EXECUTE();
+    hxh_push_microcode_literal(6);
+    hxh_parse_execute();
 }
 
 struct{s32 what_the_sigma;}nothing_state;

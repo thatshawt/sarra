@@ -88,37 +88,15 @@ void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp);
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
 
 s64 hxh_parse_execute();
-// #define hxh_PARSE_EXECUTE() (hxh_parse_execute())
 s64 hxh_reset();
-// #define hxh_RESET() (hxh_reset())
 
 void hxh_extended_literals_on();
 void hxh_extended_literals_off();
-int hxh_extended_literals_status();
+s64 hxh_extended_literals_status();
 
 s64 hxh_push_microcode_literal(s64 value);
-// #define hxh_PUSH_MICROCODE_LITERAL(value) (hxh_push_microcode_literal(value))
-// #define hxh_PUSH_MICROCODE_VALUE(value) (import_e_t_get(10000##value))
-// #define hxh_LOAD_INTO_VAR(a, address)    hxh_push_microcode_literal(1); \
-//     hxh_push_microcode_literal(address); \
-//     a = hxh_parse_execute();
+void hxh_console_log_literal(s64 value);
 
-// #define hxh_STORE(address, value) hxh_push_microcode_literal(2); \
-//     hxh_push_microcode_literal(address); \
-//     hxh_push_microcode_literal(value); \
-//     hxh_PARSE_EXECUTE();
-
-// TODO allow multiple values
-// #define hxh_CONSOLE_LOG_LITERAL(value) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
-//     hxh_PUSH_MICROCODE_LITERAL(value); \
-//     hxh_PARSE_EXECUTE();
-
-// #define hxh_CONSOLE_LOG_INT_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG); \
-//     _hxh_add_int_string_microcode(value, size); \
-//     hxh_PARSE_EXECUTE();
-
-// #define hxh_CONSOLE_LOG_CHAR_STRING(value, size) hxh_PUSH_MICROCODE_LITERAL(3); \
-//     _hxh_add_char_string_microcode(value, size); \
-//     hxh_PARSE_EXECUTE();
+void hxh_console_log_char_string(u8* str, s32 size);
 
 

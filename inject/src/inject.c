@@ -74,17 +74,17 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
+  poopf((u8*)"Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
-  // poopf("what da-|%d %d %l|-number!?", 123, -1234, 123456789123123123L);
+  poopf((u8*)"what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
 
   _reset_debug();
   _reset_stats();
   _reset_bigfunc_trace();
   _reset_chacha();
 
-  hxh_PUSH_MICROCODE_LITERAL(HXH_WINDOW_POOP_SET_NULL);
-  hxh_PARSE_EXECUTE();
+  hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
+  hxh_parse_execute();
   
   // hxh_reset();
   // poopf("aint no way?! |%c%c%c%c|", 'H','I','!','!');
@@ -100,7 +100,7 @@ void export_chacha_enable(int pleaseWork){
   _reset_chacha();
   poopState.bigfunc_chacha_enabled = TRUE;
   poopState.bigfunc_chacha_header = pleaseWork;
-  hxh_CONSOLE_LOG_LITERAL(poopState.bigfunc_chacha_header);
+  hxh_console_log_literal(poopState.bigfunc_chacha_header);
 }
 
 void export_enable_debug(){
@@ -117,14 +117,20 @@ void export_enable_bigfunc_trace(){
 }
 
 void export_wasm_arras_memsize(){
-  hxh_CONSOLE_LOG_LITERAL(special_arras_memory_memory_size());
+  hxh_console_log_literal(special_arras_memory_memory_size());
 }
 
 #define VALID_ARRAS_MEMLOCATION(x) ( ((x) > 0) && ((x) < special_arras_memory_memory_size()*PAGESIZE_BYTES) )
 
-int _special_bigfunc_beforebranch(const int index){
+
+
+u8 n_point[100] = {0};
+u8 g_point[100] = {0};
+u8 xd_point[100] = {0};
+int _special_bigfunc_beforebranch(s32 index){
   UNIQUEIFER;
 
+  // hxh_console_log_literal(123);
   // poopf("homie");
 
   if(poopState.bigfunc_trace_enabled){
@@ -132,6 +138,7 @@ int _special_bigfunc_beforebranch(const int index){
       _reset_bigfunc_trace();
       _reset_debug();
     }else{
+      
       s32 var_r = special_bigfunc_localget_i32(17);
       s32 var_y = special_bigfunc_localget_i32(24);
       s32 var_fa = special_bigfunc_localget_i32(31);
@@ -140,11 +147,11 @@ int _special_bigfunc_beforebranch(const int index){
       s32 var_g = special_bigfunc_localget_i32(6);
       s64 var_xd = special_bigfunc_localget_i64(127);
       
-      hxh_reset();
+      hxh_console_log_literal(123);
+      // u8* hithere = "hi there";
+      _poopf("%d %d %d %d", (s32)123, (s32)456, (s32)789, (s32)123);
 
-      static u8 n_point[100] = {0};
-      static u8 g_point[100] = {0};
-      static u8 xd_point[100] = {0};
+      hxh_reset();
 
       memset(n_point, 0, sizeof(n_point));
       memset(g_point, 0, sizeof(g_point));
@@ -179,14 +186,14 @@ int _special_bigfunc_beforebranch(const int index){
       
       poopf("fa test=%d, digits=%d, ", var_fa,  digits10(var_fa));
 
-      // poopf("got this far");
-      poopf((u8*)"%d| fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
-        poopState.bigfunc_trace_count,
-        var_fa, var_y, var_r,
-        var_n, n_point,
-        var_g, g_point,
-        var_xd, xd_point
-      );
+      // // poopf("got this far");
+      // poopf((u8*)"%d| fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
+      //   poopState.bigfunc_trace_count,
+      //   var_fa, var_y, var_r,
+      //   var_n, n_point,
+      //   var_g, g_point,
+      //   var_xd, xd_point
+      // );
 
       poopState.bigfunc_trace_count++;
       
@@ -207,19 +214,19 @@ int _special_bigfunc_beforebranch(const int index){
 
 void add_chacha_byte(int address, int the_byte){
   if(poopState.bigfunc_chacha_byte_i == 0){
-      // hxh_RESET();
+      // hxh_reset();
       poopState.bigfunc_chacha_firstbyte = the_byte;
       poopState.bigfunc_chacha_firstaddress = address;
-      // hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
+      // hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
     }
-    // hxh_PUSH_MICROCODE_LITERAL(the_byte);
+    // hxh_push_microcode_literal(the_byte);
     poopState.bigfunc_chacha_buffer[poopState.bigfunc_chacha_byte_i % CHACHA_BUFFER_SIZE] = the_byte;
     poopState.bigfunc_chacha_byte_i++;
     poopState.bigfunc_chacha_lastaddress = address;
 }
 
 // void _special_bigfunc_chachabyte_2(int address, int the_byte);
-void _special_bigfunc_chachabyte_1(int address, int the_byte){
+void _special_bigfunc_chachabyte_1(s32 address, s32 the_byte){
   UNIQUEIFER;
 
   // hxh_reset();
@@ -235,7 +242,7 @@ void _special_bigfunc_chachabyte_1(int address, int the_byte){
   // _special_bigfunc_chachabyte_2(address, the_byte);
 }
 
-void _special_bigfunc_chachabyte_2(int address, int the_byte){
+void _special_bigfunc_chachabyte_2(s32 address, s32 the_byte){
   UNIQUEIFER;
   if(poopState.bigfunc_chacha_enabled == TRUE){
     add_chacha_byte(address, the_byte);
@@ -250,7 +257,7 @@ void _special_bigfunc_chachafinish_2();
 void _special_bigfunc_chachafinish_1(){
   UNIQUEIFER;
   // if(poopState.bigfunc_chacha_enabled && poopState.bigfunc_chacha_byte_i > 0){
-  //   hxh_PARSE_EXECUTE();
+  //   hxh_parse_execute();
   //   hxh_CONSOLE_LOG_CHAR_STRING("Behold the bytes!!", 19);
   //   poopState.bigfunc_chacha_byte_i = 0;
   //   // if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
@@ -260,7 +267,7 @@ void _special_bigfunc_chachafinish_1(){
   // _special_bigfunc_chachafinish_2();
   // if(poopState.bigfunc_chacha_enabled){
   // if(poopState.bigfunc_chacha_firstbyte == 'M'){
-  //   hxh_CONSOLE_LOG_LITERAL(poopState.bigfunc_chacha_byte_i);
+  //   hxh_console_log_literal(poopState.bigfunc_chacha_byte_i);
   // }
   // if(poopState.bigfunc_chacha_firstbyte == 'M' && (poopState.bigfunc_chacha_byte_i == 17)){
 
@@ -269,7 +276,7 @@ void _special_bigfunc_chachafinish_1(){
 
   poopState.bigfunc_chacha_byte_i = 0;
   poopState.bigfunc_chacha_firstbyte = 0;
-  // hxh_RESET();
+  // hxh_reset();
   memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
   // }
 }
@@ -286,8 +293,8 @@ void _special_bigfunc_chachafinish_2(){
       // (firstByte != 98 && firstByte != 117 && firstByte != 112)
       (firstByte == poopState.bigfunc_chacha_header)
       && poopState.bigfunc_chacha_byte_i > 0){
-      // hxh_PARSE_EXECUTE();
-      // hxh_CONSOLE_LOG_LITERAL(poopState.bigfunc_chacha_byte_i);
+      // hxh_parse_execute();
+      // hxh_console_log_literal(poopState.bigfunc_chacha_byte_i);
 
       // just makes me reload my game...
       // if(firstByte == 'M'){
@@ -320,7 +327,7 @@ void _special_bigfunc_chachafinish_2(){
 
     poopState.bigfunc_chacha_byte_i = 0;
     poopState.bigfunc_chacha_firstbyte = 0;
-    hxh_RESET();
+    hxh_reset();
     memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
     // if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
     //   _reset_chacha();
@@ -347,14 +354,14 @@ void inject_all(){
     if(TRUE){//blacklist check
       if(poopState.debug_count >= poopState.debug_max_count){
         _reset_debug();
-        hxh_PUSH_MICROCODE_LITERAL(HXH_WINDOW_POOP_SET_NULL);
-        hxh_PARSE_EXECUTE();
+        hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
+        hxh_parse_execute();
       }else{
-        hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-        hxh_PUSH_MICROCODE_LITERAL(poopState.debug_count);
-        hxh_PUSH_MICROCODE_LITERAL(func_num);
+        hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+        hxh_push_microcode_literal(poopState.debug_count);
+        hxh_push_microcode_literal(func_num);
         special_printargs();
-        hxh_PARSE_EXECUTE();
+        hxh_parse_execute();
         poopState.debug_count++;
       }
     }
@@ -364,16 +371,16 @@ void inject_all(){
   //     poopState.stats_enabled = FALSE;
   //     //print out all the frequencies?
   //     hxh_CONSOLE_LOG_CHAR_STRING("The total is...", 15);
-  //     hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-  //     hxh_PUSH_MICROCODE_LITERAL(poopState.stats_total_count);
-  //     hxh_PARSE_EXECUTE();
+  //     hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+  //     hxh_push_microcode_literal(poopState.stats_total_count);
+  //     hxh_parse_execute();
   //     for(s32 i=0;i<STATS_FREQUENCIES_SIZE;i++){
   //       s32 freq = poopState.stats_frequencies[i];
   //       if(freq > 0){
-  //         hxh_PUSH_MICROCODE_LITERAL(HXH_ARRAY_CONSOLE_LOG);
-  //         hxh_PUSH_MICROCODE_LITERAL(i);
-  //         hxh_PUSH_MICROCODE_LITERAL(freq);
-  //         hxh_PARSE_EXECUTE();
+  //         hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+  //         hxh_push_microcode_literal(i);
+  //         hxh_push_microcode_literal(freq);
+  //         hxh_parse_execute();
   //       }
   //     }
   //   }else{

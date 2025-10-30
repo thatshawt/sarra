@@ -6,8 +6,10 @@
 u8 printf_buffer[5000] = {0};
 // aint no way...
 // borrowed from this website some code https://jameshfisher.com/2016/11/23/c-varargs/
-void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp)
+__attribute__((noinline))
+void vspoopf(u8* dest, s32 max, u8* format, __builtin_va_list argp)
 {
+    hxh_console_log_literal(789);
     // memset_i8(printf_buffer, sizeof(printf_buffer), 0);
     int outi = 0;
     // __builtin_va_start(argp, format);
@@ -17,10 +19,10 @@ void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp)
             if (*format == '%') {
                 dest[outi++] = '%';
             } else if (*format == 'c') {
-                char char_to_print = __builtin_va_arg(argp, u8);
+                char char_to_print = __builtin_va_arg(argp, u32);
                 dest[outi++] = char_to_print;
             } else if(*format == 's'){
-                char* string_to_print = __builtin_va_arg(argp, char*);
+                char* string_to_print = __builtin_va_arg(argp, u8*);
                 const int string_length = strlen(string_to_print);
                 strcat(dest+outi, string_to_print);
                 outi += string_length;
@@ -48,6 +50,7 @@ void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp)
 }
 
 // expects one dummy i32 var arg
+__attribute__((noinline))
 void _spoopf(u8* dest, s32 max, u8* format, ...)
 {
     // hxh_CONSOLE_LOG_CHAR_STRING("spoopf called",13);
@@ -63,11 +66,15 @@ void _spoopf(u8* dest, s32 max, u8* format, ...)
 }
 
 // expects one dummy i32 var arg
+__attribute__((noinline))
 void _poopf(u8* format, ...)
 {
     // hxh_CONSOLE_LOG_CHAR_STRING("poopf called",13);
+    hxh_console_log_literal(456);
+
     __builtin_va_list argp;
     __builtin_va_start(argp, format);
+
     // take out the 0 that we put with the macro
     __builtin_va_arg(argp, s32);
 
@@ -79,8 +86,10 @@ void _poopf(u8* format, ...)
 
     // hxh_CONSOLE_LOG_CHAR_STRING("after vspoopf call",19);
 
-    __builtin_va_end(argp);
+    
     hxh_reset();
-    hxh_CONSOLE_LOG_CHAR_STRING(printf_buffer, strlen(printf_buffer));
+    hxh_console_log_char_string(printf_buffer, strlen(printf_buffer));
     memset_i8(printf_buffer, sizeof(printf_buffer), 0);
+
+    __builtin_va_end(argp);
 }

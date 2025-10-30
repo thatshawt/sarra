@@ -1,3 +1,5 @@
+* source code primitive: implement a global.get/set special function.
+
 
 * dev optimization: update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
 
