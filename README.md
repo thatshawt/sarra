@@ -1,5 +1,15 @@
-# Whats going on
-This is me attempting to make a mod for the online browser game "arras.io". There are a lot of moving parts here and its mostly experimental. As of now I can run injected C code into the arras.io wasm binary. I have provided a way to access the raw received and sent packets which is nice :). I add stuff to the TODO that I need to do or am currently working on.
+# What is this
+This is an experimental modding project for arrasio. Right now what seems to be happening is the addition of features that are needed from the "injecting compiler" (one huge python script generatePatchedAppWasm.py) and also writing C source code.
+
+## What it happening with the c code and stuff?
+The c code (in inject/src) is compiled down to wasm using clang (see inject/build.sh). The inject.wasm is then "injected" into arrasio's app.wasm using the big python script (see scripts/injectBuild.sh and generatePatchedAppWasm.py). All this stuff is considered building and it happens by running `sh injectBuild.sh` inside the script directory.
+
+
+## Helpful Readings
+
+* [Compiling C to WebAssembly without Emscripten by Surma](https://surma.dev/things/c-to-webassembly/) (this one was a godsend)
+
+* [What’s in that .wasm? Introducing: wasm-decompile by Wouter van Oortmerssen](https://v8.dev/blog/wasm-decompile)
 
 # Copyright Stuff
 
