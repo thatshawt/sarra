@@ -4,335 +4,469 @@
   (type (;2;) (func (param i32 i32)))
   (type (;3;) (func (param i32) (result i32)))
   (type (;4;) (func (param i32 i32 i32) (result i32)))
-  (type (;5;) (func (result i32)))
-  (type (;6;) (func (param i32)))
+  (type (;5;) (func (param i32)))
+  (type (;6;) (func (result i32)))
   (type (;7;) (func (param i64) (result i64)))
-  (type (;8;) (func (result i64)))
-  (type (;9;) (func (param i32 i32 i32 i32)))
-  (type (;10;) (func (param i64 i64) (result i64)))
-  (type (;11;) (func (param i64)))
-  (type (;12;) (func (param i32 i32 i32)))
-  (type (;13;) (func (param i32 i64) (result i32)))
-  (type (;14;) (func (param f32)))
-  (type (;15;) (func (param f64)))
+  (type (;8;) (func (param i64)))
+  (type (;9;) (func (result i64)))
+  (type (;10;) (func (param i32 i32 i32 i32)))
+  (type (;11;) (func (param i64 i64) (result i64)))
+  (type (;12;) (func (param f32)))
+  (type (;13;) (func (param f64)))
+  (type (;14;) (func (param i32 i32 i32)))
+  (type (;15;) (func (param i32 i64) (result i32)))
   (type (;16;) (func (param i32 i64)))
   (type (;17;) (func (param i32 f32)))
   (type (;18;) (func (param i32 f64)))
   (type (;19;) (func (param i32) (result i64)))
   (type (;20;) (func (param i32) (result f32)))
   (type (;21;) (func (param i32) (result f64)))
-  (import "env" "special_global_get_i32_1" (func (;0;) (type 5)))
-  (import "env" "special_arras_memory_memory_size" (func (;1;) (type 5)))
-  (import "env" "special_arras_memory_i32_store8" (func (;2;) (type 2)))
-  (import "env" "special_start_func_number" (func (;3;) (type 5)))
-  (import "env" "special_printargs" (func (;4;) (type 0)))
-  (import "env" "special_func_number" (func (;5;) (type 5)))
-  (import "env" "import_e_t_get" (func (;6;) (type 3)))
-  (import "env" "special_arras_memory_i32_load" (func (;7;) (type 3)))
+  (import "env" "special_global_get_i32_1" (func (;0;) (type 6)))
+  (import "env" "special_arras_memory_memory_size" (func (;1;) (type 6)))
+  (import "env" "special_arras_memory_i32_load" (func (;2;) (type 3)))
+  (import "env" "special_arras_memory_i32_store8" (func (;3;) (type 2)))
+  (import "env" "special_start_func_number" (func (;4;) (type 6)))
+  (import "env" "special_func_number" (func (;5;) (type 6)))
+  (import "env" "special_update_param_struct" (func (;6;) (type 0)))
+  (import "env" "import_e_t_get" (func (;7;) (type 3)))
   (import "env" "special_arras_memory_i32_store" (func (;8;) (type 2)))
   (func (;9;) (type 0))
   (func (;10;) (type 0)
-    i32.const 3416
+    i32.const 3528
     i32.const 5000
     i32.store
-    i32.const 3408
+    i32.const 3520
     i32.const 0
     i32.store
-    i32.const 3424
+    i32.const 3536
     i32.const 600
     i32.const 0
-    call 71
-    i32.const 3420
+    call 78
+    i32.const 3532
     i32.const 0
     i32.store
-    i32.const 3412
+    i32.const 3524
     i32.const 0
     i32.store)
   (func (;11;) (type 0)
-    i32.const 1152
+    i32.const 1264
     i32.const 0
     i32.store
-    i32.const 1164
+    i32.const 1276
     i32.const 50
     i32.const 0
-    call 71
-    i32.const 1156
+    call 78
+    i32.const 1268
     i64.const 2147483648000
     i64.store align=4)
   (func (;12;) (type 0)
-    i32.const 1372
+    i32.const 1484
     i32.const 500
     i32.store
-    i32.const 1364
+    i32.const 1476
     i64.const 0
     i64.store align=4)
   (func (;13;) (type 0)
-    i32.const 1384
+    i32.const 1496
     i32.const 1
     i32.store
-    i32.const 1376
+    i32.const 1488
     i64.const 0
     i64.store align=4
-    i32.const 1388
+    i32.const 1500
     i32.const 0
     i32.const 2000
     memory.fill
-    i32.const 3400
+    i32.const 3512
     i64.const 0
     i64.store align=4
-    i32.const 3388
+    i32.const 3500
     i32.const 0
     i32.store)
   (func (;14;) (type 0)
     (local i32)
     global.get 0
-    i32.const 48
+    i32.const 32
     i32.sub
     local.tee 0
     global.set 0
     local.get 0
-    i32.const 1052
-    i32.store offset=36
-    local.get 0
-    i32.const 0
-    i32.store offset=32
-    i32.const 1084
-    local.get 0
-    i32.const 32
-    i32.add
-    call 30
+    i32.const 1129
+    i32.store offset=16
+    i32.const 1190
     local.get 0
     i32.const 16
     i32.add
+    call 30
+    local.get 0
     i64.const 123456789123123123
-    i64.store
+    i64.store offset=8
     local.get 0
-    i32.const -1234
-    i32.store offset=8
-    local.get 0
-    i64.const 528280977408
+    i64.const -5299989643141
     i64.store
-    i32.const 1024
+    i32.const 1101
     local.get 0
     call 30
     call 0
     i64.extend_i32_s
-    call 81
-    i32.const 1152
+    call 88
+    i32.const 1264
     i32.const 0
     i32.store
-    i32.const 1164
+    i32.const 1276
     i32.const 50
     i32.const 0
-    call 71
-    i32.const 3416
+    call 78
+    i32.const 3528
     i32.const 5000
     i32.store
-    i32.const 1156
+    i32.const 1268
     i64.const 2147483648000
     i64.store align=4
-    i32.const 3408
+    i32.const 3520
     i32.const 0
     i32.store
-    i32.const 3424
+    i32.const 3536
     i32.const 600
     i32.const 0
-    call 71
-    i32.const 1372
+    call 78
+    i32.const 1484
     i32.const 500
     i32.store
-    i32.const 1384
+    i32.const 1496
     i32.const 1
     i32.store
-    i32.const 1376
+    i32.const 1488
     i64.const 0
     i64.store align=4
-    i32.const 1364
+    i32.const 1476
     i64.const 0
     i64.store align=4
-    i32.const 3420
+    i32.const 3532
     i32.const 0
     i32.store
-    i32.const 3412
+    i32.const 3524
     i32.const 0
     i32.store
-    i32.const 1388
+    i32.const 1500
     i32.const 0
     i32.const 2000
     memory.fill
-    i32.const 3400
+    i32.const 3512
     i64.const 0
     i64.store align=4
-    i32.const 3388
+    i32.const 3500
     i32.const 0
     i32.store
     i64.const 5
-    call 75
+    call 82
     drop
-    call 73
+    call 80
     drop
     local.get 0
-    i32.const 48
+    i32.const 32
     i32.add
     global.set 0)
   (func (;15;) (type 0)
-    i32.const 3416
+    i32.const 3528
     i32.const 5000
     i32.store
-    i32.const 3408
+    i32.const 3520
     i32.const 0
     i32.store
-    i32.const 3424
+    i32.const 3536
     i32.const 600
     i32.const 0
-    call 71
-    i32.const 3408
+    call 78
+    i32.const 3520
     i64.const 1
     i64.store align=4
-    i32.const 3420
+    i32.const 3532
     i32.const 0
     i32.store)
-  (func (;16;) (type 6) (param i32)
-    i32.const 1384
+  (func (;16;) (type 5) (param i32)
+    i32.const 1496
     i32.const 1
     i32.store
-    i32.const 1376
+    i32.const 1488
     i64.const 0
     i64.store align=4
-    i32.const 1388
+    i32.const 1500
     i32.const 0
     i32.const 2000
     memory.fill
-    i32.const 3404
+    i32.const 3516
     local.get 0
     i32.store
-    i32.const 1376
+    i32.const 1488
     i32.const 1
     i32.store
-    i32.const 3388
+    i32.const 3500
     i32.const 0
     i32.store
-    i32.const 3400
+    i32.const 3512
     i32.const 0
     i32.store
     local.get 0
     i64.extend_i32_s
-    call 81)
+    call 88)
   (func (;17;) (type 0)
-    i32.const 1152
+    i32.const 1264
     i32.const 0
     i32.store
-    i32.const 1164
+    i32.const 1276
     i32.const 50
     i32.const 0
-    call 71
-    i32.const 1160
+    call 78
+    i32.const 1272
     i32.const 500
     i32.store
-    i32.const 1152
+    i32.const 1264
     i64.const 1
     i64.store align=4)
   (func (;18;) (type 0)
-    i32.const 1372
+    i32.const 1484
     i32.const 500
     i32.store
-    i32.const 1364
+    i32.const 1476
     i64.const 0
     i64.store align=4
-    i32.const 1152
+    i32.const 1264
     i32.const 0
     i32.store
-    i32.const 1164
+    i32.const 1276
     i32.const 50
     i32.const 0
-    call 71
-    i32.const 1364
+    call 78
+    i32.const 1476
     i32.const 1
     i32.store
-    i32.const 1160
+    i32.const 1272
     i32.const 500
     i32.store
-    i32.const 1152
+    i32.const 1264
     i64.const 1
     i64.store align=4)
   (func (;19;) (type 0)
     call 1
     i64.extend_i32_s
-    call 81)
+    call 88)
   (func (;20;) (type 3) (param i32) (result i32)
-    i32.const 133
-    call 85
-    i32.const 1364
-    i32.load
-    if  ;; label = @1
-      i32.const 1368
+    (local i32 i32 i32 i32 i32 i32 i32 i64)
+    global.get 0
+    i32.const 528
+    i32.sub
+    local.tee 1
+    global.set 0
+    i32.const 129
+    call 92
+    block  ;; label = @1
+      i32.const 1476
       i32.load
-      i32.const 1372
+      i32.eqz
+      br_if 0 (;@1;)
+      i32.const 1480
+      i32.load
+      i32.const 1484
       i32.load
       i32.ge_s
       if  ;; label = @2
-        i32.const 1372
+        i32.const 1484
         i32.const 500
         i32.store
-        i32.const 1364
+        i32.const 1476
         i64.const 0
         i64.store align=4
-        i32.const 1152
+        i32.const 1264
         i32.const 0
         i32.store
-        i32.const 1164
+        i32.const 1276
         i32.const 50
         i32.const 0
-        call 71
-        i32.const 1156
+        call 78
+        i32.const 1268
         i64.const 2147483648000
         i64.store align=4
-        local.get 0
-        return
+        br 1 (;@1;)
       end
-      call 74
-      drop
-      i32.const 5824
-      i32.const 0
-      i32.const 100
-      memory.fill
-      i32.const 5936
-      i32.const 0
-      i32.const 100
-      memory.fill
-      i32.const 6048
-      i32.const 0
-      i32.const 100
-      memory.fill
-      call 0
-      i64.extend_i32_s
+      i32.const 12412
+      i32.load
+      local.set 5
+      i32.const 12440
+      i32.load
+      local.set 6
+      i32.const 12468
+      i32.load
+      local.set 7
+      i32.const 12396
+      i32.load
+      local.set 2
+      i32.const 12368
+      i32.load
+      local.set 3
+      i32.const 17360
+      i64.load
+      local.set 8
       call 81
-      i32.const 1368
-      i32.const 1368
+      drop
+      local.get 1
+      i32.const 368
+      i32.add
+      local.tee 4
+      i32.const 0
+      i32.const 150
+      memory.fill
+      local.get 1
+      i32.const 208
+      i32.add
+      i32.const 0
+      i32.const 150
+      memory.fill
+      local.get 1
+      i32.const 48
+      i32.add
+      i32.const 0
+      i32.const 150
+      memory.fill
+      block  ;; label = @2
+        local.get 2
+        i32.const 0
+        i32.le_s
+        br_if 0 (;@2;)
+        local.get 2
+        call 1
+        i32.const 16
+        i32.shl
+        i32.ge_s
+        br_if 0 (;@2;)
+        local.get 4
+        local.get 2
+        call 2
+        call 41
+        drop
+      end
+      block  ;; label = @2
+        local.get 3
+        i32.const 0
+        i32.le_s
+        br_if 0 (;@2;)
+        local.get 3
+        call 1
+        i32.const 16
+        i32.shl
+        i32.ge_s
+        br_if 0 (;@2;)
+        local.get 1
+        i32.const 208
+        i32.add
+        local.get 3
+        call 2
+        call 41
+        drop
+      end
+      block  ;; label = @2
+        local.get 8
+        i32.wrap_i64
+        local.tee 4
+        i32.const 0
+        i32.le_s
+        br_if 0 (;@2;)
+        call 1
+        i32.const 16
+        i32.shl
+        local.get 4
+        i32.le_s
+        br_if 0 (;@2;)
+        local.get 1
+        i32.const 48
+        i32.add
+        local.get 4
+        call 2
+        call 41
+        drop
+      end
+      local.get 1
+      i32.const 16
+      i32.add
+      local.get 2
+      i32.store
+      local.get 1
+      i32.const 24
+      i32.add
+      local.get 3
+      i32.store
+      local.get 1
+      i32.const 32
+      i32.add
+      local.get 8
+      i64.store
+      local.get 1
+      local.get 7
+      i32.store offset=4
+      local.get 1
+      local.get 6
+      i32.store offset=8
+      local.get 1
+      local.get 5
+      i32.store offset=12
+      local.get 1
+      i32.const 1480
+      i32.load
+      i32.store
+      local.get 1
+      i32.const 20
+      i32.add
+      local.get 1
+      i32.const 368
+      i32.add
+      i32.store
+      local.get 1
+      i32.const 28
+      i32.add
+      local.get 1
+      i32.const 208
+      i32.add
+      i32.store
+      local.get 1
+      i32.const 40
+      i32.add
+      local.get 1
+      i32.const 48
+      i32.add
+      i32.store
+      i32.const 1024
+      local.get 1
+      call 30
+      i32.const 1480
+      i32.const 1480
       i32.load
       i32.const 1
       i32.add
       i32.store
     end
+    local.get 1
+    i32.const 528
+    i32.add
+    global.set 0
     local.get 0)
   (func (;21;) (type 2) (param i32 i32)
     (local i32)
-    i32.const 3400
+    i32.const 3512
     i32.load
     local.tee 2
     i32.eqz
     if  ;; label = @1
-      i32.const 3392
+      i32.const 3504
       local.get 0
       i32.store
-      i32.const 3388
+      i32.const 3500
       local.get 1
       i32.store
     end
-    i32.const 3396
+    i32.const 3508
     local.get 0
     i32.store
-    i32.const 3400
+    i32.const 3512
     local.get 2
     i32.const 1
     i32.add
@@ -340,30 +474,30 @@
     local.get 2
     i32.const 2000
     i32.rem_s
-    i32.const 1388
+    i32.const 1500
     i32.add
     local.get 1
     i32.store8)
   (func (;22;) (type 2) (param i32 i32)
     (local i32)
-    i32.const 232
-    call 85
-    i32.const 3400
+    i32.const 228
+    call 92
+    i32.const 3512
     i32.load
     local.tee 2
     i32.eqz
     if  ;; label = @1
-      i32.const 3392
+      i32.const 3504
       local.get 0
       i32.store
-      i32.const 3388
+      i32.const 3500
       local.get 1
       i32.store
     end
-    i32.const 3396
+    i32.const 3508
     local.get 0
     i32.store
-    i32.const 3400
+    i32.const 3512
     local.get 2
     i32.const 1
     i32.add
@@ -371,38 +505,38 @@
     local.get 2
     i32.const 2000
     i32.rem_s
-    i32.const 1388
+    i32.const 1500
     i32.add
     local.get 1
     i32.store8
     local.get 0
     local.get 1
-    call 2)
+    call 3)
   (func (;23;) (type 2) (param i32 i32)
     (local i32)
-    i32.const 248
-    call 85
-    i32.const 1376
+    i32.const 244
+    call 92
+    i32.const 1488
     i32.load
     i32.const 1
     i32.eq
     if  ;; label = @1
-      i32.const 3400
+      i32.const 3512
       i32.load
       local.tee 2
       i32.eqz
       if  ;; label = @2
-        i32.const 3392
+        i32.const 3504
         local.get 0
         i32.store
-        i32.const 3388
+        i32.const 3500
         local.get 1
         i32.store
       end
-      i32.const 3396
+      i32.const 3508
       local.get 0
       i32.store
-      i32.const 3400
+      i32.const 3512
       local.get 2
       i32.const 1
       i32.add
@@ -410,259 +544,396 @@
       local.get 2
       i32.const 2000
       i32.rem_s
-      i32.const 1388
+      i32.const 1500
       i32.add
       local.get 1
       i32.store8
     end
     local.get 0
     local.get 1
-    call 2)
+    call 3)
   (func (;24;) (type 0)
-    i32.const 260
-    call 85
-    i32.const 3388
+    i32.const 256
+    call 92
+    i32.const 3500
     i32.const 0
     i32.store
-    i32.const 3400
+    i32.const 3512
     i32.const 0
     i32.store
-    i32.const 1388
+    i32.const 1500
     i32.const 0
     i32.const 2000
     memory.fill)
   (func (;25;) (type 0)
     (local i32)
-    i32.const 287
-    call 85
-    i32.const 1376
+    i32.const 283
+    call 92
+    i32.const 1488
     i32.load
     if  ;; label = @1
       block  ;; label = @2
-        i32.const 3388
+        i32.const 3500
         i32.load
-        i32.const 3404
+        i32.const 3516
         i32.load
         i32.ne
         br_if 0 (;@2;)
-        i32.const 3400
+        i32.const 3512
         i32.load
         i32.const 0
         i32.le_s
         br_if 0 (;@2;)
-        call 0
-        i64.extend_i32_s
-        call 81
-        i32.const 1152
+        i32.const 1264
         i32.const 0
         i32.store
-        i32.const 1164
+        i32.const 1276
         i32.const 50
         i32.const 0
-        call 71
-        i32.const 1372
+        call 78
+        i32.const 1484
         i32.const 500
         i32.store
-        i32.const 1160
+        i32.const 1272
         i32.const 500
         i32.store
-        i32.const 1364
+        i32.const 1476
         i64.const 1
         i64.store align=4
-        i32.const 1152
+        i32.const 1264
         i64.const 1
         i64.store align=4
-        i32.const 1380
-        i32.const 1380
+        i32.const 1492
+        i32.const 1492
         i32.load
         i32.const 1
         i32.add
         local.tee 0
         i32.store
         local.get 0
-        i32.const 1384
+        i32.const 1496
         i32.load
         i32.lt_s
         br_if 0 (;@2;)
-        i32.const 1384
+        i32.const 1496
         i32.const 1
         i32.store
-        i32.const 1376
+        i32.const 1488
         i64.const 0
         i64.store align=4
-        i32.const 1388
+        i32.const 1500
         i32.const 0
         i32.const 2000
         memory.fill
-        i32.const 3404
+        i32.const 3516
         i32.const 0
         i32.store
       end
-      i32.const 3388
+      i32.const 3500
       i32.const 0
       i32.store
-      i32.const 3400
+      i32.const 3512
       i32.const 0
       i32.store
-      call 74
+      call 81
       drop
-      i32.const 1388
+      i32.const 1500
       i32.const 0
       i32.const 2000
       memory.fill
     end)
-  (func (;26;) (type 6) (param i32)
-    (local i32)
+  (func (;26;) (type 5) (param i32)
+    (local i32 i32 i32 i32 i32 i32)
     global.get 0
-    i32.const 48
+    i32.const 1312
     i32.sub
     local.tee 1
     global.set 0
-    call 3
+    call 4
     local.get 0
     i32.eq
     if  ;; label = @1
       local.get 1
-      i32.const 1052
-      i32.store offset=36
-      local.get 1
-      i32.const 0
+      i32.const 1129
       i32.store offset=32
-      i32.const 1084
+      i32.const 1190
       local.get 1
       i32.const 32
       i32.add
       call 30
       local.get 1
+      i64.const 123456789123123123
+      i64.store offset=24
+      local.get 1
+      i64.const -5299989643141
+      i64.store offset=16
+      i32.const 1101
+      local.get 1
       i32.const 16
       i32.add
-      i64.const 123456789123123123
-      i64.store
-      local.get 1
-      i32.const -1234
-      i32.store offset=8
-      local.get 1
-      i64.const 528280977408
-      i64.store
-      i32.const 1024
-      local.get 1
       call 30
       call 0
       i64.extend_i32_s
-      call 81
-      i32.const 1152
+      call 88
+      i32.const 1264
       i32.const 0
       i32.store
-      i32.const 1164
+      i32.const 1276
       i32.const 50
       i32.const 0
-      call 71
-      i32.const 3416
+      call 78
+      i32.const 3528
       i32.const 5000
       i32.store
-      i32.const 1156
+      i32.const 1268
       i64.const 2147483648000
       i64.store align=4
-      i32.const 3408
+      i32.const 3520
       i32.const 0
       i32.store
-      i32.const 3424
+      i32.const 3536
       i32.const 600
       i32.const 0
-      call 71
-      i32.const 1372
+      call 78
+      i32.const 1484
       i32.const 500
       i32.store
-      i32.const 1384
+      i32.const 1496
       i32.const 1
       i32.store
-      i32.const 1376
+      i32.const 1488
       i64.const 0
       i64.store align=4
-      i32.const 1364
+      i32.const 1476
       i64.const 0
       i64.store align=4
-      i32.const 3420
+      i32.const 3532
       i32.const 0
       i32.store
-      i32.const 3412
+      i32.const 3524
       i32.const 0
       i32.store
-      i32.const 1388
+      i32.const 1500
       i32.const 0
       i32.const 2000
       memory.fill
-      i32.const 3400
+      i32.const 3512
       i64.const 0
       i64.store align=4
-      i32.const 3388
+      i32.const 3500
       i32.const 0
       i32.store
       i64.const 5
-      call 75
+      call 82
       drop
-      call 73
+      call 80
       drop
     end
     block  ;; label = @1
-      i32.const 1152
+      i32.const 1264
       i32.load
       i32.eqz
       br_if 0 (;@1;)
-      i32.const 1156
+      i32.const 1268
       i32.load
-      i32.const 1160
+      local.tee 3
+      i32.const 1272
       i32.load
       i32.ge_s
       if  ;; label = @2
-        i32.const 1152
+        i32.const 1264
         i32.const 0
         i32.store
-        i32.const 1164
+        i32.const 1276
         i32.const 50
         i32.const 0
-        call 71
-        i32.const 1156
+        call 78
+        i32.const 1268
         i64.const 2147483648000
         i64.store align=4
         i64.const 5
-        call 75
+        call 82
         drop
-        call 73
+        call 80
         drop
         br 1 (;@1;)
       end
-      i64.const 0
-      call 75
-      drop
-      i32.const 1156
-      i64.load32_s
-      call 75
-      drop
+      local.get 1
+      i32.const 304
+      i32.add
+      i32.const 0
+      i32.const 1000
+      memory.fill
+      i32.const 12136
+      i32.load
+      i32.const 0
+      i32.gt_s
+      if  ;; label = @2
+        i32.const 10936
+        local.set 3
+        i32.const 11136
+        local.set 4
+        loop  ;; label = @3
+          local.get 3
+          i32.const 1204
+          i32.add
+          i32.load
+          local.set 2
+          local.get 1
+          i32.const 48
+          i32.add
+          i32.const 0
+          i32.const 250
+          memory.fill
+          block  ;; label = @4
+            block  ;; label = @5
+              block  ;; label = @6
+                block  ;; label = @7
+                  block  ;; label = @8
+                    local.get 2
+                    i32.const 1
+                    i32.sub
+                    br_table 0 (;@8;) 1 (;@7;) 2 (;@6;) 3 (;@5;) 4 (;@4;)
+                  end
+                  local.get 1
+                  i32.const 48
+                  i32.add
+                  local.get 3
+                  i32.load
+                  call 41
+                  drop
+                  br 3 (;@4;)
+                end
+                local.get 1
+                i32.const 48
+                i32.add
+                local.get 4
+                i64.load
+                call 42
+                drop
+                br 2 (;@4;)
+              end
+              local.get 1
+              i32.const 48
+              i32.add
+              local.tee 2
+              call 49
+              local.get 2
+              i32.add
+              local.tee 2
+              i32.const 1168
+              i32.load align=1
+              i32.store align=1
+              local.get 2
+              i32.const 3
+              i32.add
+              i32.const 1171
+              i32.load align=1
+              i32.store align=1
+              br 1 (;@4;)
+            end
+            local.get 1
+            i32.const 48
+            i32.add
+            local.tee 2
+            call 49
+            local.get 2
+            i32.add
+            local.tee 2
+            i32.const 1161
+            i32.load align=1
+            i32.store align=1
+            local.get 2
+            i32.const 3
+            i32.add
+            i32.const 1164
+            i32.load align=1
+            i32.store align=1
+          end
+          local.get 1
+          i32.const 304
+          i32.add
+          local.get 1
+          i32.const 48
+          i32.add
+          call 50
+          local.set 2
+          i32.const 12136
+          i32.load
+          local.tee 6
+          i32.const 1
+          i32.sub
+          local.get 5
+          i32.ne
+          if  ;; label = @4
+            local.get 2
+            call 49
+            local.get 2
+            i32.add
+            local.tee 2
+            i32.const 1236
+            i32.load16_u align=1
+            i32.store16 align=1
+            local.get 2
+            i32.const 2
+            i32.add
+            i32.const 1238
+            i32.load8_u
+            i32.store8
+          end
+          local.get 3
+          i32.const 4
+          i32.add
+          local.set 3
+          local.get 4
+          i32.const 8
+          i32.add
+          local.set 4
+          local.get 5
+          i32.const 1
+          i32.add
+          local.tee 5
+          local.get 6
+          i32.lt_s
+          br_if 0 (;@3;)
+        end
+        i32.const 1268
+        i32.load
+        local.set 3
+      end
+      local.get 1
       local.get 0
-      i64.extend_i32_s
-      call 75
-      drop
-      call 4
-      call 73
-      drop
-      i32.const 1156
-      i32.const 1156
+      i32.store offset=4
+      local.get 1
+      local.get 3
+      i32.store
+      local.get 1
+      local.get 1
+      i32.const 304
+      i32.add
+      i32.store offset=8
+      i32.const 1175
+      local.get 1
+      call 30
+      i32.const 1268
+      i32.const 1268
       i32.load
       i32.const 1
       i32.add
       i32.store
     end
     local.get 1
-    i32.const 48
+    i32.const 1312
     i32.add
     global.set 0)
   (func (;27;) (type 0)
-    i32.const 399
-    call 85
+    (local i32)
+    i32.const 419
+    call 92
     call 5
+    call 6
     call 26)
-  (func (;28;) (type 9) (param i32 i32 i32 i32)
+  (func (;28;) (type 10) (param i32 i32 i32 i32)
     (local i32 i32 i32)
     block  ;; label = @1
       local.get 2
@@ -822,7 +1093,7 @@
         br_if 0 (;@2;)
       end
     end)
-  (func (;29;) (type 9) (param i32 i32 i32 i32)
+  (func (;29;) (type 10) (param i32 i32 i32 i32)
     (local i32)
     global.get 0
     i32.const 16
@@ -831,9 +1102,6 @@
     global.set 0
     local.get 4
     local.get 3
-    i32.const 4
-    i32.add
-    local.tee 3
     i32.store offset=12
     local.get 0
     local.get 1
@@ -853,26 +1121,24 @@
     global.set 0
     local.get 2
     local.get 1
-    i32.const 4
-    i32.add
     i32.store offset=12
-    i32.const 6160
+    i32.const 5936
     i32.const 0
     i32.const 5000
     memory.fill
-    i32.const 6160
+    i32.const 5936
     i32.const 4999
     local.get 0
     local.get 2
     i32.load offset=12
     call 28
-    call 74
+    call 81
     drop
-    i32.const 6160
-    i32.const 6160
+    i32.const 5936
+    i32.const 5936
     call 49
-    call 79
-    i32.const 6160
+    call 86
+    i32.const 5936
     i32.const 0
     i32.const 5000
     memory.fill
@@ -987,7 +1253,7 @@
       end
     end
     local.get 2)
-  (func (;36;) (type 10) (param i64 i64) (result i64)
+  (func (;36;) (type 11) (param i64 i64) (result i64)
     (local i64 i64 i64)
     local.get 1
     i64.eqz
@@ -1198,7 +1464,7 @@
     i32.xor
     local.get 0
     i32.sub)
-  (func (;40;) (type 10) (param i64 i64) (result i64)
+  (func (;40;) (type 11) (param i64 i64) (result i64)
     (local i64 i64)
     block  ;; label = @1
       local.get 1
@@ -1408,7 +1674,7 @@
         i32.xor
         local.get 2
         i32.sub
-        i32.load8_u offset=1130
+        i32.load8_u offset=1239
         i32.store8
         local.get 6
         i32.const 7
@@ -1438,7 +1704,7 @@
     i32.const 48
     i32.store8
     i32.const 1)
-  (func (;42;) (type 13) (param i32 i64) (result i32)
+  (func (;42;) (type 15) (param i32 i64) (result i32)
     (local i64 i64 i64 i64 i64 i64 i64 i32 i32 i32)
     local.get 1
     i64.const 0
@@ -1587,7 +1853,7 @@
         local.get 2
         i64.sub
         i32.wrap_i64
-        i32.load8_u offset=1130
+        i32.load8_u offset=1239
         i32.store8
         local.get 10
         i32.const 7
@@ -3246,103 +3512,210 @@
     local.get 7)
   (func (;57;) (type 0)
     i64.const 0
-    call 75
+    call 82
     drop)
-  (func (;58;) (type 6) (param i32)
+  (func (;58;) (type 5) (param i32)
     local.get 0
     i64.extend_i32_s
-    call 75
+    call 82
     drop)
-  (func (;59;) (type 11) (param i64)
+  (func (;59;) (type 8) (param i64)
     i64.const 789789
-    call 75
+    call 82
     drop
     local.get 0
     i64.extend32_s
-    call 75
+    call 82
     drop)
-  (func (;60;) (type 14) (param f32)
+  (func (;60;) (type 12) (param f32)
     i64.const 123123
-    call 75
+    call 82
     drop
     local.get 0
     i32.trunc_sat_f32_s
     i64.extend_i32_s
-    call 75
+    call 82
     drop)
-  (func (;61;) (type 15) (param f64)
+  (func (;61;) (type 13) (param f64)
     i64.const 456456
-    call 75
+    call 82
     drop
     local.get 0
     i32.trunc_sat_f64_s
     i64.extend_i32_s
-    call 75
+    call 82
     drop)
   (func (;62;) (type 0)
-    call 73
+    call 80
     drop)
-  (func (;63;) (type 2) (param i32 i32)
+  (func (;63;) (type 0)
+    i32.const 10936
+    i32.const 0
+    i32.const 1404
+    memory.fill)
+  (func (;64;) (type 0)
+    i32.const 57
+    call 92
+    i32.const 10936
+    i32.const 0
+    i32.const 1404
+    memory.fill)
+  (func (;65;) (type 5) (param i32)
+    (local i32)
+    i32.const 12136
+    i32.load
+    i32.const 2
+    i32.shl
+    local.tee 1
+    i32.const 12140
+    i32.add
+    i32.const 1
+    i32.store
+    local.get 1
+    i32.const 10936
+    i32.add
+    local.get 0
+    i32.store
+    i32.const 12136
+    i32.const 12136
+    i32.load
+    i32.const 1
+    i32.add
+    i32.store)
+  (func (;66;) (type 8) (param i64)
+    (local i32)
+    i32.const 12136
+    i32.load
+    local.tee 1
+    i32.const 2
+    i32.shl
+    i32.const 12140
+    i32.add
+    i32.const 2
+    i32.store
+    local.get 1
+    i32.const 3
+    i32.shl
+    i32.const 11136
+    i32.add
+    local.get 0
+    i64.store
+    i32.const 12136
+    i32.const 12136
+    i32.load
+    i32.const 1
+    i32.add
+    i32.store)
+  (func (;67;) (type 12) (param f32)
+    (local i32)
+    i32.const 12136
+    i32.load
+    i32.const 2
+    i32.shl
+    local.tee 1
+    i32.const 12140
+    i32.add
+    i32.const 3
+    i32.store
+    local.get 1
+    i32.const 11536
+    i32.add
+    local.get 0
+    f32.store
+    i32.const 12136
+    i32.const 12136
+    i32.load
+    i32.const 1
+    i32.add
+    i32.store)
+  (func (;68;) (type 13) (param f64)
+    (local i32)
+    i32.const 12136
+    i32.load
+    local.tee 1
+    i32.const 2
+    i32.shl
+    i32.const 12140
+    i32.add
+    i32.const 4
+    i32.store
+    local.get 1
+    i32.const 3
+    i32.shl
+    i32.const 11736
+    i32.add
+    local.get 0
+    f64.store
+    i32.const 12136
+    i32.const 12136
+    i32.load
+    i32.const 1
+    i32.add
+    i32.store)
+  (func (;69;) (type 0)
+    i32.const 98
+    call 92)
+  (func (;70;) (type 2) (param i32 i32)
     local.get 0
     i32.const 2
     i32.shl
-    i32.const 11160
+    i32.const 12344
     i32.add
     local.get 1
     i32.store)
-  (func (;64;) (type 16) (param i32 i64)
+  (func (;71;) (type 16) (param i32 i64)
     local.get 0
     i32.const 3
     i32.shl
-    i32.const 15160
+    i32.const 16344
     i32.add
     local.get 1
     i64.store)
-  (func (;65;) (type 17) (param i32 f32)
+  (func (;72;) (type 17) (param i32 f32)
     local.get 0
     i32.const 2
     i32.shl
-    i32.const 13160
+    i32.const 14344
     i32.add
     local.get 1
     f32.store)
-  (func (;66;) (type 18) (param i32 f64)
+  (func (;73;) (type 18) (param i32 f64)
     local.get 0
     i32.const 3
     i32.shl
-    i32.const 19160
+    i32.const 20344
     i32.add
     local.get 1
     f64.store)
-  (func (;67;) (type 3) (param i32) (result i32)
+  (func (;74;) (type 3) (param i32) (result i32)
     local.get 0
     i32.const 2
     i32.shl
-    i32.const 11160
+    i32.const 12344
     i32.add
     i32.load)
-  (func (;68;) (type 19) (param i32) (result i64)
+  (func (;75;) (type 19) (param i32) (result i64)
     local.get 0
     i32.const 3
     i32.shl
-    i32.const 15160
+    i32.const 16344
     i32.add
     i64.load)
-  (func (;69;) (type 20) (param i32) (result f32)
+  (func (;76;) (type 20) (param i32) (result f32)
     local.get 0
     i32.const 2
     i32.shl
-    i32.const 13160
+    i32.const 14344
     i32.add
     f32.load)
-  (func (;70;) (type 21) (param i32) (result f64)
+  (func (;77;) (type 21) (param i32) (result f64)
     local.get 0
     i32.const 3
     i32.shl
-    i32.const 19160
+    i32.const 20344
     i32.add
     f64.load)
-  (func (;71;) (type 12) (param i32 i32 i32)
+  (func (;78;) (type 14) (param i32 i32 i32)
     (local i32 i32 i32)
     block  ;; label = @1
       local.get 1
@@ -3439,7 +3812,7 @@
         br_if 0 (;@2;)
       end
     end)
-  (func (;72;) (type 12) (param i32 i32 i32)
+  (func (;79;) (type 14) (param i32 i32 i32)
     block  ;; label = @1
       local.get 1
       i32.const 0
@@ -3453,15 +3826,15 @@
       local.get 1
       memory.fill
     end)
-  (func (;73;) (type 8) (result i64)
+  (func (;80;) (type 9) (result i64)
     i32.const 9999
-    call 6
+    call 7
     i64.extend_i32_s)
-  (func (;74;) (type 8) (result i64)
+  (func (;81;) (type 9) (result i64)
     i32.const 9998
-    call 6
+    call 7
     i64.extend_i32_s)
-  (func (;75;) (type 7) (param i64) (result i64)
+  (func (;82;) (type 7) (param i64) (result i64)
     (local i32)
     local.get 0
     i32.wrap_i64
@@ -3469,27 +3842,27 @@
     local.get 1
     i32.const 10000
     i32.add
-    call 76
+    call 83
     i64.const 1
     i64.eq
     select
-    call 6
+    call 7
     i64.extend_i32_s)
-  (func (;76;) (type 8) (result i64)
+  (func (;83;) (type 9) (result i64)
     i32.const 9995
-    call 6
+    call 7
     i64.extend_i32_s)
-  (func (;77;) (type 0)
+  (func (;84;) (type 0)
     i32.const 9997
-    call 6
+    call 7
     drop)
-  (func (;78;) (type 0)
+  (func (;85;) (type 0)
     i32.const 9996
-    call 6
+    call 7
     drop)
-  (func (;79;) (type 2) (param i32 i32)
+  (func (;86;) (type 2) (param i32 i32)
     i64.const 3
-    call 75
+    call 82
     drop
     local.get 1
     i32.const 0
@@ -3498,7 +3871,7 @@
       loop  ;; label = @2
         local.get 0
         i64.load8_u
-        call 75
+        call 82
         drop
         local.get 0
         i32.const 1
@@ -3511,9 +3884,9 @@
         br_if 0 (;@2;)
       end
     end
-    call 73
+    call 80
     drop)
-  (func (;80;) (type 2) (param i32 i32)
+  (func (;87;) (type 2) (param i32 i32)
     local.get 1
     i32.const 0
     i32.gt_s
@@ -3521,7 +3894,7 @@
       loop  ;; label = @2
         local.get 0
         i64.load8_u
-        call 75
+        call 82
         drop
         local.get 0
         i32.const 1
@@ -3534,16 +3907,16 @@
         br_if 0 (;@2;)
       end
     end)
-  (func (;81;) (type 11) (param i64)
+  (func (;88;) (type 8) (param i64)
     i64.const 0
-    call 75
+    call 82
     drop
     local.get 0
-    call 75
+    call 82
     drop
-    call 73
+    call 80
     drop)
-  (func (;82;) (type 4) (param i32 i32 i32) (result i32)
+  (func (;89;) (type 4) (param i32 i32 i32) (result i32)
     (local i32 i32 i32 i32)
     local.get 2
     i32.const 0
@@ -3556,7 +3929,7 @@
         local.get 0
         i32.add
         local.tee 6
-        call 7
+        call 2
         local.set 4
         local.get 1
         local.get 3
@@ -3619,10 +3992,10 @@
         br_if 0 (;@2;)
       end
     end
-    call 73
+    call 80
     drop
     local.get 0)
-  (func (;83;) (type 2) (param i32 i32)
+  (func (;90;) (type 2) (param i32 i32)
     local.get 1
     i32.const 0
     i32.gt_s
@@ -3630,7 +4003,7 @@
       loop  ;; label = @2
         local.get 0
         i64.load32_s
-        call 75
+        call 82
         drop
         local.get 0
         i32.const 4
@@ -3643,82 +4016,80 @@
         br_if 0 (;@2;)
       end
     end)
-  (func (;84;) (type 0)
+  (func (;91;) (type 0)
     i64.const 6
-    call 75
+    call 82
     drop
-    call 73
+    call 80
     drop)
-  (func (;85;) (type 6) (param i32)
-    i32.const 23160
+  (func (;92;) (type 5) (param i32)
+    i32.const 24344
     i32.const 123456
-    call 7
+    call 2
     local.get 0
     i32.add
-    i32.const 23160
+    i32.const 24344
     i32.load
     i32.add
     i32.store)
   (memory (;0;) 21)
-  (global (;0;) (mut i32) (i32.const 678528))
-  (global (;1;) i32 (i32.const 1152))
-  (global (;2;) i32 (i32.const 5824))
+  (global (;0;) (mut i32) (i32.const 679712))
+  (global (;1;) i32 (i32.const 1264))
+  (global (;2;) i32 (i32.const 10936))
   (global (;3;) i32 (i32.const 5936))
-  (global (;4;) i32 (i32.const 6048))
-  (global (;5;) i32 (i32.const 6160))
-  (global (;6;) i32 (i32.const 1130))
-  (global (;7;) i32 (i32.const 11160))
-  (global (;8;) i32 (i32.const 23160))
-  (global (;9;) i32 (i32.const 1024))
-  (global (;10;) i32 (i32.const 23164))
-  (global (;11;) i32 (i32.const 23168))
-  (global (;12;) i32 (i32.const 678528))
-  (global (;13;) i32 (i32.const 1024))
-  (global (;14;) i32 (i32.const 678528))
-  (global (;15;) i32 (i32.const 1376256))
-  (global (;16;) i32 (i32.const 0))
-  (global (;17;) i32 (i32.const 1))
-  (global (;18;) i32 (i32.const 65536))
+  (global (;4;) i32 (i32.const 1239))
+  (global (;5;) i32 (i32.const 12344))
+  (global (;6;) i32 (i32.const 24344))
+  (global (;7;) i32 (i32.const 1024))
+  (global (;8;) i32 (i32.const 24348))
+  (global (;9;) i32 (i32.const 24352))
+  (global (;10;) i32 (i32.const 679712))
+  (global (;11;) i32 (i32.const 1024))
+  (global (;12;) i32 (i32.const 679712))
+  (global (;13;) i32 (i32.const 1376256))
+  (global (;14;) i32 (i32.const 0))
+  (global (;15;) i32 (i32.const 1))
+  (global (;16;) i32 (i32.const 65536))
   (export "memory" (memory 0))
   (export "__wasm_call_ctors" (func 9))
   (export "_reset_stats" (func 10))
   (export "poopState" (global 1))
-  (export "memset_i32" (func 71))
+  (export "memset_i32" (func 78))
   (export "_reset_debug" (func 11))
   (export "_reset_bigfunc_trace" (func 12))
   (export "_reset_chacha" (func 13))
-  (export "memset_i8" (func 72))
+  (export "memset_i8" (func 79))
   (export "_init_all_the_things" (func 14))
   (export "_poopf" (func 30))
-  (export "hxh_console_log_literal" (func 81))
-  (export "hxh_push_microcode_literal" (func 75))
-  (export "hxh_parse_execute" (func 73))
+  (export "hxh_console_log_literal" (func 88))
+  (export "hxh_push_microcode_literal" (func 82))
+  (export "hxh_parse_execute" (func 80))
   (export "export_enable_stats" (func 15))
   (export "export_chacha_enable" (func 16))
   (export "export_enable_debug" (func 17))
   (export "export_enable_bigfunc_trace" (func 18))
   (export "export_wasm_arras_memsize" (func 19))
   (export "_special_bigfunc_beforebranch" (func 20))
-  (export "export_nothing" (func 85))
-  (export "hxh_reset" (func 74))
-  (export "n_point" (global 2))
-  (export "g_point" (global 3))
-  (export "xd_point" (global 4))
+  (export "export_nothing" (func 92))
+  (export "special_bigfunc_localget_i32" (func 74))
+  (export "special_bigfunc_localget_i64" (func 75))
+  (export "hxh_reset" (func 81))
+  (export "int_to_str" (func 41))
   (export "add_chacha_byte" (func 21))
   (export "_special_bigfunc_chachabyte_1" (func 22))
   (export "_special_bigfunc_chachabyte_2" (func 23))
   (export "_special_bigfunc_chachafinish_1" (func 24))
   (export "_special_bigfunc_chachafinish_2" (func 25))
   (export "every_func_preamble" (func 26))
-  (export "inject_all" (func 27))
-  (export "vspoopf" (func 28))
+  (export "params_struct" (global 2))
+  (export "i64_to_str" (func 42))
   (export "strlen" (func 49))
   (export "strcat" (func 50))
-  (export "int_to_str" (func 41))
-  (export "i64_to_str" (func 42))
+  (export "inject_all" (func 27))
+  (export "vspoopf" (func 28))
   (export "_spoopf" (func 29))
-  (export "printf_buffer" (global 5))
-  (export "hxh_console_log_char_string" (func 79))
+  (export "printf_buffer" (global 3))
+  (export "hxh_console_log_char_string" (func 86))
   (export "absi" (func 31))
   (export "absi64" (func 32))
   (export "max_i32" (func 33))
@@ -3729,7 +4100,7 @@
   (export "digits10i64" (func 38))
   (export "ithDigit10" (func 39))
   (export "ithDigit10i64" (func 40))
-  (export "digitCharMap" (global 6))
+  (export "digitCharMap" (global 4))
   (export "memset" (func 43))
   (export "memcpy" (func 44))
   (export "memcmp" (func 45))
@@ -3748,32 +4119,37 @@
   (export "_special_printargs_per_arg_f32" (func 60))
   (export "_special_printargs_per_arg_f64" (func 61))
   (export "_special_printargs_end" (func 62))
-  (export "_special_bigfunc_localset_i32" (func 63))
-  (export "locals_struct" (global 7))
-  (export "_special_bigfunc_localset_i64" (func 64))
-  (export "_special_bigfunc_localset_f32" (func 65))
-  (export "_special_bigfunc_localset_f64" (func 66))
-  (export "special_bigfunc_localget_i32" (func 67))
-  (export "special_bigfunc_localget_i64" (func 68))
-  (export "special_bigfunc_localget_f32" (func 69))
-  (export "special_bigfunc_localget_f64" (func 70))
-  (export "hxh_extended_literals_status" (func 76))
-  (export "hxh_extended_literals_on" (func 77))
-  (export "hxh_extended_literals_off" (func 78))
-  (export "_hxh_add_char_string_microcode" (func 80))
-  (export "memcpy_i8_to_arras_memory" (func 82))
-  (export "_hxh_add_int_string_microcode" (func 83))
-  (export "_hxh_breakpoint" (func 84))
-  (export "nothing_state" (global 8))
-  (export "__dso_handle" (global 9))
-  (export "__data_end" (global 10))
-  (export "__stack_low" (global 11))
-  (export "__stack_high" (global 12))
-  (export "__global_base" (global 13))
-  (export "__heap_base" (global 14))
-  (export "__heap_end" (global 15))
-  (export "__memory_base" (global 16))
-  (export "__table_base" (global 17))
-  (export "__wasm_first_page_end" (global 18))
-  (data (;0;) (i32.const 1024) "what da-|%d %d %l|-number!?\00Thu Oct 30 11:54:49 PM EDT 2025\00Welcome to Bananan Turd Labs. \0aCompiled: '%s'")
-  (data (;1;) (i32.const 1130) "0123456789"))
+  (export "param_struct_reset" (func 63))
+  (export "_special_updateparams_begin" (func 64))
+  (export "_special_updateparams_perarg_i32" (func 65))
+  (export "_special_updateparams_perarg_i64" (func 66))
+  (export "_special_updateparams_perarg_f32" (func 67))
+  (export "_special_updateparams_perarg_f64" (func 68))
+  (export "_special_updateparams_end" (func 69))
+  (export "_special_bigfunc_localset_i32" (func 70))
+  (export "locals_struct" (global 5))
+  (export "_special_bigfunc_localset_i64" (func 71))
+  (export "_special_bigfunc_localset_f32" (func 72))
+  (export "_special_bigfunc_localset_f64" (func 73))
+  (export "special_bigfunc_localget_f32" (func 76))
+  (export "special_bigfunc_localget_f64" (func 77))
+  (export "hxh_extended_literals_status" (func 83))
+  (export "hxh_extended_literals_on" (func 84))
+  (export "hxh_extended_literals_off" (func 85))
+  (export "_hxh_add_char_string_microcode" (func 87))
+  (export "memcpy_i8_to_arras_memory" (func 89))
+  (export "_hxh_add_int_string_microcode" (func 90))
+  (export "_hxh_breakpoint" (func 91))
+  (export "nothing_state" (global 6))
+  (export "__dso_handle" (global 7))
+  (export "__data_end" (global 8))
+  (export "__stack_low" (global 9))
+  (export "__stack_high" (global 10))
+  (export "__global_base" (global 11))
+  (export "__heap_base" (global 12))
+  (export "__heap_end" (global 13))
+  (export "__memory_base" (global 14))
+  (export "__table_base" (global 15))
+  (export "__wasm_first_page_end" (global 16))
+  (data (;0;) (i32.const 1024) "bigfunc_index#%d, fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s\00what da-|%d %d %l|-number!?\00Fri Oct 31 04:08:09 AM EDT 2025\00an f64\00an f32\00call#%d %d(%s)\00Welcome to Bananan Turd Labs. \0aCompiled: '%s'\00, ")
+  (data (;1;) (i32.const 1239) "0123456789"))

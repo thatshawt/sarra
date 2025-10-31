@@ -58,7 +58,7 @@ void _spoopf(u8* dest, s32 max, u8* format, ...)
     __builtin_va_start(argp, format);
 
     // take out the 0 that we put with the macro
-    __builtin_va_arg(argp, s32);
+    // __builtin_va_arg(argp, s32);
 
     vspoopf(dest, max, format, argp);
 
@@ -76,7 +76,7 @@ void _poopf(u8* format, ...)
     __builtin_va_start(argp, format);
 
     // take out the 0 that we put with the macro
-    __builtin_va_arg(argp, s32);
+    // __builtin_va_arg(argp, s32);
 
     memset_i8(printf_buffer, sizeof(printf_buffer), 0);
 

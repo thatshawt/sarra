@@ -1,4 +1,6 @@
 #include "special.h"
+#include "poopstrings.h"
+#include "utils.h"
 
 void _special_printargs_begin()
 {
@@ -35,18 +37,80 @@ void _special_printargs_end()
     hxh_parse_execute();
 }
 
+struct Params_Struct params_struct;
+
+__attribute__((noinline))
+void param_struct_reset()
+{
+    memset(params_struct.i32params, 0, sizeof(params_struct.i32params));
+    memset(params_struct.i64params, 0, sizeof(params_struct.i64params));
+    memset(params_struct.f32params, 0, sizeof(params_struct.f32params));
+    memset(params_struct.f64params, 0, sizeof(params_struct.f64params));
+
+    params_struct.param_i = 0;
+
+    memset(params_struct.paramTypes, 0, sizeof(params_struct.paramTypes));
+}
+
+void _special_updateparams_begin()
+{
+    UNIQUEIFER;
+    param_struct_reset();
+}
+void _special_updateparams_perarg_i32(s32 arg)
+{
+    s32 parami = params_struct.param_i;
+    params_struct.i32params[parami] = arg;
+    
+    params_struct.paramTypes[parami] = PARAM_T_I32;
+
+    params_struct.param_i++;
+}
+void _special_updateparams_perarg_i64(s64 arg)
+{
+    s32 parami = params_struct.param_i;
+    params_struct.i64params[parami] = arg;
+    
+    params_struct.paramTypes[parami] = PARAM_T_I64;
+
+    params_struct.param_i++;
+}
+void _special_updateparams_perarg_f32(f32 arg)
+{
+    s32 parami = params_struct.param_i;
+    params_struct.f32params[parami] = arg;
+    
+    params_struct.paramTypes[parami] = PARAM_T_F32;
+
+    params_struct.param_i++;
+}
+void _special_updateparams_perarg_f64(f64 arg)
+{
+    s32 parami = params_struct.param_i;
+    params_struct.f64params[parami] = arg;
+    
+    params_struct.paramTypes[parami] = PARAM_T_F64;
+
+    params_struct.param_i++;
+}
+void _special_updateparams_end()
+{
+    UNIQUEIFER;
+    //do nothing i think
+}
 
 
-#define MAX_I32_LOCALS 500
-#define MAX_I64_LOCALS 500
-#define MAX_F32_LOCALS 500
-#define MAX_F64_LOCALS 500
+#define MAX_LOCALS_STRUCT_LOCALS 500
+// #define MAX_I32_LOCALS 500
+// #define MAX_I64_LOCALS 500
+// #define MAX_F32_LOCALS 500
+// #define MAX_F64_LOCALS 500
 
 struct{
-    s32 i32Locals[MAX_I32_LOCALS];
-    f32 f32Locals[MAX_F32_LOCALS];
-    s64 i64Locals[MAX_I64_LOCALS];
-    f64 f64Locals[MAX_F64_LOCALS];
+    s32 i32Locals[MAX_LOCALS_STRUCT_LOCALS];
+    f32 f32Locals[MAX_LOCALS_STRUCT_LOCALS];
+    s64 i64Locals[MAX_LOCALS_STRUCT_LOCALS];
+    f64 f64Locals[MAX_LOCALS_STRUCT_LOCALS];
 }locals_struct;
 
 void _special_bigfunc_localset_i32(s32 index, s32 value){

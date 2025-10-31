@@ -1,3 +1,5 @@
+#ifndef WASMTYPES_H
+#define WASMTYPES_H
 // typedef int i32;
 // typedef long long i64;
 // typedef float f32;
@@ -41,4 +43,4 @@ typedef uint64_t u64;
 typedef int64_t s64;
 typedef float f32;
 typedef double f64;
-// #endif
+#endif

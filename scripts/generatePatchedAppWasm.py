@@ -660,6 +660,8 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_START_FUNC_NUM")
             elif import_thing.name == "special_bigfunc_num":
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_BIGFUNC_NUM")
+            elif import_thing.name == "special_update_param_struct":
+                inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_UPDATE_PARAM_STRUCT")
 
 
         return inject_body
@@ -747,20 +749,50 @@ for line in app_wat_content.split("\n"):
             temp = temp.split(" ")
             param_list = temp
 
-        poop_mapping = {
+        printarg_mapping = {
             "i32": "_special_printargs_per_arg_i32",
             "i64": "_special_printargs_per_arg_i64",
             "f32": "_special_printargs_per_arg_f32",
             "f64": "_special_printargs_per_arg_f64",
         }
+        updateparams_mapping = {
+            "i32": "_special_updateparams_perarg_i32",
+            "i64": "_special_updateparams_perarg_i64",
+            "f32": "_special_updateparams_perarg_f32",
+            "f64": "_special_updateparams_perarg_f64",
+        }
+
         print_args_code = []
+        updateparam_code = []
 
         for i in range(len(param_list)):
             param = param_list[i]
-            poop_map_number = inject_wat_stuff.exports[poop_mapping[param]]
-            special_call_number = seperate_func_mapping[poop_map_number]
-            print_args_code.append(f"    local.get {i}\ncall {special_call_number}")
 
+            #do printarg
+            printarg_func_name = printarg_mapping[param]
+            printarg_func_num = inject_wat_stuff.exports[printarg_func_name]
+            print_arg_call_num = seperate_func_mapping[printarg_func_num]
+            print_args_code.append(f"    local.get {i}\ncall {print_arg_call_num}")
+
+            #do updateparam
+            if i == 0: # begin
+                updateparam_func_name = "_special_updateparams_begin"
+                updateparam_func_num = inject_wat_stuff.exports[updateparam_func_name]
+                updateparam_call_num = seperate_func_mapping[updateparam_func_num]
+
+                updateparam_code.append(f"call {updateparam_call_num}")
+
+            updateparam_func_name = updateparams_mapping[param]
+            updateparam_func_num = inject_wat_stuff.exports[updateparam_func_name]
+            updateparam_call_num = seperate_func_mapping[updateparam_func_num]
+            updateparam_code.append(f"    local.get {i}\ncall {updateparam_call_num}")
+
+            if i == len(param_list)-1: # end
+                updateparam_func_name = "_special_updateparams_end"
+                updateparam_func_num = inject_wat_stuff.exports[updateparam_func_name]
+                updateparam_call_num = seperate_func_mapping[updateparam_func_num]
+
+                updateparam_code.append(f"call {updateparam_call_num}")
 
         locals_list = []
         #    (local i32 i32)
@@ -805,6 +837,10 @@ for line in app_wat_content.split("\n"):
             injecting_code = injecting_code.replace("SPECIAL_PRINT_ARGS", "\n" + "\n".join(print_args_code) + "\n")
             # print(f"replacing the SPECIAL_PRINT_ARGS '{func_header_line}','{param_list}','{special_inject_code}'",)
             # exit(1)
+
+        if "SPECIAL_UPDATE_PARAM_STRUCT" in injecting_code:
+            injecting_code = injecting_code.replace("SPECIAL_UPDATE_PARAM_STRUCT",
+            f"\n{"\n".join(updateparam_code)}\n")
 
         if "SPECIAL_CLEAR_LOCALS" in injecting_code:
             injecting_code = injecting_code.replace("SPECIAL_CLEAR_LOCALS", "\n" + "\n".join(clear_locals_code) + "\n")

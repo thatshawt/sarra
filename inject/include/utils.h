@@ -33,6 +33,9 @@ extern s32 import_e_t_get(s32 t);
 extern s32 import_e_t_call(s32 t);
 
 
+extern void special_update_param_struct();
+
+//deprecated
 extern void special_printargs();
 
 extern void special_clear_locals();
@@ -44,6 +47,7 @@ extern s32 special_global_get_i32_1();
 extern s64 special_global_get_i64_0();
 extern f32 special_global_get_f32_0();
 extern f64 special_global_get_f64_0();
+
 
 // TODO
 // extern void special_global_set_i32_0(s32 value);
@@ -93,7 +97,7 @@ void memset_i8(u8* start, s32 size, u8 value);
 
 //the one and only
 void _poopf(u8* format, ...);
-#define poopf(format, ...) _poopf((format), (s32)0, ##__VA_ARGS__)
+// #define poopf(format, ...) _poopf((format), (s32)0, ##__VA_ARGS__)
 
 void _spoopf(u8* dest, s32 max, u8* format, ...);
 #define spoopf(dest, max, format, ...) _spoopf((dest), (max), (format), (s32)0, ##__VA_ARGS__)

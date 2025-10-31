@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "poopstrings.h"
 #include "poopmath.h"
+#include "special.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
 #define DEBUG_MAX_COUNT 500
@@ -74,9 +75,9 @@ void _reset_chacha(){
 }
 
 void _init_all_the_things(){
-  poopf((u8*)"Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
+  _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
-  poopf((u8*)"what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
+  _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
 
   hxh_console_log_literal(special_global_get_i32_1());
 
@@ -124,11 +125,6 @@ void export_wasm_arras_memsize(){
 
 #define VALID_ARRAS_MEMLOCATION(x) ( ((x) > 0) && ((x) < special_arras_memory_memory_size()*PAGESIZE_BYTES) )
 
-
-
-u8 n_point[100] = {0};
-u8 g_point[100] = {0};
-u8 xd_point[100] = {0};
 int _special_bigfunc_beforebranch(s32 index){
   UNIQUEIFER;
 
@@ -141,13 +137,13 @@ int _special_bigfunc_beforebranch(s32 index){
       _reset_debug();
     }else{
       
-      // s32 var_r = special_bigfunc_localget_i32(17);
-      // s32 var_y = special_bigfunc_localget_i32(24);
-      // s32 var_fa = special_bigfunc_localget_i32(31);
-      // s32 var_n = special_bigfunc_localget_i32(13);
+      s32 var_r = special_bigfunc_localget_i32(17);
+      s32 var_y = special_bigfunc_localget_i32(24);
+      s32 var_fa = special_bigfunc_localget_i32(31);
+      s32 var_n = special_bigfunc_localget_i32(13);
       
-      // s32 var_g = special_bigfunc_localget_i32(6);
-      // s64 var_xd = special_bigfunc_localget_i64(127);
+      s32 var_g = special_bigfunc_localget_i32(6);
+      s64 var_xd = special_bigfunc_localget_i64(127);
       
       // hxh_console_log_literal(123);
       // u8* hithere = "hi there";
@@ -155,47 +151,47 @@ int _special_bigfunc_beforebranch(s32 index){
 
       hxh_reset();
 
-      memset(n_point, 0, sizeof(n_point));
-      memset(g_point, 0, sizeof(g_point));
-      memset(xd_point, 0, sizeof(xd_point));
+      u8 n_point[150] = {0};
+      u8 g_point[150] = {0};
+      u8 xd_point[150] = {0};
 
-      // if(VALID_ARRAS_MEMLOCATION(var_n)){
-      //   int_to_str(n_point, special_arras_memory_i32_load(var_n));
-      // }
+      if(VALID_ARRAS_MEMLOCATION(var_n)){
+        int_to_str(n_point, special_arras_memory_i32_load(var_n));
+      }
       // else{
       //   strcat(n_point, "nothing");
       // }
 
       // poopf("loaded n");
 
-      // if(VALID_ARRAS_MEMLOCATION(var_g)){
-      //   int_to_str(g_point, special_arras_memory_i32_load(var_g));
-      // }
+      if(VALID_ARRAS_MEMLOCATION(var_g)){
+        int_to_str(g_point, special_arras_memory_i32_load(var_g));
+      }
       // else{
       //   strcat(g_point, "nothing");
       // }
 
       // poopf("loaded g");
 
-      // if(VALID_ARRAS_MEMLOCATION((s32)var_xd)){
-      //   int_to_str(xd_point, special_arras_memory_i32_load((s32)var_xd));
-      // }
+      if(VALID_ARRAS_MEMLOCATION((s32)var_xd)){
+        int_to_str(xd_point, special_arras_memory_i32_load((s32)var_xd));
+      }
       // else{
       //   strcat(xd_point, "nothing");
       // }
 
       // poopf("loaded xd");
-      hxh_console_log_literal(special_global_get_i32_1());
+      // hxh_console_log_literal(special_global_get_i32_1());
       // poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
       // poopf("got this far");
-      // poopf((u8*)"%d| fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
-      //   poopState.bigfunc_trace_count,
-      //   var_fa, var_y, var_r,
-      //   var_n, n_point,
-      //   var_g, g_point,
-      //   var_xd, xd_point
-      // );
+      _poopf("bigfunc_index#%d, fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
+        poopState.bigfunc_trace_count,
+        var_fa, var_y, var_r,
+        var_n, n_point,
+        var_g, g_point,
+        var_xd, xd_point
+      );
 
       poopState.bigfunc_trace_count++;
       
@@ -318,7 +314,7 @@ void _special_bigfunc_chachafinish_2(){
       // _hxh_breakpoint();
 
 
-      hxh_console_log_literal(special_global_get_i32_1());
+      // hxh_console_log_literal(special_global_get_i32_1());
 
       _reset_debug();
       _reset_bigfunc_trace();
@@ -341,6 +337,8 @@ void _special_bigfunc_chachafinish_2(){
   }
 }
 
+extern struct Params_Struct params_struct;
+
 void every_func_preamble(s32 func_num){
   if(func_num == special_start_func_number()){
     // _hxh_breakpoint();
@@ -358,11 +356,35 @@ void every_func_preamble(s32 func_num){
         hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
         hxh_parse_execute();
       }else{
-        hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
-        hxh_push_microcode_literal(poopState.debug_count);
-        hxh_push_microcode_literal(func_num);
-        special_printargs();
-        hxh_parse_execute();
+        // hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+        // hxh_push_microcode_literal(poopState.debug_count);
+        // hxh_push_microcode_literal(func_num);
+        // hxh_parse_execute();
+        u8 args_str[1000] = {0};
+        for(int i=0;i<params_struct.param_i;i++){
+          enum Param_Type param_type = params_struct.paramTypes[i];
+          u8 temp_buffer_1[250] = {0};
+          switch(param_type){
+            case PARAM_T_NIL: //error right here
+              break;
+            case PARAM_T_I32:
+              int_to_str(temp_buffer_1, params_struct.i32params[i]);
+              break;
+            case PARAM_T_I64:
+              i64_to_str(temp_buffer_1, params_struct.i64params[i]);
+              break;
+            case PARAM_T_F32:
+              strcat(temp_buffer_1, "an f32");
+              break;
+            case PARAM_T_F64:
+              strcat(temp_buffer_1, "an f64");
+              break;
+          }
+          strcat(args_str, temp_buffer_1);
+          if(i != params_struct.param_i-1)
+            strcat(args_str, ", ");
+        }
+        _poopf("call#%d %d(%s)", poopState.debug_count, func_num, args_str);
         poopState.debug_count++;
       }
     }
@@ -397,6 +419,8 @@ void inject_all(){
   UNIQUEIFER;
 
   s32 func_num = special_func_number();
+
+  special_update_param_struct();
 
   // the injection script isnt good enough to account for lots of complex code so instead im just gonna put one function call in here.
   every_func_preamble(func_num);

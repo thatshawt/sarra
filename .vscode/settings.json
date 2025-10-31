@@ -36,6 +36,7 @@
         "special.h": "c",
         "wasmtypes.h": "c",
         "poopmath.h": "c",
-        "limits": "c"
+        "limits": "c",
+        "complex": "c"
     }
 }

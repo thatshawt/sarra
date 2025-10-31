@@ -1,6 +1,10 @@
 * source code primitive: implement a global.set special function.
 
-* retire `special_printargs()` in favor of this: copy _special_bigfunc_localget, but like this `s32 _special_arras_funcparam_i32_get(s32 index);`. same for `void _special_arras_funcparam_i32_set(s32 index, s32 value);`.
+* add some standard library things like: hashmap, linkedlist, arena allocator.
+
+* refractor generatePatchedAppWasm.py by adding a class like this `class InjectWatStuff(injectWat, injectedIntoWat)`. then i can add algorithms and functions to retrieve some good information like transforming inject func name into a injected call number.
+
+* reimplement `special_printargs()` using these new primitives: `s32 _special_arras_funcparam_i32_get(s32 index);`. same for `void _special_arras_funcparam_i32_set(s32 index, s32 value);`.
 
 * bigSwitchIndexFile.py performance: update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
 
