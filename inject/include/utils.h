@@ -38,6 +38,19 @@ extern void special_printargs();
 extern void special_clear_locals();
 extern int special_local_get_6();
 
+extern s32 special_global_get_i32_0();
+extern s32 special_global_get_i32_1();
+
+extern s64 special_global_get_i64_0();
+extern f32 special_global_get_f32_0();
+extern f64 special_global_get_f64_0();
+
+// TODO
+// extern void special_global_set_i32_0(s32 value);
+// extern void special_global_set_i64_0(s64 value);
+// extern void special_global_set_f32_0(f32 value);
+// extern void special_global_set_f64_0(f64 value);
+
 void _special_bigfunc_localset_i32(s32 index, s32 value);
 void _special_bigfunc_localset_i64(s32 index, s64 value);
 void _special_bigfunc_localset_f32(s32 index, f32 value);
@@ -62,6 +75,7 @@ extern s32 special_arras_memory_memory_size(); // memory.size
 extern s32 special_func_number();
 extern s32 special_start_func_number();
 extern s32 special_bigfunc_num();
+
 
 
 #define UNIQUEIFER export_nothing((s32) __LINE__)

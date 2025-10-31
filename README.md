@@ -7,10 +7,9 @@ The c code (in inject/src) is compiled down to wasm using clang (see inject/buil
 
 ## Helpful Readings
 
-* [Compiling C to WebAssembly without Emscripten by Surma](https://surma.dev/things/c-to-webassembly/) (this one was a godsend)
-
-* [What’s in that .wasm? Introducing: wasm-decompile by Wouter van Oortmerssen](https://v8.dev/blog/wasm-decompile)
-
+* [Compiling C to WebAssembly without Emscripten](https://surma.dev/things/c-to-webassembly/) by Surma (this one was a godsend)
+* [What’s in that .wasm? Introducing: wasm-decompile](https://v8.dev/blog/wasm-decompile) by Wouter van Oortmerssen
+* [coderundebug.com/learn/wat/introduction](https://coderundebug.com/learn/wat/introduction/) by Stephen Paul Hassall
 # Copyright Stuff
 
 I copied portions of code from musl. I put that code into these files: inject/src/poopstrings.c|poopmath.c, inject/include/poopstrings.h|poopint.h|poopmath.h.

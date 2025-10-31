@@ -9,7 +9,7 @@ u8 printf_buffer[5000] = {0};
 __attribute__((noinline))
 void vspoopf(u8* dest, s32 max, u8* format, __builtin_va_list argp)
 {
-    hxh_console_log_literal(789);
+    // hxh_console_log_literal(789);
     // memset_i8(printf_buffer, sizeof(printf_buffer), 0);
     int outi = 0;
     // __builtin_va_start(argp, format);
@@ -70,7 +70,7 @@ __attribute__((noinline))
 void _poopf(u8* format, ...)
 {
     // hxh_CONSOLE_LOG_CHAR_STRING("poopf called",13);
-    hxh_console_log_literal(456);
+    // hxh_console_log_literal(456);
 
     __builtin_va_list argp;
     __builtin_va_start(argp, format);

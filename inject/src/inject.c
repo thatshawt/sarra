@@ -78,6 +78,8 @@ void _init_all_the_things(){
 
   poopf((u8*)"what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
 
+  hxh_console_log_literal(special_global_get_i32_1());
+
   _reset_debug();
   _reset_stats();
   _reset_bigfunc_trace();
@@ -139,17 +141,17 @@ int _special_bigfunc_beforebranch(s32 index){
       _reset_debug();
     }else{
       
-      s32 var_r = special_bigfunc_localget_i32(17);
-      s32 var_y = special_bigfunc_localget_i32(24);
-      s32 var_fa = special_bigfunc_localget_i32(31);
-      s32 var_n = special_bigfunc_localget_i32(13);
+      // s32 var_r = special_bigfunc_localget_i32(17);
+      // s32 var_y = special_bigfunc_localget_i32(24);
+      // s32 var_fa = special_bigfunc_localget_i32(31);
+      // s32 var_n = special_bigfunc_localget_i32(13);
       
-      s32 var_g = special_bigfunc_localget_i32(6);
-      s64 var_xd = special_bigfunc_localget_i64(127);
+      // s32 var_g = special_bigfunc_localget_i32(6);
+      // s64 var_xd = special_bigfunc_localget_i64(127);
       
-      hxh_console_log_literal(123);
+      // hxh_console_log_literal(123);
       // u8* hithere = "hi there";
-      _poopf("%d %d %d %d", (s32)123, (s32)456, (s32)789, (s32)123);
+      // _poopf("%d %d %d %d", (s32)123, (s32)456, (s32)789, (s32)123);
 
       hxh_reset();
 
@@ -157,36 +159,36 @@ int _special_bigfunc_beforebranch(s32 index){
       memset(g_point, 0, sizeof(g_point));
       memset(xd_point, 0, sizeof(xd_point));
 
-      if(VALID_ARRAS_MEMLOCATION(var_n)){
-        int_to_str(n_point, special_arras_memory_i32_load(var_n));
-      }
+      // if(VALID_ARRAS_MEMLOCATION(var_n)){
+      //   int_to_str(n_point, special_arras_memory_i32_load(var_n));
+      // }
       // else{
       //   strcat(n_point, "nothing");
       // }
 
       // poopf("loaded n");
 
-      if(VALID_ARRAS_MEMLOCATION(var_g)){
-        int_to_str(g_point, special_arras_memory_i32_load(var_g));
-      }
+      // if(VALID_ARRAS_MEMLOCATION(var_g)){
+      //   int_to_str(g_point, special_arras_memory_i32_load(var_g));
+      // }
       // else{
       //   strcat(g_point, "nothing");
       // }
 
       // poopf("loaded g");
 
-      if(VALID_ARRAS_MEMLOCATION((s32)var_xd)){
-        int_to_str(xd_point, special_arras_memory_i32_load((s32)var_xd));
-      }
+      // if(VALID_ARRAS_MEMLOCATION((s32)var_xd)){
+      //   int_to_str(xd_point, special_arras_memory_i32_load((s32)var_xd));
+      // }
       // else{
       //   strcat(xd_point, "nothing");
       // }
 
       // poopf("loaded xd");
-      
-      poopf("fa test=%d, digits=%d, ", var_fa,  digits10(var_fa));
+      hxh_console_log_literal(special_global_get_i32_1());
+      // poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
-      // // poopf("got this far");
+      // poopf("got this far");
       // poopf((u8*)"%d| fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
       //   poopState.bigfunc_trace_count,
       //   var_fa, var_y, var_r,
@@ -315,6 +317,9 @@ void _special_bigfunc_chachafinish_2(){
       // memcpy_i8_to_arras_memory(poopState.bigfunc_chacha_firstaddress+(result-(int)poopState.bigfunc_chacha_buffer),result,9);
       // _hxh_breakpoint();
 
+
+      hxh_console_log_literal(special_global_get_i32_1());
+
       _reset_debug();
       _reset_bigfunc_trace();
       poopState.debug_enabled = TRUE;
@@ -336,11 +341,7 @@ void _special_bigfunc_chachafinish_2(){
   }
 }
 
-void inject_all(){
-  UNIQUEIFER;
-
-  s32 func_num = special_func_number();
-
+void every_func_preamble(s32 func_num){
   if(func_num == special_start_func_number()){
     // _hxh_breakpoint();
     _init_all_the_things();
@@ -389,6 +390,15 @@ void inject_all(){
   //     poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
   //   }
   // }
-  special_clear_locals();
+  // special_clear_locals();
+}
+
+void inject_all(){
+  UNIQUEIFER;
+
+  s32 func_num = special_func_number();
+
+  // the injection script isnt good enough to account for lots of complex code so instead im just gonna put one function call in here.
+  every_func_preamble(func_num);
 }
 

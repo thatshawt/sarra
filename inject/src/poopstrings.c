@@ -1,4 +1,5 @@
 #include "poopstrings.h"
+#include "utils.h"
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)<(b)?(a):(b))
@@ -144,12 +145,14 @@ char *strpbrk(const char *s, const char *b)
 	return *s ? (char *)s : 0;
 }
 
+__attribute__((noinline))
 char *strchr(const char *s, int c)
 {
 	char *r = __strchrnul(s, c);
 	return *(unsigned char *)r == (unsigned char)c ? r : 0;
 }
 
+__attribute__((noinline))
 static char *twobyte_strstr(const unsigned char *h, const unsigned char *n)
 {
 	uint16_t nw = n[0]<<8 | n[1], hw = h[0]<<8 | h[1];
@@ -157,6 +160,7 @@ static char *twobyte_strstr(const unsigned char *h, const unsigned char *n)
 	return *h ? (char *)h-1 : 0;
 }
 
+__attribute__((noinline))
 static char *threebyte_strstr(const unsigned char *h, const unsigned char *n)
 {
 	uint32_t nw = (uint32_t)n[0]<<24 | n[1]<<16 | n[2]<<8;
@@ -165,6 +169,7 @@ static char *threebyte_strstr(const unsigned char *h, const unsigned char *n)
 	return *h ? (char *)h-2 : 0;
 }
 
+__attribute__((noinline))
 static char *fourbyte_strstr(const unsigned char *h, const unsigned char *n)
 {
 	uint32_t nw = (uint32_t)n[0]<<24 | n[1]<<16 | n[2]<<8 | n[3];
@@ -173,6 +178,7 @@ static char *fourbyte_strstr(const unsigned char *h, const unsigned char *n)
 	return *h ? (char *)h-3 : 0;
 }
 
+__attribute__((noinline))
 static char *twoway_strstr(const unsigned char *h, const unsigned char *n)
 {
 	const unsigned char *z;
@@ -280,6 +286,7 @@ static char *twoway_strstr(const unsigned char *h, const unsigned char *n)
 
 char *strstr(const char *h, const char *n)
 {
+	// hxh_console_log_literal(1337);
 	/* Return immediately on empty needle */
 	if (!n[0]) return (char *)h;
 

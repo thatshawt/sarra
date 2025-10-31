@@ -615,18 +615,29 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 rightSection = rightSection.replace("_", ".", 1)
 
                 # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
-                # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"{rightSection}")
             elif import_thing.name.startswith("special_local_get_"):
                 rightSection = import_thing.name.replace("special_local_get_","")
                 # rightSection = rightSection.replace("_", ".", 1)
 
                 # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
-                # inject_body = inject_body.replace(f"call {import_thing.num}", f"{rightSection}")
                 inject_body = replace_instruction_with(inject_body,
                     f"call {import_thing.num}",
                     f"local.get {rightSection}")
                 # print(f"replace 'call {import_thing.num}' with 'local.get {rightSection}'")
+                # exit(1) 
+            elif import_thing.name.startswith("special_global_get_"):
+                # "special_global_get_i32_1" -> "global.get 1"
+                rightSection = import_thing.name.replace("special_global_get_","").split("_")[1]
+
+                # print(f"{rightSection}")
+                # exit(1)
+
+                # print(f"replacing 'call {import_thing.num}' with '{rightSection}'")
+                inject_body = replace_instruction_with(inject_body,
+                    f"call {import_thing.num}",
+                    f"global.get {rightSection}")
+                # print(f"replace 'call {import_thing.num}' with 'global.get {rightSection}'")
                 # exit(1)
             elif import_thing.name.startswith("special_i64_const_"):
                 rightSection = import_thing.name.replace("special_i64_const_","")
