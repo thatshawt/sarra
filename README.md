@@ -2,18 +2,14 @@
 This is an experimental modding project for arrasio.
 
 # High-Level Goals/Features
-* Read/Write received packets.
-* Read/Write sent packets.
-* Render extra gui on the screen like buttons, text, text input box.
-* Intercept keyboard, mouse inputs.
+* Provide a mechanism to read/write received and sent decrypted packets.
+* Provide a mechanism for rendering extra gui on the screen like buttons, text, text input box.
+* Provide a mechanism for intercepting keyboard, mouse inputs.
 * Easy for users to create mods of their own.
 
 # Low-Level Goals
 * Figure out how the big function branches works...
 * Figure out where packets are sent before encrypted.
-
-## What it happening with the c code and stuff?
-The c code (in inject/src) is compiled down to wasm using clang (see inject/build.sh). The inject.wasm is then "injected" into arrasio's app.wasm using the big python script (see scripts/injectBuild.sh and generatePatchedAppWasm.py). All this stuff is considered building and it happens by running `sh injectBuild.sh` inside the script directory.
 
 # Development
 This project uses nix to handle package dependencies, so your gonna need to install nix before doing any development. Any time I open a new terminal i run `sh scripts/shell.sh` so it adds all the packages i need to the environment path. Just do it. Not because nike said so.
