@@ -21,6 +21,9 @@
 #define TRUE ((s32)1)
 #define FALSE ((s32)0)
 
+//a is between inclusive b and c.
+#define BETWEEN_INC(a,b,c) ((a>=b) && (a<=c))
+
 // (t) => {
 //   e[t] = null;
 // },

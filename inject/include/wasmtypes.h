@@ -43,4 +43,18 @@ typedef uint64_t u64;
 typedef int64_t s64;
 typedef float f32;
 typedef double f64;
+
+#define INT8_MIN         ((s8)(-127 - 1))
+#define INT16_MIN        ((s16)(-32767 - 1))
+#define INT32_MIN        ((s32)(-2147483647 - 1))
+#define INT64_MIN        ((s64)(-9223372036854775807 - 1))
+#define INT8_MAX         ((s8)127)
+#define INT16_MAX        ((s16)32767)
+#define INT32_MAX        ((s32)2147483647)
+#define INT64_MAX        ((s64)9223372036854775807)
+#define UINT8_MAX        ((u8)0xff)
+#define UINT16_MAX       ((u16)0xffff)
+#define UINT32_MAX       ((u32)0xffffffff)
+#define UINT64_MAX       ((u64)0xffffffffffffffff)
+
 #endif

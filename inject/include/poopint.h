@@ -39,18 +39,18 @@
 // typedef long long          intmax_t;
 // typedef unsigned long long uintmax_t;
 
-// #define INT8_MIN         (-127i8 - 1)
-// #define INT16_MIN        (-32767i16 - 1)
-// #define INT32_MIN        (-2147483647i32 - 1)
-// #define INT64_MIN        (-9223372036854775807i64 - 1)
-// #define INT8_MAX         127i8
-// #define INT16_MAX        32767i16
-// #define INT32_MAX        2147483647i32
-// #define INT64_MAX        9223372036854775807i64
-// #define UINT8_MAX        0xffui8
-// #define UINT16_MAX       0xffffui16
-// #define UINT32_MAX       0xffffffffui32
-// #define UINT64_MAX       0xffffffffffffffffui64
+// #define INT8_MIN         ((s8)(-127 - 1))
+// #define INT16_MIN        ((s16)(-32767 - 1))
+// #define INT32_MIN        ((s32)(-2147483647 - 1))
+// #define INT64_MIN        ((s64)(-9223372036854775807 - 1))
+// #define INT8_MAX         ((s8)127)
+// #define INT16_MAX        ((s16)32767)
+// #define INT32_MAX        ((s32)2147483647)
+// #define INT64_MAX        ((s64)9223372036854775807)
+// #define UINT8_MAX        ((u8)0xff)
+// #define UINT16_MAX       ((u16)0xffff)
+// #define UINT32_MAX       ((u32)0xffffffff)
+// #define UINT64_MAX       ((u64)0xffffffffffffffff)
 
 // #define INT_LEAST8_MIN   INT8_MIN
 // #define INT_LEAST16_MIN  INT16_MIN

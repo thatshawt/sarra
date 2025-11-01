@@ -44,9 +44,10 @@ s64 pow_i64(s64 a, s64 b)
 
 s32 digits10(s32 num)
 {
+    if(num == 0)return 1;
     s32 i = 0;
-    s32 powerTen = 1;
-    while(num/powerTen != 0){
+    s64 powerTen = 1;
+    while((s64)num/powerTen != 0){
         powerTen *= 10;
         i++;
     }
@@ -55,9 +56,10 @@ s32 digits10(s32 num)
 
 s64 digits10i64(s64 num)
 {
+    if(num == 0)return 1;
     s32 i = 0;
     s64 powerTen = 1;
-    while(num/powerTen != 0){
+    while((s64)num/powerTen != 0){
         powerTen *= 10;
         i++;
     }

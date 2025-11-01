@@ -74,12 +74,17 @@ void _reset_chacha(){
   poopState.bigfunc_chacha_header = 0;
 }
 
+//comes from tests.c
+extern void do_all_tests();
+
 void _init_all_the_things(){
   _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
-  _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
+  do_all_tests();
 
-  hxh_console_log_literal(special_global_get_i32_1());
+  // _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
+
+  // hxh_console_log_literal(special_global_get_i32_1());
 
   _reset_debug();
   _reset_stats();
@@ -182,10 +187,10 @@ int _special_bigfunc_beforebranch(s32 index){
 
       // poopf("loaded xd");
       // hxh_console_log_literal(special_global_get_i32_1());
-      // poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
+      _poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
       // poopf("got this far");
-      _poopf("bigfunc_index#%d, fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
+      _poopf("bigf %d, fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
         poopState.bigfunc_trace_count,
         var_fa, var_y, var_r,
         var_n, n_point,
@@ -384,7 +389,7 @@ void every_func_preamble(s32 func_num){
           if(i != params_struct.param_i-1)
             strcat(args_str, ", ");
         }
-        _poopf("call#%d %d(%s)", poopState.debug_count, func_num, args_str);
+        _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
         poopState.debug_count++;
       }
     }
