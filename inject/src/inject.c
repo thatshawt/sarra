@@ -187,7 +187,7 @@ int _special_bigfunc_beforebranch(s32 index){
 
       // poopf("loaded xd");
       // hxh_console_log_literal(special_global_get_i32_1());
-      _poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
+      // _poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
       // poopf("got this far");
       _poopf("bigf %d, fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",

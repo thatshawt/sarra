@@ -1,4 +1,5 @@
 #include "poopmath.h"
+#include "utils.h"
 
 s32 absi(s32 a)
 {
@@ -57,6 +58,9 @@ s32 digits10(s32 num)
 s64 digits10i64(s64 num)
 {
     if(num == 0)return 1;
+    if(BETWEEN_INC(num, 1000000000000000000, INT64_MAX))return 19;
+    if(BETWEEN_INC(num, INT64_MIN, -1000000000000000000))return 19;
+
     s32 i = 0;
     s64 powerTen = 1;
     while((s64)num/powerTen != 0){
