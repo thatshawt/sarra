@@ -80,7 +80,7 @@ extern void do_all_tests();
 void _init_all_the_things(){
   _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
-  do_all_tests();
+  // do_all_tests();
 
   // _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
 
@@ -159,9 +159,13 @@ int _special_bigfunc_beforebranch(s32 index){
       u8 n_point[150] = {0};
       u8 g_point[150] = {0};
       u8 xd_point[150] = {0};
+      u8 faPlusNPoint[150] = {0};
 
       if(VALID_ARRAS_MEMLOCATION(var_n)){
-        int_to_str(n_point, special_arras_memory_i32_load(var_n));
+        s32 npointval = special_arras_memory_i32_load(var_n);
+        int_to_str(n_point, npointval);
+
+        int_to_str(faPlusNPoint, var_fa+npointval);
       }
       // else{
       //   strcat(n_point, "nothing");
@@ -190,10 +194,10 @@ int _special_bigfunc_beforebranch(s32 index){
       // _poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
       // poopf("got this far");
-      _poopf("bigf %d, fa=%d, y=%d, r=%d, n=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
+      _poopf("bigf %d, y=%d, r=%d, n=%d, *n+fa=%s, fa=%d, *n=%s , g=%d, *g=%s, xd=%l, *xd=%s",
         poopState.bigfunc_trace_count,
-        var_fa, var_y, var_r,
-        var_n, n_point,
+        var_y, var_r, var_n, faPlusNPoint,
+        var_fa, n_point,
         var_g, g_point,
         var_xd, xd_point
       );
@@ -361,10 +365,8 @@ void every_func_preamble(s32 func_num){
         hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
         hxh_parse_execute();
       }else{
-        // hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
-        // hxh_push_microcode_literal(poopState.debug_count);
-        // hxh_push_microcode_literal(func_num);
-        // hxh_parse_execute();
+        // if(func_num != special_bigfunc_num())return;
+
         u8 args_str[1000] = {0};
         for(int i=0;i<params_struct.param_i;i++){
           enum Param_Type param_type = params_struct.paramTypes[i];
@@ -394,29 +396,29 @@ void every_func_preamble(s32 func_num){
       }
     }
   }
-  // if(poopState.stats_enabled){
-  //   if(poopState.stats_total_count >= poopState.stats_max_count){
-  //     poopState.stats_enabled = FALSE;
-  //     //print out all the frequencies?
-  //     hxh_CONSOLE_LOG_CHAR_STRING("The total is...", 15);
-  //     hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
-  //     hxh_push_microcode_literal(poopState.stats_total_count);
-  //     hxh_parse_execute();
-  //     for(s32 i=0;i<STATS_FREQUENCIES_SIZE;i++){
-  //       s32 freq = poopState.stats_frequencies[i];
-  //       if(freq > 0){
-  //         hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
-  //         hxh_push_microcode_literal(i);
-  //         hxh_push_microcode_literal(freq);
-  //         hxh_parse_execute();
-  //       }
-  //     }
-  //   }else{
-  //     poopState.stats_frequencies[func_num]++;
-  //     poopState.stats_total_count++;
-  //     poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
-  //   }
-  // }
+  if(poopState.stats_enabled){
+    if(poopState.stats_total_count >= poopState.stats_max_count){
+      poopState.stats_enabled = FALSE;
+      //print out all the frequencies?
+      hxh_CONSOLE_LOG_CHAR_STRING("The total is...", 15);
+      hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+      hxh_push_microcode_literal(poopState.stats_total_count);
+      hxh_parse_execute();
+      for(s32 i=0;i<STATS_FREQUENCIES_SIZE;i++){
+        s32 freq = poopState.stats_frequencies[i];
+        if(freq > 0){
+          hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
+          hxh_push_microcode_literal(i);
+          hxh_push_microcode_literal(freq);
+          hxh_parse_execute();
+        }
+      }
+    }else{
+      poopState.stats_frequencies[func_num]++;
+      poopState.stats_total_count++;
+      poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
+    }
+  }
   // special_clear_locals();
 }
 

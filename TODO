@@ -1,20 +1,20 @@
+* do an experiment to see how many bigfunc indexes happen per bigfunc call.
+
+* compiler feature: implement injecting table instructions. also call_indirect.
+
 * source code primitive: implement a global.set special function.
 
 * add some standard library things like: hashmap, linkedlist, arena allocator.
 
-* refractor generatePatchedAppWasm.py by adding a class like this `class InjectWatStuff(injectWat, injectedIntoWat)`. then i can add algorithms and functions to retrieve some good information like transforming inject func name into a injected call number.
+* maintaining code: refractor generatePatchedAppWasm.py by adding a class like this `class InjectWatStuff(injectWat, injectedIntoWat)`. then i can add algorithms and functions to retrieve some good information like transforming inject func name into a injected call number.
 
 * reimplement `special_printargs()` using these new primitives: `s32 _special_arras_funcparam_i32_get(s32 index);`. same for `void _special_arras_funcparam_i32_set(s32 index, s32 value);`.
 
 * bigSwitchIndexFile.py performance: update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
 
-* compiler feature: implement injecting table instructions. also call_indirect.
-
 * source code primitive: implement inject_imports? a way to run code before app.wat calls an imported function.
 
 * source code primitive: maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.
-
-* bug detection: add a test suite to make sure all the stuff is working bruh... probably gotta add tests injected in the start func... gotta test out a bunch of poopstring.c functions make sure they work properly and memory loads and stores and yea...
 
 * investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
 
