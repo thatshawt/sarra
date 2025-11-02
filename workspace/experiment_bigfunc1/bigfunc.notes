@@ -1,0 +1,40 @@
+bf "base index" 286: 
+    if (y == 1) {
+        r = n[0] + fa;
+        n = n + 4;
+        y = r / 1625 + 2640625;
+        r = r % 1625;
+    } else {
+        r = y % 1625;
+        y = y / 1625;
+    }
+    br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b] (      r);
+^^^^^
+i dont know why the numbers 1625 and 2640625.
+2640625 is 1625*1625 so theres that.
+also, 1625 is almost exactly double the amount of indexes there are (around 812).
+
+my best theory for bigfunc is that it works like some kind of program runner and it loads the "instructions" from the n variable (approximately 3 or 4 of them) and then increments to the next address until it hits something and requires more.
+
+i dont know exactly how the numbers loaded from n map to instructions but honestly doesnt seem that far fetched. the programmers of arrasio could write instructions through some "assembler" that calculates which values to place at memory location n to have a desired program executed.
+
+the weird thing to me is why did they choose to encode the instructions in such a weird way? why didnt they just encode the indexes in some simple encoding... the simplest i can think of would be to just store each index at n directly. so n[0] would be the current instruction... n[1] would be next .. etc... the direct approach would take up more space however probably? theres probably another reason they did it like this... idk... maybe they started it like that and now its too late to change it lol. that could be the case because i was reading the arrasio discord and the main dev was talking about the codebase being huge and unwieldly so maybe thats what happened.
+
+example progression:
+    (r is the index)
+    bigf 4, y=1, r=793, n=253700, *n+fa=755841579, fa=1788600033, *n=-1032758454 , g=332736, *g=1402464, xd=1379776, *xd=-1708165051 arras.io:213:21
+    bigf 5, y=3105758, r=454, n=253704, *n+fa=-1830341998, fa=1788600033, *n=676025265 , g=332736, *g=1402464, xd=2586802245, *xd= arras.io:213:21
+    bigf 6, y=1911, r=383, n=253704, *n+fa=-1830341998, fa=1788600033, *n=676025265 , g=332736, *g=1402464, xd=2586802245, *xd= arras.io:213:21
+    bigf 7, y=1, r=286, n=253708, *n+fa=262587746, fa=-1830341998, *n=2092929744 , g=332736, *g=1402464, xd=2586802245, *xd= arras.io:213:21
+    bigf 8, y=2802217, r=746, n=253712, *n+fa=613232, fa=-1830341998, *n=1830955230 , g=332736, *g=1402464, xd=2586802245, *xd= arras.io:213:21
+    bigf 9, y=3663133, r=629, n=613236, *n+fa=27968, fa=-1830341998, *n=1830369966 , g=332728, *g=0, xd=0, *xd= arras.io:213:21
+    bigf 10, y=2254, r=383, n=613240, *n+fa=-1920167152, fa=-1830341998, *n=-89825154 , g=332736, *g=1402464, xd=27968, *xd=0 arras.io:213:21
+    bigf 11, y=1, r=629, n=613244, *n+fa=37, fa=-1920167152, *n=1920167189 , g=332736, *g=1402464, xd=27968, *xd=0 arras.io:213:21
+    bigf 12, y=3200331, r=579, n=613252, *n+fa=755684222, fa=-1920167152, *n=-1619115922 , g=332744, *g=27972, xd=37, *xd=0 arras.io:213:21
+    bigf 13, y=1969, r=706, n=613252, *n+fa=755684222, fa=-1920167152, *n=-1619115922 , g=332736, *g=27968, xd=1402464, *xd=1402456 arras.io:213:21
+    bigf 14, y=3105661, r=722, n=613256, *n+fa=930444871, fa=-1920167152, *n=-1444355273 , g=332736, *g=27968, xd=1402464, *xd=1402456 arras.io:213:21
+    bigf 15, y=1911, r=286, n=613256, *n+fa=930444871, fa=-1920167152, *n=-1444355273 , g=332736, *g=27968, xd=0, *xd= arras.io:213:21
+    bigf 16, y=1, r=286, n=613256, *n+fa=930444871, fa=-1920167152, *n=-1444355273 , g=332736, *g=27968, xd=0, *xd= arras.io:213:21
+
+most of the indexes go to base index implicitly after they finish...
+some of the indexes perform some of the function the base index does...

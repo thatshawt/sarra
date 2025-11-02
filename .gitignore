@@ -1,3 +1,6 @@
 docs/
-inject/lib/
+inject/lib/musl/*
 wabt/
+**/*.wat
+**/*.watv
+**/*.wat.patched

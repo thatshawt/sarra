@@ -9,12 +9,12 @@
 #define STATS_FREQUENCIES_SIZE 600
 #define STATS_MAX_COUNT_CONSIDERED 5000
 
-#define BIGFUNC_TRACE_MAX_LINES 500
+#define BIGFUNC_TRACE_MAX_LINES 100
 
 #define CHACHA_MAX_TOTAL 1
 #define CHACHA_BUFFER_SIZE 2000
 
-#define BIGFUNC_INDEX_CALL_MAX 30
+#define BIGFUNC_INDEX_CALL_MAX 1
 
 struct{
   s32 debug_enabled;
@@ -381,6 +381,10 @@ void every_func_preamble(s32 func_num){
       }else{
         _poopf("bigfunc called. indexes previously visited %d times.",
           poopState.bigfunc_index_count_counter);
+
+        //enable trace to see what first few indexes do
+        _reset_bigfunc_trace();
+        poopState.bigfunc_trace_enabled = TRUE;
   
         poopState.bigfunc_index_count_counter = 0;
       }

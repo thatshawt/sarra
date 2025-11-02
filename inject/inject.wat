@@ -33,14 +33,14 @@
   (func (;9;) (type 0))
   (func (;10;) (type 0)
     i32.const 3992
-    i64.const 128849018880
+    i64.const 4294967296
     i64.store align=4
     i32.const 3984
     i64.const 0
     i64.store align=4)
   (func (;11;) (type 0)
     i32.const 3992
-    i64.const 128849018880
+    i64.const 4294967296
     i64.store align=4
     i32.const 3984
     i64.const 1
@@ -75,7 +75,7 @@
     i64.store align=4)
   (func (;14;) (type 0)
     i32.const 1948
-    i32.const 500
+    i32.const 100
     i32.store
     i32.const 1940
     i64.const 0
@@ -131,7 +131,7 @@
     i32.const 0
     call 87
     i32.const 1948
-    i32.const 500
+    i32.const 100
     i32.store
     i32.const 1960
     i32.const 1
@@ -226,7 +226,7 @@
     i64.store align=4)
   (func (;20;) (type 0)
     i32.const 1948
-    i32.const 500
+    i32.const 100
     i32.store
     i32.const 1940
     i64.const 0
@@ -282,7 +282,7 @@
       i32.ge_s
       if  ;; label = @2
         i32.const 1948
-        i32.const 500
+        i32.const 100
         i32.store
         i32.const 1940
         i64.const 0
@@ -623,7 +623,7 @@
         i32.const 0
         call 87
         i32.const 1948
-        i32.const 500
+        i32.const 100
         i32.store
         i32.const 1736
         i32.const 500
@@ -713,7 +713,7 @@
       i32.const 0
       call 87
       i32.const 1948
-      i32.const 500
+      i32.const 100
       i32.store
       i32.const 1960
       i32.const 1
@@ -768,7 +768,7 @@
       i32.le_s
       if  ;; label = @2
         i32.const 3992
-        i64.const 128849018880
+        i64.const 4294967296
         i64.store align=4
         i32.const 3984
         i64.const 0
@@ -784,6 +784,12 @@
       i32.const 48
       i32.add
       call 32
+      i32.const 1948
+      i32.const 100
+      i32.store
+      i32.const 1940
+      i64.const 1
+      i64.store align=4
       i32.const 3988
       i32.const 0
       i32.store
@@ -1075,7 +1081,7 @@
     global.set 0)
   (func (;29;) (type 0)
     (local i32)
-    i32.const 450
+    i32.const 454
     call 101
     call 5
     call 6
@@ -5034,5 +5040,5 @@
   (export "__memory_base" (global 15))
   (export "__table_base" (global 16))
   (export "__wasm_first_page_end" (global 17))
-  (data (;0;) (i32.const 1024) "digits10i64 two digit nums\00digits10 two digit nums\00digits10i64 single digit nums\00digits10 single digit nums\00bigf %d, y=%d, r=%d, n=%d, *n+fa=%s, fa=%d, *n=%s , g=%d, *g=%s, xd=%l, *xd=%s\00total is %d\00%d %d\00digits10i64(INT64_MAX) == 19\00digits10i64(INT64_MIN) == 19\00digits10i64(999999999) == 9\00digits10(999999999) == 9\00digits10i64(-999999999999999999) == 18\00digits10i64(999999999999999999) == 18\00Sun Nov  2 06:45:21 AM EST 2025\00an f64\00an f32\00digits10i64(INT32_MAX) == 10\00digits10(INT32_MAX) == 10\00digits10i64(INT32_MIN) == 10\00digits10(INT32_MIN) == 10\00bigfunc called. indexes previously visited %d times.\00call %d, %d(%s)\00PASSED '%s'\00FAILED '%s'\00Welcome to Bananan Turd Labs. \0aCompiled: '%s'\00, ")
+  (data (;0;) (i32.const 1024) "digits10i64 two digit nums\00digits10 two digit nums\00digits10i64 single digit nums\00digits10 single digit nums\00bigf %d, y=%d, r=%d, n=%d, *n+fa=%s, fa=%d, *n=%s , g=%d, *g=%s, xd=%l, *xd=%s\00total is %d\00%d %d\00digits10i64(INT64_MAX) == 19\00digits10i64(INT64_MIN) == 19\00digits10i64(999999999) == 9\00digits10(999999999) == 9\00digits10i64(-999999999999999999) == 18\00digits10i64(999999999999999999) == 18\00Sun Nov  2 07:01:11 AM EST 2025\00an f64\00an f32\00digits10i64(INT32_MAX) == 10\00digits10(INT32_MAX) == 10\00digits10i64(INT32_MIN) == 10\00digits10(INT32_MIN) == 10\00bigfunc called. indexes previously visited %d times.\00call %d, %d(%s)\00PASSED '%s'\00FAILED '%s'\00Welcome to Bananan Turd Labs. \0aCompiled: '%s'\00, ")
   (data (;1;) (i32.const 1715) "0123456789"))

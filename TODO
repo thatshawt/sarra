@@ -1,3 +1,7 @@
+* log the last and first N indexes that are visited before a bigfunc call returns.
+
+* figure out a reliable encoding for the bigfunc indexes?
+
 * compiler feature: implement injecting table instructions. also call_indirect.
 
 * source code primitive: implement a global.set special function.
