@@ -1,5 +1,3 @@
-* do an experiment to see how many bigfunc indexes happen per bigfunc call.
-
 * compiler feature: implement injecting table instructions. also call_indirect.
 
 * source code primitive: implement a global.set special function.

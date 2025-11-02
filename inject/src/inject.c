@@ -14,6 +14,8 @@
 #define CHACHA_MAX_TOTAL 1
 #define CHACHA_BUFFER_SIZE 2000
 
+#define BIGFUNC_INDEX_CALL_MAX 30
+
 struct{
   s32 debug_enabled;
   s32 debug_count;
@@ -28,19 +30,35 @@ struct{
   s32 bigfunc_chacha_count;
   s32 bigfunc_chacha_count_total;
   u8 bigfunc_chacha_buffer[CHACHA_BUFFER_SIZE];
-  // s32 bigfunc_chacha_buffer_i;
   s32 bigfunc_chacha_firstbyte;
   s32 bigfunc_chacha_firstaddress;
   s32 bigfunc_chacha_lastaddress;
   s32 bigfunc_chacha_byte_i;
   s32 bigfunc_chacha_header;
 
+  s32 bigfunc_index_count_enabled;
+  s32 bigfunc_index_count_counter;
+  s32 bigfunc_index_call_count_counter;
+  s32 bigfunc_index_call_count_max;
+  
   s32 stats_enabled;
   s32 stats_total_count;
   s32 stats_max_count;
   s32 stats_max_encountered_funcnum;
   s32 stats_frequencies[STATS_FREQUENCIES_SIZE];
 }poopState;
+
+void _reset_bigfunc_index_counter(){
+  poopState.bigfunc_index_count_enabled = FALSE;
+  poopState.bigfunc_index_count_counter = 0;
+  poopState.bigfunc_index_call_count_counter = 0;
+  poopState.bigfunc_index_call_count_max = BIGFUNC_INDEX_CALL_MAX;
+}
+
+void export_bigfunc_index_count_enable(){
+  _reset_bigfunc_index_counter();
+  poopState.bigfunc_index_count_enabled = TRUE;
+}
 
 void _reset_stats(){
   poopState.stats_enabled = FALSE;
@@ -136,6 +154,10 @@ int _special_bigfunc_beforebranch(s32 index){
   // hxh_console_log_literal(123);
   // poopf("homie");
 
+  if(poopState.bigfunc_index_count_enabled){
+    poopState.bigfunc_index_count_counter++;
+  }
+
   if(poopState.bigfunc_trace_enabled){
     if(poopState.bigfunc_trace_count >= poopState.bigfunc_trace_max_count){
       _reset_bigfunc_trace();
@@ -212,12 +234,6 @@ int _special_bigfunc_beforebranch(s32 index){
 
   return index;
 }
-
-// __attribute__((optnone))
-// int inject_bigfunc_beforebranch(int index){
-//   UNIQUEIFER;
-//   return _special_bigfunc_beforebranch(index);
-// }
 
 void add_chacha_byte(int address, int the_byte){
   if(poopState.bigfunc_chacha_byte_i == 0){
@@ -358,6 +374,21 @@ void every_func_preamble(s32 func_num){
   //   _hxh_breakpoint();
   // }
 
+  if(func_num == special_bigfunc_num()){
+    if(poopState.bigfunc_index_count_enabled){
+      if(poopState.bigfunc_index_call_count_counter++ >= poopState.bigfunc_index_call_count_max){
+        _reset_bigfunc_index_counter();
+      }else{
+        _poopf("bigfunc called. indexes previously visited %d times.",
+          poopState.bigfunc_index_count_counter);
+  
+        poopState.bigfunc_index_count_counter = 0;
+      }
+
+    }
+  }
+
+
   if(poopState.debug_enabled){
     if(TRUE){//blacklist check
       if(poopState.debug_count >= poopState.debug_max_count){
@@ -399,18 +430,11 @@ void every_func_preamble(s32 func_num){
   if(poopState.stats_enabled){
     if(poopState.stats_total_count >= poopState.stats_max_count){
       poopState.stats_enabled = FALSE;
-      //print out all the frequencies?
-      hxh_CONSOLE_LOG_CHAR_STRING("The total is...", 15);
-      hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
-      hxh_push_microcode_literal(poopState.stats_total_count);
-      hxh_parse_execute();
+      _poopf("total is %d", poopState.stats_total_count);
       for(s32 i=0;i<STATS_FREQUENCIES_SIZE;i++){
         s32 freq = poopState.stats_frequencies[i];
         if(freq > 0){
-          hxh_push_microcode_literal(HXH_ARRAY_CONSOLE_LOG);
-          hxh_push_microcode_literal(i);
-          hxh_push_microcode_literal(freq);
-          hxh_parse_execute();
+          _poopf("%d %d", i, freq);
         }
       }
     }else{
