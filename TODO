@@ -1,6 +1,6 @@
-* log the last and first N indexes that are visited before a bigfunc call returns.
+* read pseucode section in "bigfunc.notes" file for TODO...
 
-* figure out a reliable encoding for the bigfunc indexes?
+* log the last and first N indexes that are visited before a bigfunc call returns.
 
 * compiler feature: implement injecting table instructions. also call_indirect.
 
