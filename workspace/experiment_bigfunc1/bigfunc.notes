@@ -13,7 +13,7 @@ bf "base index" 286:
 what does fa and n[0] look like?:
     idk yet
 
-"y and r encode 2 numbers under 1625":
+"y encodes 2 r numbers under 1625":
     Below shows a short function that will 
 
     # excerpt from findY.py

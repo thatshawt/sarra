@@ -182,12 +182,14 @@ int _special_bigfunc_beforebranch(s32 index){
       u8 g_point[150] = {0};
       u8 xd_point[150] = {0};
       u8 faPlusNPoint[150] = {0};
+      u8 initalY[150] = {0};
 
       if(VALID_ARRAS_MEMLOCATION(var_n)){
         s32 npointval = special_arras_memory_i32_load(var_n);
         int_to_str(n_point, npointval);
 
         int_to_str(faPlusNPoint, var_fa+npointval);
+        int_to_str(initalY, (var_fa+npointval) / 1625 + 2640625);
       }
       // else{
       //   strcat(n_point, "nothing");
@@ -216,9 +218,10 @@ int _special_bigfunc_beforebranch(s32 index){
       // _poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
       // poopf("got this far");
-      _poopf("bigf %d, y=%d, r=%d, n=%d, *n+fa=%s, fa=%d, *n=%s , g=%d, *g=%s, xd=%l, *xd=%s",
+      _poopf("bigf %d, y=%d, r=%d, n=%d, y0=%s, *n+fa=%s, fa=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
         poopState.bigfunc_trace_count,
-        var_y, var_r, var_n, faPlusNPoint,
+        var_y, var_r,
+        var_n, initalY, faPlusNPoint,
         var_fa, n_point,
         var_g, g_point,
         var_xd, xd_point
