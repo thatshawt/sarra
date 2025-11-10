@@ -10,33 +10,11 @@ bf "base index" 286:
     }
     br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b] (      r);
 ^^^^^
-hypotheses:
-    i dont know why the numbers 1625 and 2640625.
-    2640625 is 1625*1625 so theres that.
-    also, 1625 is almost exactly double the amount of indexes there are (around 812).
-
-    ayo this makes sense actually ngl. 1625 is equal to double the amount of indexes right... and also it gets added by a number which is that squared right... and we have usually 4 iterations until it goes to 1 right... and it divides/modulo-s each time right... so we have
-    1625 = 2*indexes
-    2640625 = 1625^2
-    = (2*indexes)(2*indexes)
-    = 4 * indexes^2
-    ^^^
-    4!? coincidence?!? i think not... so i bet every time they compile the binary it changes those two numbers to be what i said they were. one of then is going to be 2 * indexes and the other squared... so yea still gotta figure out how that fits with the dividing and modulus but yea...
-
-
-    my best theory for bigfunc is that it works like some kind of program runner and it loads the "instructions" from the n variable (approximately 3 or 4 of them) and then increments to the next address until it hits something and requires more.
-
-    i dont know exactly how the numbers loaded from n map to instructions but honestly doesnt seem that far fetched. the programmers of arrasio could write instructions through some "assembler" that calculates which values to place at memory location n to have a desired program executed.
-
-    the weird thing to me is why did they choose to encode the instructions in such a weird way? why didnt they just encode the indexes in some simple encoding... the simplest i can think of would be to just store each index at n directly. so n[0] would be the current instruction... n[1] would be next .. etc... the direct approach would take up more space however probably? theres probably another reason they did it like this... idk... maybe they started it like that and now its too late to change it lol. that could be the case because i was reading the arrasio discord and the main dev was talking about the codebase being huge and unwieldly so maybe thats what happened.
-
 pseudocode:
     # TODO
-    # see if any instruction sequence of numbers between
-    # 0 and maxIndex can be produced from a manufactored
-    # number y...
-    # for example, how do i find the initial number y that will
-    # generate the index sequence 123,456,789,123?
+    # do something with findY.py.
+    # figure out if all sequence combinations can be made between 
+    # the range [0-811]
 
     # approximately...
     a = 2*numberIndexes

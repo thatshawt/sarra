@@ -1,4 +1,6 @@
-* read pseucode section in "bigfunc.notes" file for TODO...
+* what are the typical values for "fa" local in bigfunc...
+
+* also see workspace/experiment_bigfunc1/bigfunc.notes...
 
 * log the last and first N indexes that are visited before a bigfunc call returns.
 
@@ -8,12 +10,6 @@
 
 * add some standard library things like: hashmap, linkedlist, arena allocator.
 
-* maintaining code: refractor generatePatchedAppWasm.py by adding a class like this `class InjectWatStuff(injectWat, injectedIntoWat)`. then i can add algorithms and functions to retrieve some good information like transforming inject func name into a injected call number.
-
-* reimplement `special_printargs()` using these new primitives: `s32 _special_arras_funcparam_i32_get(s32 index);`. same for `void _special_arras_funcparam_i32_set(s32 index, s32 value);`.
-
-* bigSwitchIndexFile.py performance: update the workspace/bigSwitchIndexFile.py so that it saves the mapping to a file or something idk probably in /tmp/bigIndexFile.caca. to make sure its updated i could have the hash of the script at the top or something idk bruv...
-
 * source code primitive: implement inject_imports? a way to run code before app.wat calls an imported function.
 
 * source code primitive: maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.
@@ -21,5 +17,3 @@
 * investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
 
 * chacha1_finish is broken? where are sent packets handled... i know chacha2_finish does received packets...
-
-* in the long term im gonna need to rewrite the injection thing to make it more general so that i can inject any amount of inject functions into the same wasm function... to accomplish this im probably gonna need to write some sort of generic "injector" algorithm thing that accepts an array of inject function or something to inject in order...
