@@ -10,12 +10,31 @@ bf "base index" 286:
     }
     br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b] (      r);
 ^^^^^
-pseudocode:
-    # TODO
-    # do something with findY.py.
-    # figure out if all sequence combinations can be made between 
-    # the range [0-811]
+what does fa and n[0] look like?:
+    idk yet
 
+"y and r encode 2 numbers under 1625":
+    Below shows a short function that will 
+
+    # excerpt from findY.py
+    # produces a y value that will result in the
+    # two r values given as input (sequence) before
+    # y goes to 1.
+    # example: 
+    # findSequenceFaster([628, 124]) -> 2842753.
+    # stepping forward from y=2842753 results in:
+    #   r=628, y=1749
+    #   r=124, y=1.
+    def findSequenceFaster(sequence):
+        # maxY0 = (1625**2) * 2
+        lowY0 = (1625**2)
+        
+        a = lowY0 + sequence[0]
+        a = a + (1625*sequence[1])
+        
+        return a
+
+pseudocode:
     # approximately...
     a = 2*numberIndexes
     b = a*a

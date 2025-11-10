@@ -1,6 +1,4 @@
-* what are the typical values for "fa" local in bigfunc...
-
-* also see workspace/experiment_bigfunc1/bigfunc.notes...
+* research the "n[0]" and "fa" locals, see "workspace/experiment_bigfunc1/bigfunc.notes".
 
 * log the last and first N indexes that are visited before a bigfunc call returns.
 

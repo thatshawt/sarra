@@ -22,6 +22,14 @@ def step(debug=False):
         y = y // 1625
         if debug: print(f"r={r}, y={y}")
         
+def doDoubleStep(debug=False):
+    global r
+    r1 = None
+    step(debug)
+    r1 = r
+    step(debug)
+    r2 = r
+    return (r1,r2)
 
 def findYThatResultsInDesiredSequence(desiredSeq):
     global y,r
@@ -62,14 +70,22 @@ def findYThatResultsInDesiredSequence(desiredSeq):
             # print("didnt find first one?")
             return -1
             
+# produces a y value that will result in the
+# two r values given as input (sequence) before
+# y goes to 1.
+# example: 
+# findSequenceFaster([628, 124]) -> 2842753.
+# stepping forward from y=2842753 results in:
+#   r=628, y=1749
+#   r=124, y=1.
 def findSequenceFaster(sequence):
-    maxY0 = (1625**2) * 2
+    # maxY0 = (1625**2) * 2
     lowY0 = (1625**2)
     
-    maxY0 = lowY0 + sequence[0]
-    maxY0 = maxY0 + (1625*sequence[1])
+    a = lowY0 + sequence[0]
+    a = a + (1625*sequence[1])
     
-    return maxY0
+    return a
 
 desiredSequence = [628,124]
 theY = findSequenceFaster(desiredSequence)
@@ -77,5 +93,30 @@ y = theY
 print(y)
 step(True)
 step(True)
+
+import itertools
+
+fromOneTo811 = [i for i in range(811)]
+# fromOneTo811.remove(0)
+
+# fromOneTo811.extend(fromOneTo811)
+
+i = 0
+for (oneR, twoR) in itertools.permutations(fromOneTo811, r=2):
+    # global y
+    resultY = findSequenceFaster([oneR, twoR])
+    y = resultY
+    resultR = doDoubleStep()
+    if resultR != (oneR,twoR):
+        print(f"different, test({oneR},{twoR}), got{resultR}")
+        break
+    # print(oneR, twoR)
     
+    i = i + 1
+    # if i == 1000: break
+
+
+
+
+
     
