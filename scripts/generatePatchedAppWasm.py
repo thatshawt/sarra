@@ -663,6 +663,8 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_START_FUNC_NUM")
             elif import_thing.name == "special_bigfunc_num":
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_BIGFUNC_NUM")
+            # elif import_thing.name == "special_packetsender_num":
+            #     inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_PACKETSENDER_NUM")
             elif import_thing.name == "special_update_param_struct":
                 inject_body = replace_instruction_with(inject_body,f"call {import_thing.num}", f"SPECIAL_UPDATE_PARAM_STRUCT")
 
@@ -736,6 +738,7 @@ for line in app_wat_content.split("\n"):
         injecting_code = injecting_code.replace("FUNC_NUM_CONST_INSTR", f"i32.const {on_func}")
         injecting_code = injecting_code.replace("SPECIAL_START_FUNC_NUM", f"i32.const {app_wat_stuff.start_func_num}")
         injecting_code = injecting_code.replace("SPECIAL_BIGFUNC_NUM", f"i32.const {app_wat_stuff.largestFuncNum}")
+        # injecting_code = injecting_code.replace("SPECIAL_PACKETSENDER_NUM", f"i32.const {PUT POOP POO HERE}")
 
         # if len(locals_list) > 0:
         #     print(f"{injecting_code},{locals_list}")

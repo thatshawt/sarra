@@ -327,13 +327,13 @@ void _special_bigfunc_chachafinish_2(){
       //   char msg[] = "did it";
       //   hxh_CONSOLE_LOG_CHAR_STRING(msg, strlen(msg));
       //   //[77, 240, 70, 64, 202, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 1]
-      //   if(poopState.bigfunc_chacha_byte_i == 16){
-      //     const char forbiddenStrHeehee[] = {91,1,68,105,103,105,116,49,1,93};
-      //     int chatStrOffset = 4;
-      //     memcpy(poopState.bigfunc_chacha_buffer+chatStrOffset, forbiddenStrHeehee, 10);
-      //     memcpy_i8_to_arras_memory((char*) poopState.bigfunc_chacha_firstaddress+chatStrOffset,
-      //       poopState.bigfunc_chacha_buffer+chatStrOffset, 10);
-      //   }
+        // if(poopState.bigfunc_chacha_byte_i == 16){
+        //   const char forbiddenStrHeehee[] = {91,1,68,105,103,105,116,49,1,93};
+        //   int chatStrOffset = 4;
+        //   memcpy(poopState.bigfunc_chacha_buffer+chatStrOffset, forbiddenStrHeehee, 10);
+        //   memcpy_i8_to_arras_memory((char*) poopState.bigfunc_chacha_firstaddress+chatStrOffset,
+        //     poopState.bigfunc_chacha_buffer+chatStrOffset, 10);
+        // }
       // }
 
       // hxh_CONSOLE_LOG_CHAR_STRING("chatmessage", 11);
@@ -403,8 +403,22 @@ void every_func_preamble(s32 func_num){
         hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
         hxh_parse_execute();
       }else{
-        // if(func_num != special_bigfunc_num())return;
+        // func 274 is the only one that uses import_sendpacket.
+        // other than bigfunc.
+        if(func_num != 274)return;
 
+        s32 firstParam = params_struct.i32params[0];
+        s32 secondParam = params_struct.i32params[1];
+        s32 thirdParam = params_struct.i32params[2];
+
+        if(thirdParam < 2)return;
+        
+        if(VALID_ARRAS_MEMLOCATION(secondParam)){
+          u8 firstByte = special_arras_memory_i32_load8_u(secondParam);
+          if(firstByte != 'M')return;
+        }
+
+        //print out args
         u8 args_str[1000] = {0};
         for(int i=0;i<params_struct.param_i;i++){
           enum Param_Type param_type = params_struct.paramTypes[i];
@@ -418,10 +432,10 @@ void every_func_preamble(s32 func_num){
             case PARAM_T_I64:
               i64_to_str(temp_buffer_1, params_struct.i64params[i]);
               break;
-            case PARAM_T_F32:
+            case PARAM_T_F32://TODO implement this :sob:
               strcat(temp_buffer_1, "an f32");
               break;
-            case PARAM_T_F64:
+            case PARAM_T_F64://TODO implement this :sob:
               strcat(temp_buffer_1, "an f64");
               break;
           }
@@ -430,6 +444,21 @@ void every_func_preamble(s32 func_num){
             strcat(args_str, ", ");
         }
         _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
+
+        s32 chatMessageOffset = 2;
+        if(thirdParam > 31+2) chatMessageOffset = 4;
+        s32 chatMessageLength = thirdParam-chatMessageOffset;
+        // memset_i8_to_arras_memory((char*)secondParam+chatMessageOffset, '*', chatMessageLength);
+
+        if(chatMessageLength >= 10){
+          const char forbiddenStrHeehee[] = {91,1,68,105,103,105,116,49,1,93};
+          // memcpy(secondParam+chatMessageOffset, forbiddenStrHeehee, 10);
+          memcpy_i8_to_arras_memory((char*) secondParam+chatMessageOffset,
+            forbiddenStrHeehee, 10);
+        }
+
+        _hxh_breakpoint();
+
         poopState.debug_count++;
       }
     }
@@ -450,17 +479,25 @@ void every_func_preamble(s32 func_num){
       poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);
     }
   }
-  // special_clear_locals();
+
 }
 
 void inject_all(){
   UNIQUEIFER;
 
+  // grab func number for the function this gets injected into.
   s32 func_num = special_func_number();
 
+  // load all the locals into some thing.
   special_update_param_struct();
 
-  // the injection script isnt good enough to account for lots of complex code so instead im just gonna put one function call in here.
+  // do everything else.
+  // i put this in its own function because inject_all has a bug that happens
+  // if there is too much complex code in it.
+  // this is my workaround so yea it works.
+  // the bug does something to global 1 if i remember...
   every_func_preamble(func_num);
+
+  //TODO: should i clear locals here still?
 }
 

@@ -31,7 +31,8 @@ def doDoubleStep(debug=False):
     r2 = r
     return (r1,r2)
 
-def findYThatResultsInDesiredSequence(desiredSeq):
+# this brute force searches for a y that will result in the desired r sequence.
+def findSequence(desiredSeq):
     global y,r
     maxY0 = (1625**2) * 2
     lowY0 = (1625**2)
@@ -101,6 +102,8 @@ fromOneTo811 = [i for i in range(811)]
 
 # fromOneTo811.extend(fromOneTo811)
 
+# experiment to see if all possible r sequences are possible.
+#   UPDATE: they are, up to 1625.
 i = 0
 for (oneR, twoR) in itertools.permutations(fromOneTo811, r=2):
     # global y

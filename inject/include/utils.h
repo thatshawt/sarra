@@ -77,6 +77,8 @@ extern s64 special_i64_const_9998();
 
 // these are memory instructions that work with arras memory and not my memory
 extern s32 special_arras_memory_i32_load(s32 address); // i32.load
+extern s8 special_arras_memory_i32_load8_s(s32 address); // i32.load8_s
+extern u8 special_arras_memory_i32_load8_u(s32 address); // i32.load8_u
 extern s64 special_arras_memory_i64_load(s32 address); // i64.load
 extern void special_arras_memory_i32_store(s32 address, int value); // i32.store
 extern void special_arras_memory_i32_store8(s32 address, int value);// i32.store8
@@ -110,6 +112,7 @@ void _spoopf(u8* dest, s32 max, u8* format, ...);
 void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp);
 
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);
+char* memset_i8_to_arras_memory(char* dest, u8 val, int n);
 
 s64 hxh_parse_execute();
 s64 hxh_reset();

@@ -1,5 +1,9 @@
 * research the "n[0]" and "fa" locals, see "workspace/experiment_bigfunc1/bigfunc.notes".
 
+* i wanna look into using rust cus it might be easier to use mmaayyybeeeee... idk yet...
+
+* add a special_packetsender_num for that one function that sends packets other than bigfunc.
+
 * log the last and first N indexes that are visited before a bigfunc call returns.
 
 * compiler feature: implement injecting table instructions. also call_indirect.

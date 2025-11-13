@@ -627,7 +627,10 @@ let FALSE = 0;
               : WebAssembly.instantiate(await (await y).arrayBuffer(), b))
           ).instance.exports,
           f = h.c;
-window.wasmthing = h;
+window.wasm_exports = h;
+window.wasm_imports = b;
+console.log(h)
+console.log(b)
         h.b();
       })();
     </script>

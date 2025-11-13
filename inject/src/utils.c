@@ -97,10 +97,40 @@ char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
         special_arras_memory_i32_store((int)dest + (i/4)*4, dval);
     } 
 
-    hxh_parse_execute();
+    // hxh_parse_execute();
 
 	return dest;
 }
+
+char* memset_i8_to_arras_memory(char* dest, u8 val, int n)
+{
+    unsigned char *d = dest;
+
+	for (int i=0;i<n;i++){
+        int dval = special_arras_memory_i32_load((int)dest + (i/4)*4);
+        int sval = val;
+
+        switch(i % 4){
+            case 0:
+                dval = (dval & 0xFFFFFF00) | (sval << 0);
+                break;
+            case 1:
+                dval = (dval & 0xFFFF00FF) | (sval << 8);
+                break;
+            case 2:
+                dval = (dval & 0xFF00FFFF) | (sval << 16);
+                break;
+            case 3:
+                dval = (dval & 0x00FFFFFF) | (sval << 24);
+                break;
+        }
+
+        special_arras_memory_i32_store((int)dest + (i/4)*4, dval);
+    } 
+
+	return dest;
+}
+
 #pragma clang diagnostic pop
 
 
