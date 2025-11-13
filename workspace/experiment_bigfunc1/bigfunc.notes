@@ -10,8 +10,25 @@ bf "base index" 286:
     }
     br_table[B_cb, B_kh, B_iv, ... sj, B_ua, B_av, B_of, ..L_b] (      r);
 ^^^^^
-what does fa and n[0] look like?:
-    idk yet
+n, n*, and fa:
+    n values are positioned in memory in groups kind of.
+    like for example: ?? n n n ?? n n n n n ??
+    this makes sense because the bigfunc just increments
+    n by 4 usually, apart from some instructions changing
+    it to arbritrary values.
+    my plan of attack for n is to see if it is reliable to
+    use the n values to predict the function of the game
+    that is being used. for example when a chat packet is received
+    the same n values are used. maybe those n values are only
+    used for chat and can be called "chat parsing instruction pointer"
+    region?
+    idk yet gotta do more research.
+
+    n* seems to be evenly use all the range of the possible 
+    int32 values.
+
+    i didnt get many fa samples but seems to be the same as n*.
+
 
 "y encodes 2 r numbers under 1625":
     Below shows a short function that will 
