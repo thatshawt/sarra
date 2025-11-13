@@ -220,8 +220,11 @@ class IndexHtmlStuff:
 index_imports_code_mapping = {
     'import_e_t_get': ['              (t) => e[t]'],
     'import_e_t_call':['              (t) => e[t]()'],
-    'import_consolelog1': ['              (e, t) => {','                console.log(d.decode(r().subarray(e, e + t)));'],
-    'import_consolelog2': ['              (e, t, a, o) => {','                console.log('],
+    'import_consolelog1': ['              (e, t) => {',
+        '                console.log(d.decode(r().subarray(e, e + t)));'],
+    'import_consolelog2': ['              (e, t, a, o) => {',
+        '                console.log('],
+    'import_sendpacket': ['                  1 === t.readyState && t.send(a);']
 }
 
 indexStuff = IndexHtmlStuff(index_html_content, index_imports_code_mapping)

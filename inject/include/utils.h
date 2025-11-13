@@ -35,6 +35,9 @@ extern s32 import_e_t_get(s32 t);
 // (t) => e[t](),
 extern s32 import_e_t_call(s32 t);
 
+//TODO. give the parameters names and see if calling this works...
+extern s32 import_sendpacket(s32 a, s32 b, s32 c);
+
 
 extern void special_update_param_struct();
 
