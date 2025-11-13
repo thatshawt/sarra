@@ -17,5 +17,3 @@
 * source code primitive: maybe, add a special_export_a_func_num() so there is a way to get the func nums for the arras exported funcs.
 
 * investigate how 266 is being called like 10 tens in a row with the same two arguments, i saw that on the length 74 packet receive debug calls only trace.
-
-* chacha1_finish is broken? where are sent packets handled... i know chacha2_finish does received packets...
