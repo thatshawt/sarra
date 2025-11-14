@@ -128,9 +128,12 @@ let FALSE = 0;
                 e[t].arc(a, r, o, n, l);
               },
               (t) => e[t].complete,
-              (t, a, o, n, l) => {
-                e[t].strokeText(d.decode(r().subarray(a, a + o)), n, l);
-              },
+(t, a, o, n, l) => {
+    //hello
+    var text = d.decode(r().subarray(a, a + o));
+    text = text.replace("arras.io","sarra.io");
+    e[t].strokeText(text, n, l);
+},
               (t, a, r, o, n) => {
                 e[t].viewport(a, r, o, n);
               },
@@ -450,9 +453,12 @@ let FALSE = 0;
               (t) => {
                 e[t].closePath();
               },
-              (t, a, o, n, l) => {
-                e[t].fillText(d.decode(r().subarray(a, a + o)), n, l);
-              },
+(t, a, o, n, l) => {
+    // hi
+    var text = d.decode(r().subarray(a, a + o));
+    text = text.replace("arras.io","sarra.io");
+    e[t].fillText(text, n, l);
+},
               (a, r, o) => t(a, e[r](e[o])),
               (a, r) => t(a, e[r].createBuffer()),
               (t) => e[t].readyState,

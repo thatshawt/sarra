@@ -38,6 +38,10 @@ extern s32 import_e_t_call(s32 t);
 //TODO. give the parameters names and see if calling this works...
 extern s32 import_sendpacket(s32 a, s32 b, s32 c);
 
+//TODO calling this breaks stuff...
+// maybe because it has no parameters and
+// the script doesnt handle that correctly?
+extern f64 import_datenow();
 
 extern void special_update_param_struct();
 
@@ -108,7 +112,7 @@ void _poopf(u8* format, ...);
 // #define poopf(format, ...) _poopf((format), (s32)0, ##__VA_ARGS__)
 
 void _spoopf(u8* dest, s32 max, u8* format, ...);
-#define spoopf(dest, max, format, ...) _spoopf((dest), (max), (format), (s32)0, ##__VA_ARGS__)
+// #define spoopf(dest, max, format, ...) _spoopf((dest), (max), (format), (s32)0, ##__VA_ARGS__)
 void vspoopf(u8* dest, int max, u8* format, __builtin_va_list argp);
 
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n);

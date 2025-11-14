@@ -48,6 +48,11 @@ struct{
   s32 stats_frequencies[STATS_FREQUENCIES_SIZE];
 }poopState;
 
+void export_datenow(){
+  f64 datenow = import_datenow();
+  _poopf("Date.now() %l", (s64)datenow );
+}
+
 void _reset_bigfunc_index_counter(){
   poopState.bigfunc_index_count_enabled = FALSE;
   poopState.bigfunc_index_count_counter = 0;
@@ -365,6 +370,7 @@ void _special_bigfunc_chachafinish_2(){
   }
 }
 
+//from special.c
 extern struct Params_Struct params_struct;
 
 void every_func_preamble(s32 func_num){
@@ -500,4 +506,3 @@ void inject_all(){
 
   //TODO: should i clear locals here still?
 }
-

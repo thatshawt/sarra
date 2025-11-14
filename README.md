@@ -9,7 +9,6 @@ This is an experimental modding project for arrasio.
 
 # Low-Level Goals
 * Figure out how the big function branches works...
-* Figure out where packets are sent before encrypted.
 
 # Development
 This project uses nix to handle package dependencies, so your gonna need to install nix before doing any development. Any time I open a new terminal i run `sh scripts/shell.sh` so it adds all the packages i need to the environment path. Just do it. Not because nike said so.
