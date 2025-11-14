@@ -138,6 +138,7 @@ class IndexHtmlStuff:
             # index_html_patched.append(line)
 
         for func_thing in self.import_funcs:
+            # print(func_thing)
             for (name, match_array) in mappings.items():
                 match_list = list(match_array)
                 # print(f" {func_thing.num} '{name}' {match_array} {match_list}")
@@ -158,6 +159,7 @@ class IndexHtmlStuff:
                     filePath = f"{args.a}/{name}.js"
                     if os.path.isfile(filePath):
                         self.overrides.append(ImportOverride(name, filePath))
+        # print(self.index_imports_name_index_mapping)
 
 
     def generatePatched(self):
@@ -220,11 +222,17 @@ class IndexHtmlStuff:
 index_imports_code_mapping = {
     'import_e_t_get': ['              (t) => e[t]'],
     'import_e_t_call':['              (t) => e[t]()'],
+
     'import_consolelog1': ['              (e, t) => {',
         '                console.log(d.decode(r().subarray(e, e + t)));'],
     'import_consolelog2': ['              (e, t, a, o) => {',
         '                console.log('],
-    'import_sendpacket': ['                  1 === t.readyState && t.send(a);']
+
+    'import_sendpacket': ['                  1 === t.readyState && t.send(a);'],
+
+    'import_stroketext':['                e[t].strokeText(d.decode(r().subarray(a, a + o)), n, l);'],
+    'import_filltext':['                e[t].fillText(d.decode(r().subarray(a, a + o)), n, l);'],
+    'import_datenow':['              () => Date.now()'],
 }
 
 indexStuff = IndexHtmlStuff(index_html_content, index_imports_code_mapping)
@@ -265,6 +273,9 @@ class ImportThing:
         self.type = type
         self.num = num
         self.full_string = full_string
+
+    def __str__(self):
+        return f"<ImportThing. '{self.full_string}'>"
 
 class TypeThing:
     def __init__(self, num, param_string, full_string):
@@ -567,25 +578,27 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
 
     def fix_indexhtml_import_calls(inject_body):
         for inject_import in inject_wat_stuff.imports:
-                import_name = inject_import.name
-                inject_import_func_num = inject_import.num
+            # print(inject_import)
+            import_name = inject_import.name
+            inject_import_func_num = inject_import.num
 
-                # translate app wat import calls
-                if import_name in indexStuff.index_imports_name_index_mapping:
-                    import_type = inject_wat_stuff.getTypeByNum(inject_import.type).param_string
+            # translate app wat import calls
+            if import_name in indexStuff.index_imports_name_index_mapping:
+                import_type = inject_wat_stuff.getTypeByNum(inject_import.type).param_string
 
-                    # see if the imported func has a mapping to the app wat imports
-                    app_import_index = indexStuff.index_imports_name_index_mapping[import_name]
+                # see if the imported func has a mapping to the app wat imports
+                app_import_index = indexStuff.index_imports_name_index_mapping[import_name]
 
-                    # check every import in app wat to find if one is matching the inject wat import call
-                    for app_import in app_wat_stuff.imports:
-                        app_import_func_num = app_import.num
-                        app_import_type = app_wat_stuff.getTypeByNum(app_import.type).param_string
+                # check every import in app wat to find if one is matching the inject wat import call
+                for app_import in app_wat_stuff.imports:
+                    app_import_func_num = app_import.num
+                    app_import_type = app_wat_stuff.getTypeByNum(app_import.type).param_string
 
-                        if import_type == app_import_type and app_import.name == app_import_index:
-                            # print(f"replace 'call {inject_import_func_num}' with 'call {app_import_func_num}'")
-                            inject_body = replace_instruction_with(inject_body, f"call {inject_import_func_num}", f"call {app_import_func_num}")
-                    return inject_body
+                    if import_type == app_import_type and app_import.name == app_import_index:
+                        # print(f"{app_import_type} {app_import.name} {import_name}")
+                        # print(f"{import_name},replace 'call {inject_import_func_num}' with 'call {app_import_func_num}'")
+                        inject_body = replace_instruction_with(inject_body, f"call {inject_import_func_num}", f"call {app_import_func_num}")
+        return inject_body
     
     def fix_seperate_func_calls(inject_body):
         for inject_func in inject_wat_stuff.funcs:
