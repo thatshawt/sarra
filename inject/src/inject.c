@@ -4,7 +4,7 @@
 #include "special.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 500
+#define DEBUG_MAX_COUNT 15000
 
 #define STATS_FREQUENCIES_SIZE 600
 #define STATS_MAX_COUNT_CONSIDERED 5000
@@ -14,7 +14,7 @@
 #define CHACHA_MAX_TOTAL 1
 #define CHACHA_BUFFER_SIZE 2000
 
-#define BIGFUNC_INDEX_CALL_MAX 1
+#define BIGFUNC_INDEX_CALL_MAX 10
 
 struct{
   s32 debug_enabled;
@@ -119,7 +119,11 @@ void _init_all_the_things(){
   _reset_debug();
   _reset_stats();
   _reset_bigfunc_trace();
+  _reset_bigfunc_index_counter();
   _reset_chacha();
+
+  poopState.debug_enabled = TRUE;
+  poopState.bigfunc_index_count_enabled = TRUE;
 
   hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
   hxh_parse_execute();
@@ -176,7 +180,6 @@ int _special_bigfunc_beforebranch(s32 index){
       _reset_bigfunc_trace();
       _reset_debug();
     }else{
-      
       s32 var_r = special_bigfunc_localget_i32(17);
       s32 var_y = special_bigfunc_localget_i32(24);
       s32 var_fa = special_bigfunc_localget_i32(31);
@@ -420,7 +423,7 @@ void every_func_preamble(s32 func_num){
 
         //enable trace to see what first few indexes do
         _reset_bigfunc_trace();
-        poopState.bigfunc_trace_enabled = TRUE;
+        // poopState.bigfunc_trace_enabled = TRUE;
   
         poopState.bigfunc_index_count_counter = 0;
       }
@@ -438,18 +441,17 @@ void every_func_preamble(s32 func_num){
       }else{
         // func 274 is the only one that uses import_sendpacket.
         // other than bigfunc.
-        if(func_num != 274)return;
-
-        s32 firstParam = params_struct.i32params[0];
-        s32 secondParam = params_struct.i32params[1];
-        s32 thirdParam = params_struct.i32params[2];
-
-        if(thirdParam < 2)return;
-        
-        if(VALID_ARRAS_MEMLOCATION(secondParam)){
-          u8 firstByte = special_arras_memory_i32_load8_u(secondParam);
-          if(firstByte != 'M')return;
-        }
+        // {
+        //   if(func_num != 274)return;
+        //   s32 firstParam = params_struct.i32params[0];
+        //   s32 secondParam = params_struct.i32params[1];
+        //   s32 thirdParam = params_struct.i32params[2];
+        //   if(thirdParam < 2)return;
+        //   if(VALID_ARRAS_MEMLOCATION(secondParam)){
+        //     u8 firstByte = special_arras_memory_i32_load8_u(secondParam);
+        //     if(firstByte != 'M')return;
+        //   }
+        // }
 
         //print out args
         u8 args_str[1000] = {0};
@@ -478,19 +480,19 @@ void every_func_preamble(s32 func_num){
         }
         _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
 
-        s32 chatMessageOffset = 2;
-        if(thirdParam > 31+2) chatMessageOffset = 4;
-        s32 chatMessageLength = thirdParam-chatMessageOffset;
-        // memset_i8_to_arras_memory((char*)secondParam+chatMessageOffset, '*', chatMessageLength);
-
-        if(chatMessageLength >= 10){
-          const char forbiddenStrHeehee[] = {91,1,68,105,103,105,116,49,1,93};
-          // memcpy(secondParam+chatMessageOffset, forbiddenStrHeehee, 10);
-          memcpy_i8_to_arras_memory((char*) secondParam+chatMessageOffset,
-            forbiddenStrHeehee, 10);
-        }
-
-        _hxh_breakpoint();
+        // {
+        //   s32 chatMessageOffset = 2;
+        //   if(thirdParam > 31+2) chatMessageOffset = 4;
+        //   s32 chatMessageLength = thirdParam-chatMessageOffset;
+        //   // memset_i8_to_arras_memory((char*)secondParam+chatMessageOffset, '*', chatMessageLength);
+        //   if(chatMessageLength >= 10){
+        //     const char forbiddenStrHeehee[] = {91,1,68,105,103,105,116,49,1,93};
+        //     // memcpy(secondParam+chatMessageOffset, forbiddenStrHeehee, 10);
+        //     memcpy_i8_to_arras_memory((char*) secondParam+chatMessageOffset,
+        //       forbiddenStrHeehee, 10);
+        //   }
+        //   _hxh_breakpoint();
+        // }
 
         poopState.debug_count++;
       }

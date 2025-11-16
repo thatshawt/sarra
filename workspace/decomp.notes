@@ -1,5 +1,22 @@
 in VS code do "Ctrl+k, Ctrl+0" to Fold All in code editor.
 
+func 264 is a string compare.
+264(char* a, char* b, int n){
+    return "different bytes between a and b";
+}
+
+claude says:
+    func 208 "realloc() - it resizes an already-allocated memory block".
+    func 260 "it removes a free memory block from the allocator's data structures".
+    func 266 "UTF-8 decoder with Unicode character classification function".
+    func 302 is malloc.
+    func 311 "insert_free_chunk() - it adds a freed block back to the allocator and merges it with adjacent free blocks".
+    func 348 "dynamic array/vector resize function - it grows the capacity of a data structure (likely a vector or dynamic array) when it runs out of space".
+    func 405 is free.
+    func 423 is memcpy.
+
+
+
 encryptFunc looks like this in app.decomp:
     function f_lj(a:{ a:int, b:int, c:int, d:int, e:int, f:int, g:int, h:int, i:int, j:int, k:int, l:int, m:int, n:int, o:int, p:int }) { // func271
 you can find encryptFunc by going to the t.send imported function and seeing what its callees. go to the first one connected to it thats not the bigFunc. then, right next to the t.send function in the call graph will be the encryptFunc.
