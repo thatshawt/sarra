@@ -53,6 +53,13 @@ void export_datenow(){
   _poopf("Date.now() %l", (s64)datenow );
 }
 
+void export_do_mem0(){
+  u32 mem_loc = 0;
+  s32 val = special_arras_memory_i32_load(mem_loc);
+  hxh_console_log_literal(val);
+  special_arras_memory_i32_store(mem_loc, val+1);
+}
+
 void _reset_bigfunc_index_counter(){
   poopState.bigfunc_index_count_enabled = FALSE;
   poopState.bigfunc_index_count_counter = 0;
@@ -151,7 +158,7 @@ void export_wasm_arras_memsize(){
   hxh_console_log_literal(special_arras_memory_memory_size());
 }
 
-#define VALID_ARRAS_MEMLOCATION(x) ( ((x) > 0) && ((x) < special_arras_memory_memory_size()*PAGESIZE_BYTES) )
+extern struct LocalsStruct locals_struct;
 
 int _special_bigfunc_beforebranch(s32 index){
   UNIQUEIFER;
@@ -164,6 +171,7 @@ int _special_bigfunc_beforebranch(s32 index){
   }
 
   if(poopState.bigfunc_trace_enabled){
+    locals_struct.enabled = TRUE;
     if(poopState.bigfunc_trace_count >= poopState.bigfunc_trace_max_count){
       _reset_bigfunc_trace();
       _reset_debug();
@@ -238,6 +246,8 @@ int _special_bigfunc_beforebranch(s32 index){
       //   _hxh_breakpoint();
       // }
     }
+  }else{
+    locals_struct.enabled = FALSE;
   }
 
   return index;
@@ -275,9 +285,9 @@ void _special_bigfunc_chachabyte_1(s32 address, s32 the_byte){
 
 void _special_bigfunc_chachabyte_2(s32 address, s32 the_byte){
   UNIQUEIFER;
-  if(poopState.bigfunc_chacha_enabled == TRUE){
+  // if(poopState.bigfunc_chacha_enabled == TRUE){
     add_chacha_byte(address, the_byte);
-  }
+  // }
 
   special_arras_memory_i32_store8(address, the_byte);
   // hxh_reset();
@@ -301,29 +311,47 @@ void _special_bigfunc_chachafinish_1(){
   //   hxh_console_log_literal(poopState.bigfunc_chacha_byte_i);
   // }
   // if(poopState.bigfunc_chacha_firstbyte == 'M' && (poopState.bigfunc_chacha_byte_i == 17)){
-
   //   }
   // }
 
   poopState.bigfunc_chacha_byte_i = 0;
   poopState.bigfunc_chacha_firstbyte = 0;
-  // hxh_reset();
   memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
-  // }
 }
 
 void _special_bigfunc_chachafinish_2(){
   UNIQUEIFER;
 
-  // _special_bigfunc_chachafinish_1();
+  const int firstByte = poopState.bigfunc_chacha_firstbyte;
+
+  //we about to go cra cra now
+  if(firstByte == 'M' && poopState.bigfunc_chacha_byte_i == 16){
+    const u8 customPacket1[] = {77, 240, 70, 64, 202, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 1};
+    const u8 customPacket2[] = {77, 240, 70, 64, 202, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 1};
+    // _poopf("before, packetaddress: %d", poopState.bigfunc_chacha_firstaddress);
+    // _hxh_breakpoint();
+    // memcpy_i8_to_arras_memory(
+    //     (char*)poopState.bigfunc_chacha_firstaddress+5,
+    //     (char*)customPacket1+5,
+    //     (sizeof customPacket1)-5-1
+    // );
+    memset_i8_to_arras_memory(
+        (char*)poopState.bigfunc_chacha_firstaddress+5,
+        '\n',
+        10
+    );
+    // _poopf("right after");
+    // _hxh_breakpoint();
+  }
 
   if(poopState.bigfunc_chacha_enabled){
     // char* result = strstr(poopState.bigfunc_chacha_buffer, "123456789");
-    const int firstByte = poopState.bigfunc_chacha_firstbyte;
+
     if(
       // (firstByte != 98 && firstByte != 117 && firstByte != 112)
       (firstByte == poopState.bigfunc_chacha_header)
       && poopState.bigfunc_chacha_byte_i > 0){
+
       // hxh_parse_execute();
       // hxh_console_log_literal(poopState.bigfunc_chacha_byte_i);
 
@@ -359,15 +387,14 @@ void _special_bigfunc_chachafinish_2(){
       }
     }
 
-    poopState.bigfunc_chacha_byte_i = 0;
-    poopState.bigfunc_chacha_firstbyte = 0;
-    hxh_reset();
-    memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
     // if(poopState.bigfunc_chacha_count++ >= poopState.bigfunc_chacha_count_total){
-    //   _reset_chacha();
-    // }
-
+      //   _reset_chacha();
+      // }
   }
+  poopState.bigfunc_chacha_byte_i = 0;
+  poopState.bigfunc_chacha_firstbyte = 0;
+  hxh_reset();
+  memset_i8(poopState.bigfunc_chacha_buffer, CHACHA_BUFFER_SIZE, 0);
 }
 
 //from special.c
@@ -494,14 +521,14 @@ void inject_all(){
   // grab func number for the function this gets injected into.
   s32 func_num = special_func_number();
 
-  // load all the locals into some thing.
+  // load all the parameters into some thing.
   special_update_param_struct();
 
   // do everything else.
   // i put this in its own function because inject_all has a bug that happens
   // if there is too much complex code in it.
   // this is my workaround so yea it works.
-  // the bug does something to global 1 if i remember...
+  // the bug does something with global 1 if i remember...
   every_func_preamble(func_num);
 
   //TODO: should i clear locals here still?

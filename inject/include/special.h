@@ -6,7 +6,7 @@ enum Param_Type{PARAM_T_NIL, PARAM_T_I32, PARAM_T_I64, PARAM_T_F32, PARAM_T_F64}
 
 #define MAX_PARAM_STRUCT_PARAMS 50
 
-struct Params_Struct{ // not the most efficient but hey its really simple
+struct Params_Struct{ // simple as a pimple
     s32 i32params[MAX_PARAM_STRUCT_PARAMS];
     s64 i64params[MAX_PARAM_STRUCT_PARAMS];
     f32 f32params[MAX_PARAM_STRUCT_PARAMS];
@@ -28,4 +28,16 @@ void _special_printargs_per_arg_i64(s64 a);
 void _special_printargs_per_arg_f32(f32 a);
 void _special_printargs_per_arg_f64(f64 a);
 void _special_printargs_end();
+
+
+#define MAX_LOCALS_STRUCT_LOCALS 500
+
+struct LocalsStruct{
+    s32 i32Locals[MAX_LOCALS_STRUCT_LOCALS];
+    f32 f32Locals[MAX_LOCALS_STRUCT_LOCALS];
+    s64 i64Locals[MAX_LOCALS_STRUCT_LOCALS];
+    f64 f64Locals[MAX_LOCALS_STRUCT_LOCALS];
+    s32 enabled;
+};
+
 #endif

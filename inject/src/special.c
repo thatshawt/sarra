@@ -100,18 +100,16 @@ void _special_updateparams_end()
 }
 
 
-#define MAX_LOCALS_STRUCT_LOCALS 500
 // #define MAX_I32_LOCALS 500
 // #define MAX_I64_LOCALS 500
 // #define MAX_F32_LOCALS 500
 // #define MAX_F64_LOCALS 500
 
-struct{
-    s32 i32Locals[MAX_LOCALS_STRUCT_LOCALS];
-    f32 f32Locals[MAX_LOCALS_STRUCT_LOCALS];
-    s64 i64Locals[MAX_LOCALS_STRUCT_LOCALS];
-    f64 f64Locals[MAX_LOCALS_STRUCT_LOCALS];
-}locals_struct;
+struct LocalsStruct locals_struct;
+
+s32 _special_bigfunc_localset_enabled(){
+    return locals_struct.enabled;
+}
 
 void _special_bigfunc_localset_i32(s32 index, s32 value){
     locals_struct.i32Locals[index] = value;

@@ -9,9 +9,17 @@ This is an experimental modding project for arrasio.
 
 # Low-Level Goals
 * Figure out how the big function branches works...
+* How do i modify packets to a different length...
+* Make a mechanism to detect keyboard/mouse input.
+* Make a mechanism to render stuff on screen.
+* Make a simple heap allocator.
+* Make a tool that replaces a region of arras memory with some custom data and then can return it back to how it was before replacing it.
+* Object oriented stuff?
+* Make a custom packet parser/writer?
+* Upgrade the injection script so its very easy to inject any code...
 
 # Development
-This project uses nix to handle package dependencies, so your gonna need to install nix before doing any development. Any time I open a new terminal i run `sh scripts/shell.sh` so it adds all the packages i need to the environment path. Just do it. Not because nike said so.
+This project uses nix to handle package dependencies, so your gonna need to install nix before doing any development. Any time I open a new terminal i run `sh scripts/shell.sh` so it adds all the packages i need to the environment path. "Just do it"®.
 1. Next you run `sh scripts/mitmproxy.sh` so we can override arrasio's app.wasm and index.html with out own. Those are in the `mitmoverride` directory. You have to change your browser's settings to point to the mitmproxy and do some extra stuff to intercept https traffic (which you need for arrasio. see [Mitmproxy Getting Started](https://docs.mitmproxy.org/stable/overview/getting-started/)).
 2. Next (in a new terminal cus the other one has mitmproxy open), if im making changes to any injected code i run `sh injectBuild.sh` inside the scripts directory to rebuild the app.wasm and index.html.
 3. Go back to 2.

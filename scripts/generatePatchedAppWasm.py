@@ -1038,12 +1038,13 @@ for line in app_wat_content.split("\n"):
         if len(line) > 6000 and "br_table" in line and hit_large_branch_bigfunc == False:
             hit_large_branch_bigfunc = True
             bigfunc_branch_func = inject_wat_stuff.getFuncByName("_special_bigfunc_beforebranch")
+            bigfunc_localset_enabled_func = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_enabled")
             bigfunc_localseti32 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_i32")
             bigfunc_localseti64 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_i64")
             bigfunc_localsetf32 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_f32")
             bigfunc_localsetf64 = inject_wat_stuff.getFuncByName("_special_bigfunc_localset_f64")
             if bigfunc_branch_func != None:
-                if bigfunc_localseti32 == None or bigfunc_localseti64 == None or bigfunc_localsetf32 == None or bigfunc_localsetf64 == None:
+                if bigfunc_localseti32 == None or bigfunc_localseti64 == None or bigfunc_localsetf32 == None or bigfunc_localsetf64 == None or bigfunc_localset_enabled_func == None:
                     print(f"hell nah pongebob, missing one of the _special_bigfunc_localset_ functions!",file=sys.stderr)
                     exit(1)
                 # and here is index... already here dont gotta do anything...
@@ -1053,6 +1054,8 @@ for line in app_wat_content.split("\n"):
                 # app_wat_patched.append(f"local.get 127")
                 appWatBiggestFunc = app_wat_stuff.getFuncByNum(app_wat_stuff.largestFuncNum)
 
+                app_wat_patched.append(f"call {seperate_func_mapping[bigfunc_localset_enabled_func.num]}")
+                app_wat_patched.append(f"if")
                 for (localIndex, localTypeStr) in appWatBiggestFunc.locals.items():
                     chosenFuncNum = -1
                     if localTypeStr == "i32":
@@ -1079,6 +1082,7 @@ for line in app_wat_content.split("\n"):
                     app_wat_patched.append(f"call {seperate_func_mapping[chosenFuncNum]}")
 
                     # print(f"index {updatedIndex}|")
+                app_wat_patched.append(f"end")
 
                 app_wat_patched.append(f"call {seperate_func_mapping[bigfunc_branch_func.num]}")
             elif bigfunc_beforebranch_job != "":
