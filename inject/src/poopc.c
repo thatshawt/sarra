@@ -36,6 +36,14 @@ void vspoopf(u8* dest, s32 max, u8* format, __builtin_va_list argp)
                 s64 the_i64 = __builtin_va_arg(argp, s64);
                 int printed = i64_to_str(dest+outi, the_i64);
                 outi += printed;
+            }else if(*format == 'f'){ //f32
+                f32 the_f32 = __builtin_va_arg(argp, f32);
+                int printed = f32_to_str(dest+outi, the_f32);
+                outi += printed;
+            }else if(*format == 'z'){ //f64
+                f64 the_f64 = __builtin_va_arg(argp, f64);
+                int printed = f64_to_str(dest+outi, the_f64);
+                outi += printed;
             } else {
             // fputs("Not implemented", stdout);
             // idk vro :skull:

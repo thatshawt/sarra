@@ -129,3 +129,141 @@ s32 i64_to_str(u8* dest, s64 num)
 
     return j;
 }
+
+s32 f32_to_str(u8* dest, f32 num)
+{
+    int j = 0;
+    
+    // Handle zero
+    if(num == 0.0f){
+        dest[j++] = '0';
+        dest[j++] = '.';
+        dest[j++] = '0';
+        return j;
+    }
+    
+    // Handle negative
+    if(num < 0.0f){
+        dest[j++] = '-';
+        num = -num;
+    }
+    
+    // Extract integer and fractional parts
+    // Cast to integer to get integer part (truncates towards zero)
+    s32 int_part = (s32)num;
+    // Calculate fractional part
+    f32 frac_part = num - (f32)int_part;
+    // Ensure fractional part is positive (handle any rounding issues)
+    if(frac_part < 0.0f) frac_part = -frac_part;
+    
+    // Convert integer part manually (to avoid issues with int_to_str)
+    if(int_part == 0){
+        dest[j++] = '0';
+    } else {
+        // Count digits
+        s32 temp = int_part;
+        s32 digit_count = 0;
+        while(temp > 0){
+            temp /= 10;
+            digit_count++;
+        }
+        
+        // Extract and write digits
+        temp = int_part;
+        if(temp < 0) temp = -temp;  // Ensure positive for extraction
+        u8 digits[32];
+        for(s32 i = digit_count - 1; i >= 0; i--){
+            s32 digit = temp % 10;
+            digits[i] = digitCharMap[digit];
+            temp /= 10;
+        }
+        for(s32 i = 0; i < digit_count; i++){
+            dest[j++] = digits[i];
+        }
+    }
+    
+    // Add decimal point
+    dest[j++] = '.';
+    
+    // Convert fractional part (6 decimal places for float)
+    const int precision = 6;
+    for(int i = 0; i < precision; i++){
+        frac_part *= 10.0f;
+        s32 digit = (s32)frac_part;
+        if(digit < 0) digit = 0;
+        if(digit > 9) digit = 9;
+        dest[j++] = digitCharMap[digit];
+        frac_part -= (f32)digit;
+    }
+    
+    return j;
+}
+
+s32 f64_to_str(u8* dest, f64 num)
+{
+    int j = 0;
+    
+    // Handle zero
+    if(num == 0.0){
+        dest[j++] = '0';
+        dest[j++] = '.';
+        dest[j++] = '0';
+        return j;
+    }
+    
+    // Handle negative
+    if(num < 0.0){
+        dest[j++] = '-';
+        num = -num;
+    }
+    
+    // Extract integer and fractional parts
+    // Cast to integer to get integer part (truncates towards zero)
+    s64 int_part = (s64)num;
+    // Calculate fractional part
+    f64 frac_part = num - (f64)int_part;
+    // Ensure fractional part is positive (handle any rounding issues)
+    if(frac_part < 0.0) frac_part = -frac_part;
+    
+    // Convert integer part manually (to avoid issues with i64_to_str)
+    if(int_part == 0){
+        dest[j++] = '0';
+    } else {
+        // Count digits
+        s64 temp = int_part;
+        s32 digit_count = 0;
+        while(temp > 0){
+            temp /= 10;
+            digit_count++;
+        }
+        
+        // Extract and write digits
+        temp = int_part;
+        if(temp < 0) temp = -temp;  // Ensure positive for extraction
+        u8 digits[32];
+        for(s32 i = digit_count - 1; i >= 0; i--){
+            s64 digit = temp % 10;
+            digits[i] = digitCharMap[digit];
+            temp /= 10;
+        }
+        for(s32 i = 0; i < digit_count; i++){
+            dest[j++] = digits[i];
+        }
+    }
+    
+    // Add decimal point
+    dest[j++] = '.';
+    
+    // Convert fractional part (15 decimal places for double)
+    const int precision = 15;
+    for(int i = 0; i < precision; i++){
+        frac_part *= 10.0;
+        s64 digit = (s64)frac_part;
+        if(digit < 0) digit = 0;
+        if(digit > 9) digit = 9;
+        dest[j++] = digitCharMap[digit];
+        frac_part -= (f64)digit;
+    }
+    
+    return j;
+}

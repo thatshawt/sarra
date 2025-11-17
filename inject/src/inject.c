@@ -4,7 +4,7 @@
 #include "special.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 15000
+#define DEBUG_MAX_COUNT 5000
 
 #define STATS_FREQUENCIES_SIZE 600
 #define STATS_MAX_COUNT_CONSIDERED 5000
@@ -110,6 +110,9 @@ extern void do_all_tests();
 void _init_all_the_things(){
   _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
+  _poopf("here is a float: %f, and a double: %z", (f32)123.456, (f64)123.4567890123456789);
+  _poopf("just a float: %f", (f32)3.1415926);
+  _poopf("just a double: %z", (f64)3.14159265358979323846);
   // do_all_tests();
 
   // _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
@@ -122,8 +125,8 @@ void _init_all_the_things(){
   _reset_bigfunc_index_counter();
   _reset_chacha();
 
-  poopState.debug_enabled = TRUE;
-  poopState.bigfunc_index_count_enabled = TRUE;
+  // poopState.debug_enabled = TRUE;
+  // poopState.bigfunc_index_count_enabled = TRUE;
 
   hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
   hxh_parse_execute();
@@ -402,6 +405,8 @@ void _special_bigfunc_chachafinish_2(){
 
 //from special.c
 extern struct Params_Struct params_struct;
+//from function_name_map.c
+extern const char* nameMap(int func_num);
 
 void every_func_preamble(s32 func_num){
   if(func_num == special_start_func_number()){
@@ -478,7 +483,15 @@ void every_func_preamble(s32 func_num){
           if(i != params_struct.param_i-1)
             strcat(args_str, ", ");
         }
-        _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
+
+        const char* func_name = nameMap(func_num);
+        if(func_name != NULL){
+          _poopf("call %d, %d|%s(%s)", poopState.debug_count, func_num, func_name, args_str);
+        }else{
+          _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
+        }
+
+        // _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
 
         // {
         //   s32 chatMessageOffset = 2;

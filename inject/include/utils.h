@@ -20,6 +20,7 @@
 
 #define TRUE ((s32)1)
 #define FALSE ((s32)0)
+#define NULL ((void*)0)
 
 //a is between inclusive b and c.
 #define BETWEEN_INC(a,b,c) ((a>=b) && (a<=c))
