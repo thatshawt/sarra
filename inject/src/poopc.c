@@ -37,8 +37,9 @@ void vspoopf(u8* dest, s32 max, u8* format, __builtin_va_list argp)
                 int printed = i64_to_str(dest+outi, the_i64);
                 outi += printed;
             }else if(*format == 'f'){ //f32
-                f32 the_f32 = __builtin_va_arg(argp, f32);
+                f32 the_f32 = (f32)__builtin_va_arg(argp, f64);
                 int printed = f32_to_str(dest+outi, the_f32);
+                // hxh_console_log_char_string(dest+outi,printed);
                 outi += printed;
             }else if(*format == 'z'){ //f64
                 f64 the_f64 = __builtin_va_arg(argp, f64);

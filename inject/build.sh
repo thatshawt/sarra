@@ -5,6 +5,7 @@ clang-21 \
   -D__DATETIME__="\"$(date)\"" \
   --include-directory include \
   -Wno-incompatible-library-redeclaration \
+  -ferror-limit=1 \
   -Wl,--no-entry \
   -Wl,--allow-undefined \
   -Wl,--export-all \

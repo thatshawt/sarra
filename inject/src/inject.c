@@ -110,9 +110,7 @@ extern void do_all_tests();
 void _init_all_the_things(){
   _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
-  _poopf("here is a float: %f, and a double: %z", (f32)123.456, (f64)123.4567890123456789);
-  _poopf("just a float: %f", (f32)3.1415926);
-  _poopf("just a double: %z", (f64)3.14159265358979323846);
+  // _poopf("here is a float: %f, and a double: %z", (f32)123.456123, (f64)123.4567890123456789);
   // do_all_tests();
 
   // _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
