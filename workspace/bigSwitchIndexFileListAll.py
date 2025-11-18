@@ -1,10 +1,10 @@
 import argparse
 import sys
 
-# python3 bigSwitchIndexFile.py -d ../src/app.decomp -c ../src/app.section.code -i indexesfileHERE
+# python3 bigSwitchIndexFileListAll.py -d ../src/app.decomp -c ../src/app.section.code
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-i", help="big switch index file path", required=True)
+# parser.add_argument("-i", help="big switch index file path", required=True)
 parser.add_argument("-n" ,help="number of lines to grab from app.decomp", default=12, type=int)
 # parser.add_argument("-z" ,help="max number of lines per index", default=12, type=int)
 parser.add_argument("-d", help="app.decomp file path", required=True)
@@ -98,17 +98,22 @@ with open(args.d) as f:
 
 # indexes = [747, 123, 0]
 indexes = []
-with open(args.i) as f:
-    line = f.readline()
-    while line:
-        line = line.strip()
-        if line.isnumeric():
-            indexes.append(int(line))
-        else:
-            indexes.append(line)
+# with open(args.i) as f:
+#     line = f.readline()
+#     while line:
+#         line = line.strip()
+#         if line.isnumeric():
+#             indexes.append(int(line))
+#         else:
+#             indexes.append(line)
 
-        line = f.readline()
+#         line = f.readline()
 
+# print(index_branch_mapping)
+# exit(1)
+
+for i in range(len(index_branch_mapping)):
+    indexes.append(i)
 
 indexes_result = {}
 with open(args.d) as f:

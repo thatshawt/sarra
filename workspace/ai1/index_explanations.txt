@@ -1,0 +1,828 @@
+0 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+1 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+2 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+3 # Array search: loops through array checking for type 11 entry with value 693956; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+4 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+5 # Array search: loops through array checking for type 26 entry with value 1158987; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+6 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+7 # Control flow: performs operations and branches
+8 # Function call: calls f_yu; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+9 # Type conversion: converts between integer types
+10 # Type conversion: converts between integer types
+11 # Type conversion: converts between integer types
+12 # Memory access: reads/writes memory locations
+13 # Utility call: calls f_lu function; Branch dispatch: uses computed index to branch to different code paths; Conditional select: chooses value based on boolean condition
+14 # Array search: loops through array checking for type 24 entry with value 304136; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+15 # Type conversion: converts between integer types
+16 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+17 # Type conversion: converts between integer types
+18 # Control flow: performs operations and branches
+19 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+20 # Type conversion: converts between integer types
+21 # Control flow: performs operations and branches
+22 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+23 # Type conversion: converts between integer types
+24 # Array search: loops through array checking for type 13 entry with value 277402; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+25 # Memory access: reads/writes memory locations
+26 # Memory access: reads/writes memory locations
+27 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+28 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+29 # Array search: loops through array checking for type 23 entry with value 1318163; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+30 # Array search: loops through array checking for type 21 entry with value 1042126; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+31 # Type conversion: converts between integer types
+32 # Array search: loops through array checking for type 22 entry with value 354096; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+33 # Type conversion: converts between integer types
+34 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+35 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+36 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+37 # Type conversion: converts between integer types
+38 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+39 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+40 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+41 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+42 # Array search: loops through array checking for type 15 entry with value 414987; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+43 # Utility call: calls f_lu function; Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+44 # Memory free: calls f_po to release memory block; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+45 # Conditional loop: iterates while condition is met; Byte array: operates on byte-level data
+46 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+47 # Memory free: calls f_po to release memory block; Utility call: calls f_lu function; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+48 # Type conversion: converts between integer types
+49 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+50 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+51 # Memory access: reads/writes memory locations
+52 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+53 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+54 # Type conversion: converts between integer types
+55 # Type conversion: converts between integer types
+56 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+57 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+58 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+59 # Memory init: calls f_mi for memory initialization; Function call: calls f_tl; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+60 # Array search: loops through array checking for type 27 entry with value 183676; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+61 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+62 # Type conversion: converts between integer types
+63 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+64 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+65 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+66 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+67 # Type conversion: converts between integer types
+68 # Control flow: performs operations and branches
+69 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+70 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+71 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+72 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+73 # Iterative loop: processes elements in sequence
+74 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+75 # Memory access: reads/writes memory locations
+76 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+77 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+78 # Array search: loops through array checking for type 15 entry with value 332380; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+79 # Memory access: reads/writes memory locations
+80 # Array search: loops through array checking for type 14 entry with value 601720; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+81 # Array search: loops through array checking for type 12 entry with value 240940; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+82 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+83 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+84 # Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+85 # Control flow: performs operations and branches
+86 # Memory access: reads/writes memory locations
+87 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+88 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+89 # Array search: loops through array checking for type 24 entry with value 1042360; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+90 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+91 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+92 # Type conversion: converts between integer types
+93 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+94 # Control flow: performs operations and branches
+95 # Array search: loops through array checking for type 26 entry with value 649494; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+96 # Function call: calls f_tl; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+97 # Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+98 # Control flow: performs operations and branches
+99 # Type conversion: converts between integer types
+100 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+101 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+102 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+103 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+104 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+105 # Type conversion: converts between integer types
+106 # Array search: loops through array checking for type 22 entry with value 152548; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+107 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+108 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+109 # Memory access: reads/writes memory locations
+110 # Iterative loop: processes elements in sequence
+111 # Type conversion: converts between integer types
+112 # Array search: loops through array checking for type 14 entry with value 281496; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+113 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+114 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+115 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+116 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+117 # Type conversion: converts between integer types
+118 # Control flow: performs operations and branches
+119 # Type conversion: converts between integer types
+120 # Array search: loops through array checking for type 10 entry with value 1258112; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+121 # Array search: loops through array checking for type 15 entry with value 961012; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+122 # Memory free: calls f_po to release memory block; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+123 # Memory access: reads/writes memory locations
+124 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+125 # Memory access: reads/writes memory locations
+126 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+127 # Type conversion: converts between integer types
+128 # Type conversion: converts between integer types
+129 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+130 # Array search: loops through array checking for type 17 entry with value 471760; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+131 # Control flow: performs operations and branches
+132 # Memory access: reads/writes memory locations
+133 # Array search: loops through array checking for type 18 entry with value 615484; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+134 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+135 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+136 # Array search: loops through array checking for type 15 entry with value 252779; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+137 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+138 # Memory free: calls f_po to release memory block; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+139 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+140 # Type conversion: converts between integer types
+141 # Iterative loop: processes elements in sequence
+142 # Array search: loops through array checking for type 16 entry with value 318124; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+143 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+144 # Type conversion: converts between integer types
+145 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+146 # Type conversion: converts between integer types
+147 # Type conversion: converts between integer types
+148 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+149 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+150 # Type conversion: converts between integer types
+151 # Type conversion: converts between integer types
+152 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+153 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+154 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+155 # Memory access: reads/writes memory locations
+156 # Type conversion: converts between integer types
+157 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+158 # Array search: loops through array checking for type 14 entry with value 847616; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+159 # Array search: loops through array checking for type 15 entry with value 920021; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+160 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+161 # Function call: calls f_yu; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+162 # Type conversion: converts between integer types
+163 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+164 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+165 # Array search: loops through array checking for type 27 entry with value 932572; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+166 # Type conversion: converts between integer types
+167 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+168 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+169 # Control flow: performs operations and branches
+170 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+171 # Type conversion: converts between integer types
+172 # Control flow: performs operations and branches
+173 # Type conversion: converts between integer types
+174 # Type conversion: converts between integer types
+175 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+176 # Memory access: reads/writes memory locations
+177 # Array search: loops through array checking for type 20 entry with value 640804; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+178 # Iterative loop: processes elements in sequence
+179 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+180 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+181 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+182 # Array search: loops through array checking for type 15 entry with value 943244; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+183 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+184 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+185 # Hash lookup: calls f_hl for hash table lookup; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+186 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+187 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+188 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+189 # Control flow: performs operations and branches
+190 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+191 # Control flow: performs operations and branches
+192 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+193 # Memory access: reads/writes memory locations
+194 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+195 # Memory access: reads/writes memory locations
+196 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+197 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+198 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+199 # Memory access: reads/writes memory locations
+200 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+201 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+202 # Type conversion: converts between integer types
+203 # Type conversion: converts between integer types
+204 # Type conversion: converts between integer types
+205 # Control flow: performs operations and branches
+206 # Type conversion: converts between integer types
+207 # Type conversion: converts between integer types; Byte array: operates on byte-level data
+208 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+209 # Memory access: reads/writes memory locations
+210 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+211 # Type conversion: converts between integer types
+212 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+213 # Control flow: performs operations and branches
+214 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+215 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+216 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+217 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+218 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+219 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+220 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+221 # Memory init: calls f_mi for memory initialization; Function call: calls f_tl; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+222 # Memory access: reads/writes memory locations
+223 # Type conversion: converts between integer types
+224 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+225 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+226 # Memory access: reads/writes memory locations
+227 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+228 # Control flow: performs operations and branches
+229 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+230 # Type conversion: converts between integer types
+231 # Type conversion: converts between integer types
+232 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+233 # Control flow: performs operations and branches
+234 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+235 # Array search: loops through array checking for type 15 entry with value 1230372; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+236 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+237 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+238 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+239 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+240 # Memory access: reads/writes memory locations
+241 # Type conversion: converts between integer types
+242 # Memory access: reads/writes memory locations
+243 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+244 # Type conversion: converts between integer types
+245 # Array search: loops through array checking for type 14 entry with value 818692; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+246 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+247 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+248 # Memory access: reads/writes memory locations
+249 # Type conversion: converts between integer types
+250 # Type conversion: converts between integer types
+251 # Control flow: performs operations and branches
+252 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+253 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+254 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+255 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+256 # Type conversion: converts between integer types
+257 # Memory access: reads/writes memory locations
+258 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+259 # Type conversion: converts between integer types
+260 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+261 # Hash lookup: calls f_hl for hash table lookup; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+262 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+263 # Memory access: reads/writes memory locations
+264 # Array search: loops through array checking for type 24 entry with value 688244; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+265 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+266 # Type conversion: converts between integer types
+267 # Array search: loops through array checking for type 22 entry with value 820829; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+268 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+269 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+270 # Array search: loops through array checking for type 24 entry with value 758544; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+271 # Type conversion: converts between integer types
+272 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+273 # Type conversion: converts between integer types
+274 # Type conversion: converts between integer types
+275 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+276 # Hash lookup: calls f_hl for hash table lookup; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+277 # Array search: loops through array checking for type 18 entry with value 226492; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+278 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+279 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+280 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+281 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+282 # Type conversion: converts between integer types
+283 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+284 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+285 # Type conversion: converts between integer types
+286 # Branch dispatch: uses computed index to branch to different code paths
+287 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+288 # Type conversion: converts between integer types
+289 # Memory access: reads/writes memory locations
+290 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+291 # Type conversion: converts between integer types
+292 # Type conversion: converts between integer types
+293 # Memory access: reads/writes memory locations
+294 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+295 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+296 # Type conversion: converts between integer types
+297 # Type conversion: converts between integer types
+298 # Array search: loops through array checking for type 31 entry with value 250500; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+299 # Function call: calls f_tl; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+300 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+301 # Type conversion: converts between integer types
+302 # Array search: loops through array checking for type 14 entry with value 334904; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+303 # Array search: loops through array checking for type 18 entry with value 240612; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+304 # Type conversion: converts between integer types
+305 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+306 # Type conversion: converts between integer types
+307 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+308 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+309 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+310 # Hash lookup: calls f_hl for hash table lookup; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+311 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+312 # Type conversion: converts between integer types
+313 # Array search: loops through array checking for type 14 entry with value 1073735; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+314 # Control flow: performs operations and branches
+315 # Memory access: reads/writes memory locations
+316 # Control flow: performs operations and branches
+317 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+318 # Type conversion: converts between integer types
+319 # Type conversion: converts between integer types
+320 # Memory access: reads/writes memory locations
+321 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+322 # Hash lookup: calls f_hl for hash table lookup; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+323 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+324 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+325 # Type conversion: converts between integer types
+326 # Array search: loops through array checking for type 14 entry with value 973914; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+327 # Type conversion: converts between integer types
+328 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+329 # Type conversion: converts between integer types
+330 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+331 # Array search: loops through array checking for type 24 entry with value 905520; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+332 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+333 # Control flow: performs operations and branches
+334 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+335 # Type conversion: converts between integer types
+336 # Type conversion: converts between integer types
+337 # Array search: loops through array checking for type 24 entry with value 1100808; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+338 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+339 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition
+340 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+341 # Type conversion: converts between integer types
+342 # Memory access: reads/writes memory locations
+343 # Control flow: performs operations and branches
+344 # Array search: loops through array checking for type 28 entry with value 770384; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+345 # Type conversion: converts between integer types
+346 # Memory access: reads/writes memory locations
+347 # Type conversion: converts between integer types
+348 # Memory access: reads/writes memory locations
+349 # Memory access: reads/writes memory locations
+350 # Memory access: reads/writes memory locations
+351 # Array search: loops through array checking for type 14 entry with value 757352; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+352 # Type conversion: converts between integer types
+353 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+354 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+355 # Type conversion: converts between integer types
+356 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+357 # Type conversion: converts between integer types
+358 # Memory access: reads/writes memory locations
+359 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+360 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+361 # Type conversion: converts between integer types
+362 # Type conversion: converts between integer types
+363 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+364 # Type conversion: converts between integer types
+365 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+366 # Control flow: performs operations and branches
+367 # Memory free: calls f_po to release memory block; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+368 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+369 # Type conversion: converts between integer types
+370 # Array search: loops through array checking for type 19 entry with value 1302780; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+371 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+372 # Hash table: performs hash table lookup or manipulation
+373 # Control flow: performs operations and branches
+374 # Array search: loops through array checking for type 15 entry with value 709824; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+375 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+376 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+377 # Memory access: reads/writes memory locations
+378 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+379 # Type conversion: converts between integer types
+380 # Memory free: calls f_po to release memory block; Function call: calls f_qj; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+381 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+382 # Array search: loops through array checking for type 24 entry with value 649470; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+383 # Control flow: performs operations and branches
+384 # Type conversion: converts between integer types
+385 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+386 # Memory access: reads/writes memory locations
+387 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+388 # Memory access: reads/writes memory locations
+389 # Type conversion: converts between integer types
+390 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+391 # Memory access: reads/writes memory locations
+392 # Type conversion: converts between integer types
+393 # Memory access: reads/writes memory locations
+394 # Type conversion: converts between integer types
+395 # Type conversion: converts between integer types
+396 # Type conversion: converts between integer types
+397 # Memory access: reads/writes memory locations
+398 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+399 # Control flow: performs operations and branches
+400 # Type conversion: converts between integer types
+401 # Array search: loops through array checking for type 16 entry with value 469348; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+402 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+403 # Control flow: performs operations and branches
+404 # Function call: calls f_tl; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+405 # Type conversion: converts between integer types
+406 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+407 # Control flow: performs operations and branches
+408 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+409 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+410 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+411 # Type conversion: converts between integer types
+412 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+413 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+414 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+415 # Memory access: reads/writes memory locations
+416 # Utility call: calls f_lu function; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+417 # Memory access: reads/writes memory locations
+418 # Type conversion: converts between integer types
+419 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+420 # Control flow: performs operations and branches
+421 # Type conversion: converts between integer types
+422 # Control flow: performs operations and branches
+423 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+424 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+425 # Type conversion: converts between integer types
+426 # Type conversion: converts between integer types
+427 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+428 # Memory access: reads/writes memory locations
+429 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+430 # Control flow: performs operations and branches
+431 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+432 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+433 # Array search: loops through array checking for type 15 entry with value 834686; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+434 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+435 # Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+436 # Type conversion: converts between integer types
+437 # Branch dispatch: uses computed index to branch to different code paths; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+438 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+439 # Type conversion: converts between integer types
+440 # Type conversion: converts between integer types
+441 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+442 # Array search: loops through array checking for type 16 entry with value 261007; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+443 # Type conversion: converts between integer types
+444 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+445 # Type conversion: converts between integer types
+446 # Array search: loops through array checking for type 15 entry with value 932675; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+447 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+448 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+449 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+450 # Type conversion: converts between integer types
+451 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+452 # Type conversion: converts between integer types
+453 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+454 # Type conversion: converts between integer types
+455 # Type conversion: converts between integer types
+456 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+457 # Array search: loops through array checking for type 27 entry with value 70564; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+458 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+459 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+460 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+461 # Array search: loops through array checking for type 21 entry with value 950327; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+462 # Type conversion: converts between integer types
+463 # Memory access: reads/writes memory locations
+464 # Type conversion: converts between integer types
+465 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+466 # Control flow: performs operations and branches
+467 # Array search: loops through array checking for type 24 entry with value 538936; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+468 # Memory access: reads/writes memory locations
+469 # Type conversion: converts between integer types
+470 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+471 # Type conversion: converts between integer types
+472 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+473 # Array search: loops through array checking for type 24 entry with value 1170520; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+474 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+475 # Type conversion: converts between integer types
+476 # Memory access: reads/writes memory locations
+477 # Type conversion: converts between integer types
+478 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+479 # Control flow: performs operations and branches
+480 # Control flow: performs operations and branches
+481 # Control flow: performs operations and branches
+482 # Type conversion: converts between integer types
+483 # Type conversion: converts between integer types
+484 # Memory access: reads/writes memory locations
+485 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+486 # Type conversion: converts between integer types
+487 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+488 # Type conversion: converts between integer types
+489 # Memory free: calls f_po to release memory block; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+490 # Control flow: performs operations and branches
+491 # Control flow: performs operations and branches
+492 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+493 # Type conversion: converts between integer types
+494 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+495 # Array search: loops through array checking for type 21 entry with value 777228; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+496 # Type conversion: converts between integer types
+497 # Type conversion: converts between integer types
+498 # Function call: calls f_tl; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+499 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+500 # Type conversion: converts between integer types; Byte array: operates on byte-level data
+501 # Memory access: reads/writes memory locations
+502 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+503 # Type conversion: converts between integer types
+504 # Type conversion: converts between integer types
+505 # Type conversion: converts between integer types
+506 # Array search: loops through array checking for type 24 entry with value 726288; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+507 # Memory access: reads/writes memory locations
+508 # Type conversion: converts between integer types
+509 # Control flow: performs operations and branches
+510 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+511 # Memory access: reads/writes memory locations
+512 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+513 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+514 # Control flow: performs operations and branches
+515 # Array search: loops through array checking for type 11 entry with value 964449; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+516 # Array search: loops through array checking for type 11 entry with value 326190; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+517 # Type conversion: converts between integer types
+518 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+519 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+520 # Type conversion: converts between integer types
+521 # Iterative loop: processes elements in sequence
+522 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+523 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+524 # Type conversion: converts between integer types
+525 # Array search: loops through array checking for type 30 entry with value 309138; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+526 # Array search: loops through array checking for type 14 entry with value 861012; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+527 # Control flow: performs operations and branches
+528 # Memory access: reads/writes memory locations
+529 # Memory access: reads/writes memory locations
+530 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+531 # Memory access: reads/writes memory locations
+532 # Type conversion: converts between integer types
+533 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+534 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Conditional select: chooses value based on boolean condition
+535 # Type conversion: converts between integer types
+536 # Array search: loops through array checking for type 23 entry with value 1061256; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+537 # Type conversion: converts between integer types
+538 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+539 # Array search: loops through array checking for type 27 entry with value 559988; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+540 # Type conversion: converts between integer types
+541 # Array search: loops through array checking for type 24 entry with value 1236256; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+542 # Type conversion: converts between integer types
+543 # Array search: loops through array checking for type 20 entry with value 807748; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+544 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+545 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+546 # Array search: loops through array checking for type 18 entry with value 990392; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+547 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+548 # Memory access: reads/writes memory locations
+549 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+550 # Memory access: reads/writes memory locations
+551 # Array search: loops through array checking for type 22 entry with value 866660; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+552 # Memory access: reads/writes memory locations
+553 # Type conversion: converts between integer types
+554 # Type conversion: converts between integer types
+555 # Type conversion: converts between integer types
+556 # Type conversion: converts between integer types
+557 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+558 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+559 # Type conversion: converts between integer types
+560 # Iterative loop: processes elements in sequence
+561 # Iterative loop: processes elements in sequence
+562 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+563 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+564 # Memory access: reads/writes memory locations
+565 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+566 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+567 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+568 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+569 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+570 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+571 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+572 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+573 # Branch dispatch: uses computed index to branch to different code paths
+574 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+575 # Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+576 # Type conversion: converts between integer types
+577 # Type conversion: converts between integer types
+578 # Type conversion: converts between integer types
+579 # Memory access: reads/writes memory locations
+580 # Array search: loops through array checking for type 19 entry with value 905332; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+581 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+582 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+583 # Type conversion: converts between integer types
+584 # Array search: loops through array checking for type 15 entry with value 1253741; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+585 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+586 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+587 # Type conversion: converts between integer types
+588 # Array search: loops through array checking for type 21 entry with value 807984; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+589 # Memory access: reads/writes memory locations
+590 # Array search: loops through array checking for type 24 entry with value 1099907; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+591 # Array search: loops through array checking for type 14 entry with value 1148296; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+592 # Type conversion: converts between integer types
+593 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+594 # Memory access: reads/writes memory locations
+595 # Type conversion: converts between integer types
+596 # Utility call: calls f_lu function; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+597 # Memory init: calls f_mi for memory initialization; Branch dispatch: uses computed index to branch to different code paths; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+598 # Type conversion: converts between integer types
+599 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+600 # Type conversion: converts between integer types
+601 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+602 # Type conversion: converts between integer types
+603 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+604 # Control flow: performs operations and branches
+605 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+606 # Array search: loops through array checking for type 27 entry with value 1006263; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+607 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+608 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+609 # Iterative loop: processes elements in sequence
+610 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+611 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+612 # Type conversion: converts between integer types
+613 # Memory access: reads/writes memory locations
+614 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+615 # Control flow: performs operations and branches
+616 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+617 # Type conversion: converts between integer types
+618 # Memory access: reads/writes memory locations
+619 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+620 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+621 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+622 # Array search: loops through array checking for type 20 entry with value 1292702; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+623 # Type conversion: converts between integer types
+624 # Type conversion: converts between integer types
+625 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+626 # Memory access: reads/writes memory locations
+627 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+628 # Type conversion: converts between integer types
+629 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+630 # Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+631 # Memory free: calls f_po to release memory block; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+632 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+633 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+634 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+635 # Type conversion: converts between integer types
+636 # Memory access: reads/writes memory locations
+637 # Memory access: reads/writes memory locations
+638 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+639 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+640 # Control flow: performs operations and branches
+641 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+642 # Control flow: performs operations and branches
+643 # Memory access: reads/writes memory locations
+644 # Array search: loops through array checking for type 27 entry with value 1006236; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+645 # Control flow: performs operations and branches
+646 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+647 # Control flow: performs operations and branches
+648 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+649 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+650 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+651 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+652 # Array search: loops through array checking for type 14 entry with value 709824; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+653 # Type conversion: converts between integer types
+654 # Array search: loops through array checking for type 15 entry with value 789944; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+655 # Conditional loop: iterates while condition is met; Conditional select: chooses value based on boolean condition
+656 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+657 # Control flow: performs operations and branches
+658 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+659 # Memory access: reads/writes memory locations
+660 # Type conversion: converts between integer types
+661 # Type conversion: converts between integer types
+662 # Array search: loops through array checking for type 10 entry with value 290723; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+663 # Type conversion: converts between integer types
+664 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+665 # Type conversion: converts between integer types
+666 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+667 # Control flow: performs operations and branches
+668 # Control flow: performs operations and branches
+669 # Type conversion: converts between integer types
+670 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+671 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+672 # Array search: loops through array checking for type 23 entry with value 684256; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+673 # Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+674 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+675 # Type conversion: converts between integer types
+676 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+677 # Conditional loop: iterates while condition is met; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+678 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+679 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+680 # Type conversion: converts between integer types
+681 # Memory access: reads/writes memory locations
+682 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+683 # Type conversion: converts between integer types
+684 # Type conversion: converts between integer types
+685 # Type conversion: converts between integer types
+686 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+687 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+688 # Type conversion: converts between integer types
+689 # Memory access: reads/writes memory locations
+690 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+691 # Array search: loops through array checking for type 14 entry with value 924112; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+692 # Type conversion: converts between integer types
+693 # Array search: loops through array checking for type 24 entry with value 843299; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+694 # Iterative loop: processes elements in sequence
+695 # Type conversion: converts between integer types
+696 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Byte array: operates on byte-level data
+697 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+698 # Array search: loops through array checking for type 29 entry with value 911328; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+699 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+700 # Array search: loops through array checking for type 24 entry with value 580768; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+701 # Hash lookup: calls f_hl for hash table lookup; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+702 # Type conversion: converts between integer types
+703 # Array search: loops through array checking for type 14 entry with value 1246052; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+704 # Type conversion: converts between integer types
+705 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+706 # Type conversion: converts between integer types
+707 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+708 # Control flow: performs operations and branches
+709 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+710 # Type conversion: converts between integer types
+711 # Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+712 # Array search: loops through array checking for type 18 entry with value 597252; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+713 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+714 # Memory init: calls f_mi for memory initialization; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+715 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+716 # Type conversion: converts between integer types
+717 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+718 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+719 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+720 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+721 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+722 # Type conversion: converts between integer types
+723 # Function call: calls f_tl; Function call: calls f_sq; Branch dispatch: uses computed index to branch to different code paths; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+724 # Array search: loops through array checking for type 16 entry with value 248400; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+725 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+726 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+727 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+728 # Control flow: performs operations and branches
+729 # Branch dispatch: uses computed index to branch to different code paths; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+730 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+731 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+732 # Control flow: performs operations and branches
+733 # Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+734 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+735 # Memory access: reads/writes memory locations
+736 # Control flow: performs operations and branches
+737 # Control flow: performs operations and branches
+738 # Array search: loops through array checking for type 6 entry with value 820845; Utility call: calls f_lu function; Memory init: calls f_mi for memory initialization; Function call: calls f_tl; Branch dispatch: uses computed index to branch to different code paths; Memory access: reads/writes memory locations
+739 # Iterative loop: processes elements in sequence
+740 # Control flow: performs operations and branches
+741 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+742 # Array search: loops through array checking for type 24 entry with value 1047364; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+743 # Type conversion: converts between integer types
+744 # Array search: loops through array checking for type 18 entry with value 452107; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+745 # Type conversion: converts between integer types
+746 # Memory access: reads/writes memory locations
+747 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+748 # Type conversion: converts between integer types
+749 # Iterative loop: processes elements in sequence
+750 # Type conversion: converts between integer types
+751 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+752 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+753 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+754 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+755 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+756 # Type conversion: converts between integer types
+757 # Memory access: reads/writes memory locations
+758 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+759 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+760 # Array search: loops through array checking for type 11 entry with value 331572; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+761 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+762 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+763 # Iterative loop: processes elements in sequence; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+764 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+765 # Array search: loops through array checking for type 19 entry with value 1053952; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+766 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+767 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+768 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+769 # Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Byte array: operates on byte-level data
+770 # Array search: loops through array checking for type 5 entry with value 622372; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation
+771 # Memory access: reads/writes memory locations
+772 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+773 # Memory free: calls f_po to release memory block; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+774 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+775 # Memory init: calls f_mi for memory initialization; Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+776 # Memory access: reads/writes memory locations
+777 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+778 # Array search: loops through array checking for type 20 entry with value 816524; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+779 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+780 # Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+781 # Array search: loops through array checking for type 17 entry with value 1153081; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+782 # Stack push: reinterprets float64 as int64 and pushes to stack; Memory access: reads/writes memory locations
+783 # Array search: loops through array checking for type 22 entry with value 787528; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+784 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+785 # Type conversion: converts between integer types
+786 # Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+787 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+788 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+789 # Memory free: calls f_po to release memory block; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Hash table: performs hash table lookup or manipulation
+790 # Type conversion: converts between integer types
+791 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+792 # Utility call: calls f_lu function; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Hash table: performs hash table lookup or manipulation; Byte array: operates on byte-level data
+793 # Type conversion: converts between integer types
+794 # Array search: loops through array checking for type 19 entry with value 1171866; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+795 # Array search: loops through array checking for type 28 entry with value 468232; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+796 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+797 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+798 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations
+799 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+800 # Memory access: reads/writes memory locations
+801 # Array search: loops through array checking for type 25 entry with value 654254; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+802 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+803 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+804 # Array search: loops through array checking for type 5 entry with value 235535; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+805 # Iterative loop: processes elements in sequence; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition
+806 # Memory access: reads/writes memory locations
+807 # Array search: loops through array checking for type 22 entry with value 1130340; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+808 # Control flow: performs operations and branches
+809 # Array search: loops through array checking for type 17 entry with value 1106708; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+810 # Type conversion: converts between integer types
+811 # Iterative loop: processes elements in sequence
+812 # Type conversion: converts between integer types
+813 # Iterative loop: processes elements in sequence; Byte array: operates on byte-level data
+814 # Stack push: extends 32-bit unsigned int to 64-bit and pushes to stack; Memory access: reads/writes memory locations
+815 # Type conversion: converts between integer types
+816 # Stack push: pushes xd register value to stack; Memory access: reads/writes memory locations
+817 # Type conversion: converts between integer types
+818 # Type conversion: converts between integer types
+819 # Control flow: performs operations and branches
+820 # Iterative loop: processes elements in sequence
+821 # Memory free: calls f_po to release memory block; Memory init: calls f_mi for memory initialization; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations; Conditional select: chooses value based on boolean condition; Byte array: operates on byte-level data
+822 # Array search: loops through array checking for type 10 entry with value 261007; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+823 # Memory access: reads/writes memory locations
+824 # Function call: calls f_tl; Hash lookup: calls f_hl for hash table lookup; Branch dispatch: uses computed index to branch to different code paths; Conditional loop: iterates while condition is met; Bit manipulation: uses count trailing/leading zeros for bit operations; Memory access: reads/writes memory locations; Byte array: operates on byte-level data
+825 # Array search: loops through array checking for type 7 entry with value 199384; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+826 # Array search: loops through array checking for type 22 entry with value 270512; Conditional loop: iterates while condition is met; Memory access: reads/writes memory locations
+827 # Branch dispatch: uses computed index to branch to different code paths

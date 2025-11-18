@@ -107,6 +107,8 @@ void _hxh_add_char_string_microcode(u8* value, s32 size);
 void memset_i32(s32* start, s32 size, s32 value);
 void memset_i8(u8* start, s32 size, u8 value);
 
+// u8 load_ith_byte(s32 dest, s32 i);
+
 //the one and only
 void _poopf(u8* format, ...);
 void _spoopf(u8* dest, s32 max, u8* format, ...);

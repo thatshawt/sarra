@@ -71,6 +71,24 @@ void hxh_console_log_literal(s64 value)
 //TODO: how do i remove the warning -Wpointer-to-int-cast :sob:
 #pragma clang diagnostic ignored "-Wpointer-to-int-cast"
 #pragma clang diagnostic ignored "-Wpointer-sign"
+
+// u8 load_ith_byte(u8* dest, s32 i)
+// {
+//     int dval = i32LOAD(dest + (i/4)*4);
+
+//     switch(i % 4){
+//         case 0:
+//             return (u8)((dval & 0xFFFFFF00) >> 0);
+//         case 1:
+//             return (u8)((dval & 0xFFFF00FF) >> 8);
+//         case 2:
+//             return (u8)((dval & 0xFF00FFFF) >> 16);
+//         case 3:
+//             return (u8)((dval & 0x00FFFFFF) >> 24);
+//     }
+//     return 0;
+// }
+
 char* memcpy_i8_to_arras_memory(char* dest, char* src, int n){
     unsigned char *d = dest;
 	const unsigned char *s = src;

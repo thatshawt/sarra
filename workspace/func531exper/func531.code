@@ -1,0 +1,135 @@
+function f_lt(a:int, b:int, c:int) { // func531
+  var d:int;
+  var f:int;
+  if (eqz(c)) goto B_a;
+  var h:int = select_if(0, d = c - 7, c < d);
+  var i:int = (b + 3 & -4) - b;
+  d = 0;
+  loop L_b {
+    var g:ubyte_ptr = (b + d)[0]:ubyte;
+    var e:{ a:int, b:int } = (g << 24) >> 24;
+    if (e >= 0) {
+      if (i - d & 3) goto B_e;
+      if (d >= h) goto B_d;
+      loop L_g {
+        e = b + d;
+        if ((e.b | e.a) & -2139062144) goto B_d;
+        if (h > (d = d + 8)) continue L_g;
+      }
+      goto B_d;
+    }
+    var k:long = 1099511627776L;
+    var j:long = 4294967296L;
+    k = 
+      {
+        br_table[B_s, B_r, B_q, ..B_i](g[1103744] - 2)
+        label B_s:
+        e = d + 1;
+        if (e < c) goto B_p;
+        k = 0L;
+        j = 0L;
+        goto B_i;
+        label B_r:
+        k = memory[7302]:long;
+        f = d + 1;
+        if (
+          f < select_if(e, c, memory[58224]:ubyte)) goto B_o;
+        j = memory[7302]:long;
+        goto B_i;
+        label B_q:
+        k = memory[7302]:long;
+        f = d + 1;
+        if (f < c) goto B_n;
+        j = 0L;
+        goto B_i;
+        label B_p:
+        if ((b + e)[0]:byte > -65) goto B_i;
+        goto B_h;
+        label B_o:
+        f = (b + f)[0]:byte;
+        br_table[B_v, B_t, B_t, B_t, B_t, B_t, B_t, B_t, B_t, B_t, B_t, B_t, B_t, B_u, ..B_t](
+          g - 224)
+        label B_v:
+        if ((f & -32) == -96) goto B_l;
+        goto B_m;
+        label B_u:
+        if (f > -97) goto B_m;
+        goto B_l;
+        label B_t:
+        if ((e + 31 & 255) >= 12) {
+          if ((e & -2) != -18) goto B_m;
+          if (f < -64) goto B_l;
+          goto B_m;
+        }
+        if (f < -64) goto B_l;
+        goto B_m;
+        label B_n:
+        f = (b + f)[0]:byte;
+        br_table[B_z, B_aa, B_aa, B_aa, B_y, ..B_aa](g - 240)
+        label B_aa:
+        if ((e + 15 & 255) > 2) goto B_m;
+        if (f >= -64) goto B_m;
+        goto B_x;
+        label B_z:
+        if (
+          memory[228670]:int <= (f + 112 & 255)) goto B_m;
+        goto B_x;
+        label B_y:
+        if (f > -113) goto B_m;
+        label B_x:
+        if (c <= (e = d + 2)) {
+          j = 0L;
+          goto B_i;
+        }
+        if ((b + e)[0]:byte > -65) goto B_k;
+        j = 0L;
+        e = d + 3;
+        if (e >= c) goto B_i;
+        if ((b + e)[0]:byte < -64) goto B_h;
+        3298534883328L;
+        goto B_j;
+        label B_m:
+        1099511627776L;
+        goto B_j;
+        label B_l:
+        j = 0L;
+        e = select_if(c, d, memory[58224]:ubyte) + 2;
+        if (e >= c) goto B_i;
+        if (
+          (b + select_if(b, e, memory[58224]:ubyte))[0]:byte <=
+          -65) goto B_h;
+        label B_k:
+        2199023255552L;
+        label B_j:
+      }
+    j = 4294967296L;
+    label B_i:
+    a[1]:long@4 =
+      (select_if(k, j, b = memory[562411]:ubyte) |
+       i64_extend_i32_u(select_if(d, c, b))) |
+      j;
+    a[0]:int = 1;
+    return ;
+    label B_h:
+    d = e + 1;
+    goto B_c;
+    label B_e:
+    d = d + 1;
+    goto B_c;
+    label B_d:
+    if (
+      select_if(a, d, memory[58224]:ubyte) >= c) goto B_c;
+    loop L_ca {
+      if ((b + d)[0]:byte < 0) goto B_c;
+      d = d + 1;
+      if (d != c) continue L_ca;
+    }
+    goto B_a;
+    label B_c:
+    if (c > d) continue L_b;
+  }
+  label B_a:
+  a[2]:int = c;
+  a[1]:int = b;
+  a[0]:int = 0;
+}

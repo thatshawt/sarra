@@ -1,3 +1,6 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpointer-sign"
+
 #include "poopmath.h"
 #include "utils.h"
 
@@ -339,3 +342,5 @@ s32 f64_to_str(u8* dest, f64 num)
 
     return j;
 }
+
+#pragma clang diagnostic pop

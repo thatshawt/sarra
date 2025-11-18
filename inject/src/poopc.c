@@ -3,7 +3,6 @@
 #include "poopstrings.h"
 
 // o yea
-u8 printf_buffer[5000] = {0};
 // aint no way...
 // borrowed from this website some code https://jameshfisher.com/2016/11/23/c-varargs/
 __attribute__((noinline))
@@ -74,6 +73,7 @@ void _spoopf(u8* dest, s32 max, u8* format, ...)
     __builtin_va_end(argp);
 }
 
+u8 printf_buffer[5000] = {0};
 // expects one dummy i32 var arg
 __attribute__((noinline))
 void _poopf(u8* format, ...)

@@ -4,12 +4,12 @@
 #include "special.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 5000
+#define DEBUG_MAX_COUNT 100
 
 #define STATS_FREQUENCIES_SIZE 600
 #define STATS_MAX_COUNT_CONSIDERED 5000
 
-#define BIGFUNC_TRACE_MAX_LINES 100
+#define BIGFUNC_TRACE_MAX_LINES 500
 
 #define CHACHA_MAX_TOTAL 1
 #define CHACHA_BUFFER_SIZE 2000
@@ -111,6 +111,7 @@ void _init_all_the_things(){
   _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
 
   // _poopf("here is a float: %f, and a double: %z", (f32)123.456123, (f64)123.4567890123456789);
+  
   // do_all_tests();
 
   // _poopf("what da-|%d %d %l|-number!?", (s32)123, (s32)-1234, (s64)123456789123123123);
@@ -164,6 +165,8 @@ void export_wasm_arras_memsize(){
 }
 
 extern struct LocalsStruct locals_struct;
+
+extern const char* indexNameMap(int index_num);
 
 int _special_bigfunc_beforebranch(s32 index){
   UNIQUEIFER;
@@ -235,8 +238,9 @@ int _special_bigfunc_beforebranch(s32 index){
       // _poopf("fa test=%d, digits=%d, global.get 1: %d", var_fa,  digits10(var_fa), special_global_get_i32_1());
 
       // poopf("got this far");
-      _poopf("bigf %d, y=%d, r=%d, n=%d, y0=%s, *n+fa=%s, fa=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
+      _poopf("bigf %d '%s', y=%d, r=%d, n=%d, y0=%s, *n+fa=%s, fa=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
         poopState.bigfunc_trace_count,
+        indexNameMap(index),
         var_y, var_r,
         var_n, initalY, faPlusNPoint,
         var_fa, n_point,
@@ -257,7 +261,7 @@ int _special_bigfunc_beforebranch(s32 index){
   return index;
 }
 
-void add_chacha_byte(int address, int the_byte){
+void add_chacha_byte(s32 address, s32 the_byte){
   if(poopState.bigfunc_chacha_byte_i == 0){
       // hxh_reset();
       poopState.bigfunc_chacha_firstbyte = the_byte;
@@ -381,6 +385,19 @@ void _special_bigfunc_chachafinish_2(){
 
       // hxh_console_log_literal(special_global_get_i32_1());
 
+      //print out the buffer
+      u8 temp_buffer[1000] = {0};
+      strcat(temp_buffer, "[");
+      for(int i = 0; i < poopState.bigfunc_chacha_byte_i; ++i){
+        char byte_str[12] = {0};
+        u8 theByte = poopState.bigfunc_chacha_buffer[i];
+        int_to_str(byte_str, theByte);
+        strcat(temp_buffer, byte_str);
+        strcat(temp_buffer, ", ");
+      }
+      strcat(temp_buffer, "]");
+      _poopf("buffer: %s", temp_buffer);
+
       _reset_debug();
       _reset_bigfunc_trace();
       poopState.debug_enabled = TRUE;
@@ -471,10 +488,10 @@ void every_func_preamble(s32 func_num){
               i64_to_str(temp_buffer_1, params_struct.i64params[i]);
               break;
             case PARAM_T_F32://TODO implement this :sob:
-              strcat(temp_buffer_1, "an f32");
+              f32_to_str(temp_buffer_1, params_struct.f32params[i]);
               break;
             case PARAM_T_F64://TODO implement this :sob:
-              strcat(temp_buffer_1, "an f64");
+              f64_to_str(temp_buffer_1, params_struct.f64params[i]);
               break;
           }
           strcat(args_str, temp_buffer_1);

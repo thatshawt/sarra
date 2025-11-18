@@ -1,3 +1,6 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpointer-sign"
+
 #include "poopmath.h"
 #include "utils.h"
 #include "poopstrings.h"
@@ -65,7 +68,6 @@ void assert_string_equals(u8* a, u8* b, u8* test_name)
         _poopf("%s '%s'!='%s' '%s'", FAILED_MSG, a, b, test_name);
     }
 }
-//TODO. add test for _poopf... probably test vspoopf instead cus how do we test printf buffer stuff :skull:
 
 void test_digits10(){
     reset_test_struct();
@@ -185,10 +187,45 @@ void test_spoopf()
 
 }
 
+void test_int_to_str()
+{
+    u8 buffer[32] = {0};
+
+    int result = int_to_str(buffer, 0);
+    assert_int_equals(result, strlen(buffer), "int_to_str(0) length");
+    assert_string_equals(buffer, "0", "int_to_str(0) dest");
+    memset(buffer, 0, sizeof(buffer));
+
+    result = int_to_str(buffer, 12345);
+    assert_int_equals(result, strlen(buffer), "int_to_str(12345) length");
+    assert_string_equals(buffer, "12345", "int_to_str(12345) dest");
+    memset(buffer, 0, sizeof(buffer));
+
+    result = int_to_str(buffer, -9876);
+    assert_int_equals(result, strlen(buffer), "int_to_str(-9876) length");
+    assert_string_equals(buffer, "-9876", "int_to_str(-9876) dest");
+    memset(buffer, 0, sizeof(buffer));
+
+    result = int_to_str(buffer, 42);
+    assert_int_equals(result, strlen(buffer), "int_to_str(42) length");
+    assert_string_equals(buffer, "42", "int_to_str(42) dest");
+    memset(buffer, 0, sizeof(buffer));
+
+    result = int_to_str(buffer, -1);
+    assert_int_equals(result, strlen(buffer), "int_to_str(-1) length");
+    assert_string_equals(buffer, "-1", "int_to_str(-1) dest");
+    memset(buffer, 0, sizeof(buffer));
+
+}
+
 
 void do_all_tests(){
     test_digits10();
     test_digits10i64();
     test_f32_to_str();
     test_spoopf();
+    test_int_to_str();
 }
+
+#pragma clang diagnostic pop
+
