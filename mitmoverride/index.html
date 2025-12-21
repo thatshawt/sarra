@@ -79,92 +79,195 @@ let FALSE = 0;
         let i = /^[\x00-\x7f]*$/,
           c = (e, t) => {
             if (i.test(t)) {
-              let a = h.d(t.length, 1),
+              let a = h.c(t.length, 1),
                 o = r();
               for (let e = 0; e < t.length; e++) o[a + e] = t.charCodeAt(e);
               n().set([a, t.length], e >> 2);
             } else u(e, s.encode(t));
           },
           u = (e, t) => {
-            let a = h.d(t.length, 1);
+            let a = h.c(t.length, 1);
             r().set(t, a), n().set([a, t.length], e >> 2);
           },
           b = [
             [
-              (t, a, r, o, n, l, s) => {
-                e[t].vertexAttribPointer(a >>> 0, r, o >>> 0, n > 0, l, s);
+              (t, a, r, o, n) => {
+                e[t].fillRect(a, r, o, n);
               },
-              (t, a) => {
-                e[t].enable(a >>> 0);
-              },
-              () => window.innerWidth,
-              (t, a, r) =>
-                ((e, t) => {
-                  let a = h.d(t.length << 3, 8);
-                  ((null == l || 0 === l.byteLength) &&
-                    (l = new Float64Array(h.g.buffer)),
-                  l).set(t, a >> 3),
-                    n().set([a, t.length], e >> 2);
-                })(t, e[a](e[r])),
-              (t) => {
-                window.addEventListener("beforeunload", e[t]);
-              },
-              (t) => (0 === (t = e[t]).length ? -1 : t.shift()),
-              () => !!navigator.serviceWorker,
-              (t) => {
-                e[t][1] = !0;
-              },
+              (t) => e[t][0].timestamp,
+              (t, a, o) => e[t](r().subarray(a, a + o)),
               (t, a) => e[t][a].maxClients || 0,
+(t, a, o, n, l) => {
+    // hi
+    var text = d.decode(r().subarray(a, a + o));
+    text = text.replace("arras.io","sarra.io");
+    e[t].fillText(text, n, l);
+},
+              () => {
+                try {
+                  location.reload();
+                } catch (e) {}
+              },
+              (a, o, n, l, s) =>
+                t(a, e[o](e[n], d.decode(r().subarray(l, l + s)))),
+              (t, a, r, o, n, l, s, d, i, c, u, b) =>
+                e[t](e[a], r, o, n, l, s, d >>> 0, i, c, u > 0, b > 0),
+              (t) => {
+                e[t].close();
+              },
+              (a, o, n, l, s) =>
+                t(
+                  a,
+                  e[o].getUniformLocation(
+                    e[n],
+                    d.decode(r().subarray(l, l + s)),
+                  ),
+                ),
               (t, a, r) => {
-                e[t].blendFunc(a >>> 0, r >>> 0);
+                e[t].lineTo(a, r);
               },
-              (t) => {
-                e[t].lineJoin = "miter";
+              (t) => e[t].shift(),
+              (t, a, r, o, n) => {
+                e[t].uniform3f(e[a], r, o, n);
               },
-              (t) => {
-                e[t].restore();
+              (e) => t(e, []),
+              (t, a) => e[t][a].clients,
+              (t, a, o, n) => e[t](d.decode(r().subarray(a, a + o)), e[n], f),
+              (t, a) =>
+                ((e, t) => {
+                  null != t && c(e, t);
+                })(t, e[a].pop()),
+              (t) => e[t].isContextLost(),
+              (a, r) => t(a, e[r][1]),
+              (t) => e[t].shift().clients,
+              (t, a, r, o) => e[t](e[a], r, o),
+              (t) => !e[t],
+              (t, a, o) => {
+                (t = e[t]),
+                  (a = r().subarray(a, a + o)),
+                  1 === t.readyState && t.send(a);
               },
-              (t, a, r, o, n, l) => {
-                e[t].arc(a, r, o, n, l);
-              },
-              (t) => e[t].complete,
 (t, a, o, n, l) => {
     //hello
     var text = d.decode(r().subarray(a, a + o));
     text = text.replace("arras.io","sarra.io");
     e[t].strokeText(text, n, l);
 },
-              (t, a, r, o, n) => {
-                e[t].viewport(a, r, o, n);
-              },
+              (a, o, n, l, s, i, c) =>
+                t(
+                  a,
+                  e[o](
+                    d.decode(r().subarray(n, n + l)),
+                    d.decode(r().subarray(s, s + i)),
+                    e[c],
+                  ),
+                ),
+              (t, a) => e[t](e[a]),
               (t, a, o, n) => {
-                e[t].shaderSource(e[a], d.decode(r().subarray(o, o + n)));
-              },
-              (t, a, r) => {
-                (t = e[t]),
-                  (a >>>= 0),
-                  (t.fillStyle = `rgba(${a >> 16},${(a >> 8) & 255},${255 & a},${r})`);
+                e[t](
+                  new Blob([e[a]], { type: d.decode(r().subarray(o, o + n)) }),
+                );
               },
               (t) => {
-                e[t].clip();
+                e[t][1] = !0;
               },
-              (t, a) => c(t, e[a].shift()),
-              (a, r, o, n) => t(a, e[r].getProgramParameter(e[o], n >>> 0)),
+              (t, a, r) => {
+                e[t].bindTexture(a >>> 0, e[r]);
+              },
+              (t) => e[t].shift() || 0,
+              () => parent !== top,
+              (t, a, r) => c(t, e[a][r].code),
+              (t, a) => u(t, e[a]),
+              (a, r, o) => t(a, e[r].getContext("2d", { alpha: o > 0 })),
+              (t) => e[t](),
+              () =>
+                new Date(new Date().getFullYear(), 0, 1).getTimezoneOffset(),
+              (t) => {
+                e[t].fill();
+              },
+              (a, r) => t(a, e[r].createProgram()),
+              (t, a) => {
+                e[t].compileShader(e[a]);
+              },
+              (t, a) => e[t][a].mspt,
+              (t) => (0 === (t = e[t]).length ? -1 : t.shift()),
               (t, a) => {
                 (t = e[t]), (a = e[a]), t.then((e) => a(e));
               },
-              (t) => e[t].shift(),
-              () =>
-                new Date(new Date().getFullYear(), 0, 1).getTimezoneOffset(),
-              (t) => e[t][0].timestamp,
+              (t, a) => {
+                e[t].lineWidth = a;
+              },
+              (a, o, n, l, s, i) =>
+                t(
+                  a,
+                  e[o](
+                    d.decode(r().subarray(n, n + l)),
+                    d.decode(r().subarray(s, s + i)),
+                  ),
+                ),
+              (e) => c(e, location.hostname),
+              (t, a, o, n) => c(t, e[a](d.decode(r().subarray(o, o + n)))),
+              (t, a) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.fillStyle = `rgb(${a >> 16},${(a >> 8) & 255},${255 & a})`);
+              },
               (t, a, r, o, n, l) => {
+                e[t].arc(a, r, o, n, l);
+              },
+              (a, r, o, n) => t(a, e[r].getProgramParameter(e[o], n >>> 0)),
+              (e, t) => !!WebAssembly[d.decode(r().subarray(e, e + t))],
+              (a, o, n, l) => t(a, e[o](d.decode(r().subarray(n, n + l)))),
+              (a, r, o) => t(a, e[r](e[o])),
+              (a, r, o) => t(a, e[r].createShader(o >>> 0)),
+              (t, a, o) => {
+                e[t].value = d.decode(r().subarray(a, a + o));
+              },
+              (t, a, r, o, n) => {
+                e[t].clearRect(a, r, o, n);
+              },
+              () => !!window.RTCDataChannel,
+              (t, a) => c(t, e[a].shift().signature),
+              (t, a, r, o) => {
                 try {
-                  e[t].drawImage(e[a], r, o, n, l);
+                  e[t].drawImage(e[a], r, o);
                 } catch (e) {}
               },
-              (t) => {
-                e[t].close();
+              (t, a) => {
+                e[t].disable(a >>> 0);
               },
+              () => null != document.fullscreenElement,
+              (t, a) => e[t][a].online,
+              (t, a, r, o, n, l, s) => e[t](e[a], r, o, n, l, s),
+              (a, r) => ((r = e[r]), t(a, new Promise((e) => r.toBlob(e)))),
+              (t, a) => {
+                e[t].font = `${a}px Trebuchet MS`;
+              },
+              () => "boolean" == typeof window.crossOriginIsolated,
+              (t, a, r, o, n) => {
+                e[t].blendColor(a, r, o, n);
+              },
+              (t) => e[t].readyState,
+              (t) => {
+                e[t].style.clipPath = "none";
+              },
+              (t) => "number" == typeof e[t],
+              () => window.devicePixelRatio,
+              (t, a) => {
+                e[t].font = `${a}px Ubuntu`;
+              },
+              () => !!window.WebTransport,
+              (a, r) => t(a, e[r].createBuffer()),
+              (e) => c(e, location.hash),
+              (t, a) => c(t, e[a].value),
+              (e) => t(e, document.createElement("canvas")),
+              () => navigator.hardwareConcurrency || -1,
+              (t) => document.activeElement === e[t],
+              (a, r) => t(a, e[r](f)),
+              (t, a) => {
+                e[t].depthFunc(a >>> 0);
+              },
+              () => !!window.RTCPeerConnection,
 (t) => {
     let hxhpush = (val) => {
         // let val = t-10000
@@ -241,258 +344,117 @@ let FALSE = 0;
 
     return e[t];
 },
-              (t) => e[t](),
-              (t, a, r, o, n) => {
-                e[t].fillRect(a, r, o, n);
-              },
-              (t, a) => {
-                e[t].enableVertexAttribArray(a >>> 0);
-              },
-              (t, a, r, o, n) => {
-                e[t].blendFuncSeparate(a >>> 0, r >>> 0, o >>> 0, n >>> 0);
-              },
-              (e, t) => WebAssembly.validate(r().subarray(e, e + t)),
-              (t, a, r, o, n) => {
-                e[t].uniform3f(e[a], r, o, n);
-              },
-              (t, a) => u(t, e[a]),
-              (t, a, r, o) => e[t](e[a], r, o),
-              (t, a, r) => {
-                e[t].translate(a, r);
-              },
-              (t, a, o) => {
-                e[t].value = d.decode(r().subarray(a, a + o));
-              },
-              (e) => t(e, []),
-              (t) => e[t].shift() || 0,
-              (t) => "number" == typeof e[t],
-              (t) => {
-                e[t].stroke();
-              },
-              (t, a, r, o, n) => {
-                e[t].blendColor(a, r, o, n);
-              },
-              (a, r) => t(a, Object.values(e[r].shift().status)),
-              (a, o, n, l, s) =>
-                t(a, e[o](e[n], d.decode(r().subarray(l, l + s)))),
-              () => !!window.RTCPeerConnection,
-              (t) => {
-                e[t].style.textAlign = "center";
-              },
-              (t, a, r, o, n) => {
-                e[t].drawElements(a >>> 0, r, o >>> 0, n);
-              },
-              (t, a) => {
-                e[t].font = `bold ${a}px Ubuntu`;
-              },
-              () => !!window.RTCDataChannel,
-              (t) => {
-                e[t].lineCap = "round";
-              },
-              (t, a, o, n, l) => {
-                e[t](
-                  new Blob([r().subarray(a, a + o)], {
-                    type: d.decode(r().subarray(n, n + l)),
-                  }),
-                );
-              },
-              (t, a) => {
-                e[t].font = `${a}px Trebuchet MS`;
-              },
-              (t, a) => {
-                e[t].activeTexture(a >>> 0);
-              },
-              (t, a) => u(t, e[a].shift()),
-              (t) => {
-                e[t] = null;
-              },
-              (e, t) => {
-                location.hash = d.decode(r().subarray(e, e + t));
-              },
-              (t, a, r, o, n, l, s, d, i, c) =>
-                u(t, e[a](r >>> 0, e[o], n, l, s, d, i >>> 0, c >>> 0)),
-              () => !!window.WebTransport,
-              (t, a) => {
-                e[t].linkProgram(e[a]);
-              },
-              (t, a, r) => {
-                e[t].bindTexture(a >>> 0, e[r]);
-              },
-              (t, a) => e[t](e[a]),
-              (a, r, o, n) => t(a, e[r](e[o], n > 0)),
-              (t) => "string" == typeof e[t],
-              (t, a) => {
-                e[t].replaceWith(e[a]);
-              },
-              (t, a, r) => c(t, e[a](e[r])),
-              () => parent !== top,
-              (t, a) => {
-                e[t].disable(a >>> 0);
-              },
-              (t, a, o, n) => c(t, e[a](d.decode(r().subarray(o, o + n)))),
-              () => window.devicePixelRatio,
-              (a, r) => ((r = e[r]), t(a, new Promise((e) => r.toBlob(e)))),
-              (t, a, r, o) => {
-                try {
-                  e[t].drawImage(e[a], r, o);
-                } catch (e) {}
-              },
-              (t, a, o, n) => e[t](d.decode(r().subarray(a, a + o)), e[n], f),
-              (t) => {
-                e[t].save();
-              },
-              (t) => e[t].shift().clients,
-              (t, a) => e[t][a].featured,
-              (e) => t(e, document.createElement("canvas")),
-              (t, a, r, o) => {
-                e[t].drawArrays(a >>> 0, r, o);
-              },
-              (e) => c(e, document.referrer),
-              (e, t) => {
-                location.hash = `#${d.decode(r().subarray(e, e + t))}`;
-              },
-              (t, a, r) => c(t, e[a][r].name),
-              (t) => e[t][0],
-              (t, a, o, n, l) =>
-                e[t](r().subarray(a, a + o), d.decode(r().subarray(n, n + l))),
-              (t) => document.activeElement === e[t],
-              () => "boolean" == typeof window.crossOriginIsolated,
-              (t) => e[t].length,
-              () => {
-                try {
-                  location.reload();
-                } catch (e) {}
-              },
-              (t, a, r, o, n, l, s) => e[t](e[a], r, o, n, l, s),
-              (t, a, o) => e[t](d.decode(r().subarray(a, a + o))),
-              () => performance.now(),
-              (t, a, r) => {
-                e[t].moveTo(a, r);
-              },
-              (a, r, o) => t(a, e[r](e[o], f)),
-              (a, r, o) => t(a, e[r].getParameter(o >>> 0)),
-              (a, o, n, l) => t(a, e[o](d.decode(r().subarray(n, n + l)))),
-              (t) => {
-                e[t].lineJoin = "round";
-              },
-              (t, a, r) => c(t, e[a][r].code),
-              (e) => t(e, window),
-              (t, a, o) => {
-                (t = e[t]),
-                  (a = r().subarray(a, a + o)),
-                  1 === t.readyState && t.send(a);
-              },
-              (t, a, o) => {
-                e[t].style.cursor = d.decode(r().subarray(a, a + o));
-              },
-              (t, a, o, n, l) => {
-                e[t].bufferData(a >>> 0, r().subarray(o, o + n), l >>> 0);
-              },
-              (t, a, r, o, n) => {
-                e[t].strokeRect(a, r, o, n);
+              (t, a) => c(t, e[a].shift()),
+              (t, a, r, o, n, l, s) => {
+                e[t].vertexAttribPointer(a >>> 0, r, o >>> 0, n > 0, l, s);
               },
               (t, a, o) =>
                 e[t].measureText(d.decode(r().subarray(a, a + o))).width,
+              (e) => t(e, document.createElement("div")),
+              (t) => e[t][0],
+              (t, a, r, o) => {
+                e[t].uniform2f(e[a], r, o);
+              },
+              (t, a, r, o, n, l) => {
+                try {
+                  e[t].drawImage(e[a], r, o, n, l);
+                } catch (e) {}
+              },
+              (t, a, r, o) => {
+                e[t].drawArrays(a >>> 0, r, o);
+              },
+(e, t) => {
+    console.log(d.decode(r().subarray(e, e + t)));
+},
+              (t) => e[t].pop(),
+              (t, a) => e[t][a].uptime,
+              (t, a) => c(t, e[a][0].ip),
+              (t) => {
+                window.removeEventListener("beforeunload", e[t]);
+              },
+              (a, r, o) => t(a, e[r](e[o], f)),
+              (t) => {
+                e[t].restore();
+              },
               (t) => {
                 (t = e[t]).addEventListener("focus", () => t.select());
               },
-              (a, o, n, l, s, i) =>
-                t(
-                  a,
-                  e[o](
-                    d.decode(r().subarray(n, n + l)),
-                    d.decode(r().subarray(s, s + i)),
-                  ),
-                ),
-              (t, a) =>
-                ((e, t) => {
-                  null != t && c(e, t);
-                })(t, e[a].pop()),
-              (t, a) => e[t][a].online,
-              (a, o, n, l, s, i, c) =>
-                t(
-                  a,
-                  e[o](
-                    d.decode(r().subarray(n, n + l)),
-                    d.decode(r().subarray(s, s + i)),
-                    e[c],
-                  ),
-                ),
-              (t, a) => {
-                e[t].clear(a >>> 0);
-              },
-              () => !!navigator.gpu,
-              () => window.innerHeight,
-              (t) => e[t].isContextLost(),
-              (t, a) => {
-                e[t].depthFunc(a >>> 0);
-              },
-              (t, a) => c(t, e[a].shift().signature),
-              (t, a) => {
-                e[t].compileShader(e[a]);
-              },
-              (t, a) => {
-                e[t].appendChild(e[a]);
-              },
-              (a, r) => t(a, e[r](f)),
-              (t, a, o) => {
-                e[t].lastValue = d.decode(r().subarray(a, a + o));
-              },
-              (t, a) => e[t][a].hidden,
-              () => crypto.getRandomValues(new Uint32Array(1))[0],
-              (t, a) => c(t, e[a].protocol),
-              (t, a) => {
-                (t = e[t]),
-                  (a >>>= 0),
-                  (t.fillStyle = `rgb(${a >> 16},${(a >> 8) & 255},${255 & a})`);
-              },
-              (t, a, r) => {
-                e[t].lineTo(a, r);
-              },
-              (t, a) => e[t][a].clients,
               (t) => {
                 e[t].closePath();
               },
-(t, a, o, n, l) => {
-    // hi
-    var text = d.decode(r().subarray(a, a + o));
-    text = text.replace("arras.io","sarra.io");
-    e[t].fillText(text, n, l);
-},
-              (a, r, o) => t(a, e[r](e[o])),
-              (a, r) => t(a, e[r].createBuffer()),
-              (t) => e[t].readyState,
-              (t, a) => e[t][a].mspt,
-              (t, a) => {
-                e[t].font = `${a}px Ubuntu`;
-              },
-              (t, a, o, n) => {
-                e[t](
-                  new Blob([e[a]], { type: d.decode(r().subarray(o, o + n)) }),
-                );
-              },
-              (e, t) => {
-                open(d.decode(r().subarray(e, e + t)), "_blank", "noopener");
-              },
-              (e) => t(e, document.createElement("div")),
-              (t, a, r) => {
-                (t = e[t]),
-                  (a >>>= 0),
-                  (t.strokeStyle = `rgba(${a >> 16},${(a >> 8) & 255},${255 & a},${r})`);
-              },
-              (t) => e[t].pop(),
-              (t, a) => {
-                e[t].useProgram(e[a]);
-              },
-              (t) => "boolean" == typeof e[t],
+              (t) => e[t].length,
+              (t, a) => u(t, e[a].shift()),
               (t) => {
-                e[t].fill();
+                e[t].lineCap = "round";
               },
-              (e) => c(e, location.hash),
+              (t, a, r) =>
+                ((e, t) => {
+                  let a = h.c(t.length << 3, 8);
+                  ((null == l || 0 === l.byteLength) &&
+                    (l = new Float64Array(h.g.buffer)),
+                  l).set(t, a >> 3),
+                    n().set([a, t.length], e >> 2);
+                })(t, e[a](e[r])),
+              (t, a, r, o, n) => {
+                e[t].rect(a, r, o, n);
+              },
+              (a, r, o, n) => t(a, e[r](e[o], n > 0)),
+              (t, a, r, o, n) => {
+                e[t].viewport(a, r, o, n);
+              },
               (t, a, r, o, n, l, s, d, i, c) => {
                 try {
                   e[t].drawImage(e[a], r, o, n, l, s, d, i, c);
                 } catch (e) {}
+              },
+              (a, r) => t(a, e[r]()),
+              (e, t) => {
+                location.hash = `#${d.decode(r().subarray(e, e + t))}`;
+              },
+              (e, t) => {
+                location.hash = d.decode(r().subarray(e, e + t));
+              },
+              (t) => {
+                e[t].save();
+              },
+              (t, a) => {
+                e[t].enable(a >>> 0);
+              },
+              (t) => {
+                e[t] = null;
+              },
+              (t, a, r, o, n) => {
+                e[t].blendFuncSeparate(a >>> 0, r >>> 0, o >>> 0, n >>> 0);
+              },
+              () => "boolean" == typeof window.credentialless,
+              (t) => {
+                e[t].beginPath();
+              },
+              (t, a, o, n) =>
+                e[t].getAttribLocation(e[a], d.decode(r().subarray(o, o + n))),
+              (t, a) => {
+                e[t].appendChild(e[a]);
+              },
+              (t, a, r) => {
+                e[t].translate(a, r);
+              },
+              (t) => e[t].complete,
+              (t, a) => c(t, e[a].lastValue),
+              (t, a, o) => e[t](d.decode(r().subarray(a, a + o))),
+              (e, t) => WebAssembly.validate(r().subarray(e, e + t)),
+              (t) => {
+                e[t].clip();
+              },
+              (t, a, r) => {
+                e[t].uniform1i(e[a], r);
+              },
+              (t, a) => {
+                e[t].linkProgram(e[a]);
+              },
+              (t, a) => c(t, e[a]()),
+              () => crypto.getRandomValues(new Uint32Array(1))[0],
+              (t, a, o) => {
+                e[t].lastValue = d.decode(r().subarray(a, a + o));
               },
 (e, t, a, o) => {
     var thing = d.decode(r().subarray(e, e + t));
@@ -505,46 +467,439 @@ let FALSE = 0;
         d.decode(r().subarray(a, a + o)),
     );
 },
-              (t, a) => c(t, e[a].value),
-              (t) => {
-                e[t].style.clipPath = "none";
+              (t, a) => {
+                e[t].enableVertexAttribArray(a >>> 0);
               },
-              (e) => c(e, navigator.userAgent || ""),
+              (a, r) => t(a, e[r].createTexture()),
+              (a, r) => t(a, Object.values(e[r].shift().status)),
+              (t, a, o, n, l) =>
+                e[t](d.decode(r().subarray(a, a + o)), e[n], l >>> 0),
               (t) => {
-                window.removeEventListener("beforeunload", e[t]);
+                e[t].lineJoin = "miter";
+              },
+              (e) => t(e, null),
+              (t, a, o, n, l) =>
+                e[t](r().subarray(a, a + o), d.decode(r().subarray(n, n + l))),
+              (t, a) => c(t, e[a].protocol),
+              (t, a) => e[t][a].hidden,
+              (t, a, r, o, n, l, s, d, i, c) =>
+                u(t, e[a](r >>> 0, e[o], n, l, s, d, i >>> 0, c >>> 0)),
+              (t) => {
+                e[t].style.textAlign = "center";
+              },
+              (t, a, o, n) => {
+                var theShader = e[a];
+                var source = d.decode(r().subarray(o, o + n));
+
+                // random color per element as well.
+                if(false && source.startsWith("uniform vec3 u_resolution;attribute float a_index;attribute vec2 a_position;attribute vec4 a_color;varying lowp vec4 v_color;void main(){v_color=a_color"))
+                source = `uniform vec3 u_resolution;
+attribute float a_index;
+attribute vec2 a_position;
+attribute vec4 a_color;
+varying lowp vec4 v_color;
+
+// Simple pseudo-random function (must be defined BEFORE it's used)
+float rand(float n) {
+    return fract(sin(n * 12.9898) * 43758.5453);
+}
+
+void main() {
+  v_color = a_color + vec4(
+        rand(a_index + 0.0) * 0.2 - 0.1,
+        rand(a_index + 0.3) * 0.2 - 0.1,
+        rand(a_index + 0.7) * 0.2 - 0.1,
+        0.0
+    );
+v_color = clamp(v_color, 0.0, 1.0);
+  gl_Position = vec4(vec3(a_position, a_index) / u_resolution * vec3(2, -2, -1.6) + vec3(-1, 1, 0.8), 1);
+}`;
+                // random colors per gui element
+                if(false && source.startsWith("uniform vec3 u_resolution;attribute float a_index;attribute vec2 a_position;attribute vec2 a_tex_coord;attribute vec4 a_fill_color;attribute vec4 a_stroke_color;varying mediump vec2 v_tex_coord;varying lowp vec4 v_fill_color;varying lowp vec4 v_stroke_color;void main"))
+                source = `uniform vec3 u_resolution;
+
+attribute float a_index;
+attribute vec2 a_position;
+attribute vec2 a_tex_coord;
+attribute vec4 a_fill_color;
+attribute vec4 a_stroke_color;
+
+varying mediump vec2 v_tex_coord;
+varying lowp vec4 v_fill_color;
+varying lowp vec4 v_stroke_color;
+
+// Simple pseudo-random function
+float rand(float n) {
+    return fract(sin(n * 12.9898) * 43758.5453);
+}
+
+void main() {
+    v_tex_coord = a_tex_coord;
+
+    // Base colors
+    vec4 fill = a_fill_color;
+    vec4 stroke = a_stroke_color;
+
+    // Small random offset per instance (±0.1)
+    float r = rand(a_index + 0.0) * 0.9 - 0.1;
+    float g = rand(a_index + 0.3) * 0.9 - 0.1;
+    float b = rand(a_index + 0.7) * 0.9 - 0.1;
+
+    // Apply to both fill and stroke (you can make them different if you want)
+    fill.rgb += vec3(r, g, b);
+    stroke.rgb += vec3(r, g, b);
+
+    // Clamp to valid range
+    v_fill_color = clamp(fill, 0.0, 1.0);
+    v_stroke_color = clamp(stroke, 0.0, 1.0);
+
+    // Original position calculation
+    gl_Position = vec4(
+        vec3(a_position, a_index) / u_resolution * vec3(2, -2, -1.6) + vec3(-1, 1, 0.8),
+        1
+    );
+}`;
+
+                // noisy text colors
+                if(false && source.startsWith("precision mediump float;uniform sampler2D u_texture;uniform mediump vec2 u_texture_size;varying mediump vec2 v_tex_coord;varying lowp vec4 v_fill_color;varying lowp vec4 v_stroke_color;"))
+                source = `
+precision mediump float;
+
+uniform sampler2D u_texture;
+uniform mediump vec2 u_texture_size;
+
+varying mediump vec2 v_tex_coord;
+varying lowp vec4 v_fill_color;
+varying lowp vec4 v_stroke_color;
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+    vec4 texture = texture2D(u_texture, v_tex_coord / u_texture_size);
+
+    vec3 luminance = texture.a > 0.0
+        ? texture.rgb / texture.a
+        : vec3(0.0);
+
+    float coverage = texture.a;
+
+    float r = rand(v_tex_coord);
+
+    vec3 randomOffset = vec3((r - 0.5) * 0.9);
+
+    vec3 color =
+        luminance * v_fill_color.rgb +
+        (1.0 - luminance) * v_stroke_color.rgb;
+
+    color += randomOffset;
+
+    gl_FragColor = vec4(color, coverage);
+}
+`;
+
+                // not sure2
+                if(false && source.startsWith("precision mediump float;uniform sampler2D u_texture_primary;uniform mediump vec2 u_texture_primary_size;uniform sampler2D u_texture_accel;uniform mediump vec2 u_texture_accel_size;varying lowp vec4 v_fill_color;varying lowp vec4 v_stroke_color;varying mediump vec2 v_local_tex_coord;varying mediump float v_size;void main"))
+                source = `
+              precision mediump float;
+
+uniform sampler2D u_texture_primary;
+uniform mediump vec2 u_texture_primary_size;
+
+uniform sampler2D u_texture_accel;
+uniform mediump vec2 u_texture_accel_size;
+
+varying lowp vec4 v_fill_color;
+varying lowp vec4 v_stroke_color;
+varying mediump vec2 v_local_tex_coord;
+varying mediump float v_size;
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+    vec4 result = vec4(0.0);
+
+    // Random value per fragment
+    float r = rand(v_local_tex_coord);
+    vec3 randomOffset = vec3((r - 0.5) * 0.5); // strength = 0.1
+
+    if (v_size < 0.0) {
+        vec4 texture;
+
+        if (v_size > -4.0) {
+            texture = texture2D(
+                u_texture_primary,
+                v_local_tex_coord / u_texture_primary_size
+            );
+        } else {
+            texture = texture2D(
+                u_texture_accel,
+                v_local_tex_coord / u_texture_accel_size
+            );
+        }
+
+        vec3 luminance = texture.a > 0.0
+            ? texture.rgb / texture.a
+            : vec3(0.0);
+
+        float coverage = texture.a;
+
+        vec3 color =
+            luminance * v_fill_color.rgb +
+            (1.0 - luminance) * v_stroke_color.rgb;
+
+        color += randomOffset;
+
+        result = vec4(color, coverage);
+
+    } else {
+        float coverage = smoothstep(
+            v_size + 0.5,
+            v_size - 0.5,
+            length(v_local_tex_coord)
+        );
+
+        vec3 color = v_fill_color.rgb + randomOffset;
+
+        result = vec4(color, coverage);
+    }
+
+    gl_FragColor = result;
+}
+`;
+
+                // not sure
+              if(false && source.startsWith("uniform vec3 u_resolution;attribute float a_index;attribute vec2 a_position;attribute vec3 a_circle_tex_coord;attribute vec4 a_fill_color;attribute vec4 a_stroke_color;varying lowp vec4 v_fill_color;varying lowp vec4 v_stroke_color;varying mediump vec2 v_local_tex_coord;varying mediump float v_size;void main("))
+              source = `
+            uniform vec3 u_resolution;
+
+attribute float a_index;
+attribute vec2 a_position;
+attribute vec3 a_circle_tex_coord;
+attribute vec4 a_fill_color;
+attribute vec4 a_stroke_color;
+
+varying lowp vec4 v_fill_color;
+varying lowp vec4 v_stroke_color;
+varying mediump vec2 v_local_tex_coord;
+varying mediump float v_size;
+
+// Pseudo-random function (vertex-safe)
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+
+    // Random value per vertex / shape
+    float r = rand(a_position + a_index);
+    vec3 randomOffset = vec3((r - 0.5) * 0.5); // strength = 0.1
+
+    // Apply offset to colors
+    v_fill_color = vec4(a_fill_color.rgb + randomOffset, a_fill_color.a);
+    v_stroke_color = vec4(a_stroke_color.rgb + randomOffset, a_stroke_color.a);
+
+    // Original logic
+    if (a_circle_tex_coord.p < 0.0) {
+        if (a_circle_tex_coord.p < -2.0) {
+            v_local_tex_coord = a_circle_tex_coord.xy;
+            v_size = a_circle_tex_coord.p;
+        } else {
+            v_local_tex_coord = vec2(0.0);
+            v_size = 1.0;
+        }
+    } else {
+        v_local_tex_coord = a_circle_tex_coord.xy - a_position;
+        v_size = a_circle_tex_coord.p;
+    }
+
+    gl_Position = vec4(
+        vec3(a_position, a_index) / u_resolution * vec3(2.0, -2.0, -1.6)
+        + vec3(-1.0, 1.0, 0.8),
+        1.0
+    );
+}
+            `;
+
+
+            //WebGLShader {  }
+//  uniform vec3 u_resolution;attribute float a_index;attribute vec2 a_position;attribute vec4 a_color;varying lowp vec4 v_color;void main(){v_color=a_color;gl_Position=vec4(vec3(a_position,a_index)/u_resolution*vec3(2,-2,-1.6)+vec3(-1,1,0.8),1);}
+
+// general shape color randomnizer
+            if(false && source.startsWith("uniform vec3 u_resolution;attribute float a_index;attribute vec2 a_position;attribute vec4 a_color;varying lowp vec4 v_color;void main"))
+            source = `
+          uniform vec3 u_resolution;
+
+attribute float a_index;
+attribute vec2 a_position;
+attribute vec4 a_color;
+
+varying lowp vec4 v_color;
+
+// Pseudo-random function
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+
+    // Stable random per vertex
+    float r = rand(a_position + a_index);
+    vec3 randomOffset = vec3((r - 0.5) * 0.1); // strength = 0.1
+
+    // Apply to color (keep alpha unchanged)
+    v_color = vec4(a_color.rgb + randomOffset, a_color.a);
+
+    gl_Position = vec4(
+        vec3(a_position, a_index) / u_resolution * vec3(2.0, -2.0, -1.6)
+        + vec3(-1.0, 1.0, 0.8),
+        1.0
+    );
+}
+`;
+
+// entire(kinda) screen noise
+                if(false || source.startsWith("precision mediump float;varying lowp vec4 v_color;void main"))
+                source = `
+precision mediump float;
+
+varying lowp vec4 v_color;
+
+// Pseudo-random function (fragment-safe)
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+
+    // Independent R, G, B noise per fragment
+    vec3 randomOffset = vec3(
+        rand(gl_FragCoord.xy + vec2(1.0, 0.0)),
+        rand(gl_FragCoord.xy + vec2(0.0, 1.0)),
+        rand(gl_FragCoord.xy + vec2(1.0, 1.0))
+    ) - 0.5;
+
+    randomOffset *= 0.1; // noise strength
+
+    vec3 color = v_color.rgb + randomOffset;
+
+    gl_FragColor = vec4(color, 1.0) * v_color.a;
+}
+
+`;
+
+                // weird boxy per element random
+                if(false && source.startsWith("uniform vec3 u_resolution;attribute float a_index;attribute vec2 a_position;attribute vec3 a_circle;attribute vec4 a_color;varying lowp vec4 v_color;varying mediump vec2 v_local;varying mediump float v_size;void main"))
+                source = `
+              uniform vec3 u_resolution;
+
+attribute float a_index;
+attribute vec2 a_position;
+attribute vec3 a_circle;
+attribute vec4 a_color;
+
+varying lowp vec4 v_color;
+varying mediump vec2 v_local;
+varying mediump float v_size;
+
+// Pseudo-random function
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+
+    // Stable random per vertex / object
+    float r = rand(a_position + a_index);
+    vec3 randomOffset = vec3((r - 0.5) * 0.5); // strength = 0.1
+
+    // Apply random offset to color (keep alpha)
+    v_color = vec4(a_color.rgb + randomOffset, a_color.a);
+
+    // Original logic
+    v_local = a_circle.xy - a_position;
+    v_size = a_circle.p;
+
+    gl_Position = vec4(
+        vec3(a_position, a_index) / u_resolution * vec3(2.0, -2.0, -1.6)
+        + vec3(-1.0, 1.0, 0.8),
+        1.0
+    );
+}
+              `;
+
+              // random pixels for circles
+              if(false || source.startsWith("precision mediump float;varying lowp vec4 v_color;varying mediump vec2 v_local;varying mediump float v_size;void main"))
+              source = `
+precision mediump float;
+
+varying lowp vec4 v_color;
+varying mediump vec2 v_local;
+varying mediump float v_size;
+
+// Pseudo-random function
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+
+    // Independent RGB noise
+    vec3 randomOffset = vec3(
+        rand(v_local + vec2(1.0, 0.0)),
+        rand(v_local + vec2(0.0, 1.0)),
+        rand(v_local + vec2(1.0, 1.0))
+    ) - 0.5;
+
+    randomOffset *= 0.9; // noise strength
+
+    float coverage = smoothstep(
+        v_size + 0.5,
+        v_size - 0.5,
+        length(v_local)
+    );
+
+    vec3 color = v_color.rgb + randomOffset;
+
+    gl_FragColor = vec4(color, coverage);
+}
+
+`;
+
+                e[t].shaderSource(theShader, source);
+                console.log(theShader, source);
+              },
+              (t, a, r, o, n, l, s) => {
+                e[t].texImage2D(a >>> 0, r, o >>> 0, n >>> 0, l >>> 0, e[s]);
+              },
+              (t, a, r) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.strokeStyle = `rgba(${a >> 16},${(a >> 8) & 255},${255 & a},${r})`);
               },
               (t) => {
                 e[t].remove();
               },
-              (t, a, o, n) =>
-                e[t].getAttribLocation(e[a], d.decode(r().subarray(o, o + n))),
-              (t, a, r) => {
-                e[t].bindBuffer(a >>> 0, e[r]);
+              () => window.arrasAdDone,
+              (t, a, o) => {
+                e[t].style.cursor = d.decode(r().subarray(a, a + o));
               },
-              () => navigator.hardwareConcurrency || -1,
-              (t, a, r, o, n) => {
-                e[t].style.clipPath = `xywh(${a}px ${r}px ${o}px ${n}px)`;
-              },
-              (t, a, o, n, l) =>
-                e[t](d.decode(r().subarray(a, a + o)), e[n], l >>> 0),
+              () => performance.now(),
+              (t, a, r) => c(t, e[a][r].host),
               (t) => {
-                e[t].focus();
+                e[t].stroke();
               },
-              (t, a) => c(t, e[a]()),
-              (t, a) => e[t][a].uptime,
-              (t, a) => {
-                (t = e[t]),
-                  (a >>>= 0),
-                  (t.strokeStyle = `rgb(${a >> 16},${(a >> 8) & 255},${255 & a})`);
+              (e) => t(e, window),
+              (e) => c(e, navigator.userAgent || ""),
+              (e, t) => {
+                open(d.decode(r().subarray(e, e + t)), "_blank", "noopener");
               },
-              (a, r) => t(a, e[r].createTexture()),
+              (t) => "string" == typeof e[t],
               (t, a, r) => {
-                e[t].uniform1i(e[a], r);
-              },
-              () => "boolean" == typeof window.credentialless,
-              () => Date.now(),
-              (t, a, r) => {
-                e[t].pixelStorei(a >>> 0, r);
+                e[t].attachShader(e[a], e[r]);
               },
               (t) =>
                 0 === (t = e[t]).length
@@ -554,63 +909,6 @@ let FALSE = 0;
                     : t[0].signature
                       ? 2
                       : 3,
-(e, t) => {
-    console.log(d.decode(r().subarray(e, e + t)));
-},
-              (e) => c(e, location.hostname),
-              (t, a, o) => e[t](r().subarray(a, a + o)),
-              (e) => t(e, null),
-              (t) => !e[t],
-              (t, a, r, o, n, l, s, d, i, c, u, b) =>
-                e[t](e[a], r, o, n, l, s, d >>> 0, i, c, u > 0, b > 0),
-              (t, a, r, o, n) => {
-                e[t].rect(a, r, o, n);
-              },
-              (t, a, r, o, n) => {
-                e[t].clearRect(a, r, o, n);
-              },
-              (t, a, r, o) => {
-                e[t].texParameteri(a >>> 0, r >>> 0, o);
-              },
-              () => null != document.fullscreenElement,
-              (a, r, o) => t(a, e[r].getContext("2d", { alpha: o > 0 })),
-              (t, a) => c(t, e[a].lastValue),
-              (t, a) => c(t, e[a]),
-              (t) => {
-                e[t].beginPath();
-              },
-              (a, o, n, l, s) =>
-                t(
-                  a,
-                  e[o].getUniformLocation(
-                    e[n],
-                    d.decode(r().subarray(l, l + s)),
-                  ),
-                ),
-              (t) => {
-                e[t].lineCap = "butt";
-              },
-              (t, a, r) => {
-                e[t].attachShader(e[a], e[r]);
-              },
-              () => window.arrasAdDone,
-              (e, t) => !!WebAssembly[d.decode(r().subarray(e, e + t))],
-              (a, r, o) => t(a, e[r].createShader(o >>> 0)),
-              (a, r) => t(a, e[r]()),
-              (a, r) => t(a, e[r].createProgram()),
-              (t, a) => {
-                e[t].globalAlpha = a;
-              },
-              (t, a, r, o, n, l, s) => {
-                e[t].texImage2D(a >>> 0, r, o >>> 0, n >>> 0, l >>> 0, e[s]);
-              },
-              (t, a, r, o, n) => {
-                e[t].scissor(a, r, o, n);
-              },
-              (t, a) => c(t, e[a][0].ip),
-              (t, a, r, o) => {
-                e[t].uniform2f(e[a], r, o);
-              },
               (e, t) => {
                 try {
                   localStorage.setItem(
@@ -619,11 +917,95 @@ let FALSE = 0;
                   );
                 } catch (e) {}
               },
-              (t, a, r) => c(t, e[a][r].host),
               (t, a) => {
-                e[t].lineWidth = a;
+                e[t].clear(a >>> 0);
               },
-              (a, r) => t(a, e[r][1]),
+              (t, a, o, n, l) => {
+                e[t].bufferData(a >>> 0, r().subarray(o, o + n), l >>> 0);
+              },
+              (t, a) => {
+                e[t].globalAlpha = a;
+              },
+              (t, a, r) => c(t, e[a](e[r])),
+              (t, a, r) => {
+                e[t].bindBuffer(a >>> 0, e[r]);
+              },
+              (t, a) => {
+                e[t].useProgram(e[a]);
+              },
+              (e) => c(e, document.referrer),
+              (t, a) => {
+                e[t].activeTexture(a >>> 0);
+              },
+              (t, a, r, o, n) => {
+                e[t].scissor(a, r, o, n);
+              },
+              (t) => {
+                e[t].focus();
+              },
+              () => window.innerHeight,
+              (t, a, r, o, n) => {
+                e[t].drawElements(a >>> 0, r, o >>> 0, n);
+              },
+              (t) => {
+                e[t].lineCap = "butt";
+              },
+              (t) => {
+                window.addEventListener("beforeunload", e[t]);
+              },
+              (t, a) => c(t, e[a]),
+              (a, r, o) => t(a, e[r].getParameter(o >>> 0)),
+              (t, a, r) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.fillStyle = `rgba(${a >> 16},${(a >> 8) & 255},${255 & a},${r})`);
+              },
+              (t, a, r, o, n) => {
+                e[t].style.clipPath = `xywh(${a}px ${r}px ${o}px ${n}px)`;
+              },
+              (t, a, r) => {
+                e[t].pixelStorei(a >>> 0, r);
+              },
+              () => !!navigator.gpu,
+              (t, a) => {
+                (t = e[t]),
+                  (a >>>= 0),
+                  (t.strokeStyle = `rgb(${a >> 16},${(a >> 8) & 255},${255 & a})`);
+              },
+              (t) => {
+                e[t].lineJoin = "round";
+              },
+              (t, a) => {
+                e[t].font = `bold ${a}px Ubuntu`;
+              },
+              (t, a) => e[t][a].featured,
+              (t, a, r, o, n) => {
+                e[t].strokeRect(a, r, o, n);
+              },
+              (t, a, r) => c(t, e[a][r].name),
+              (t, a, r) => {
+                e[t].blendFunc(a >>> 0, r >>> 0);
+              },
+              (t, a, o, n, l) => {
+                e[t](
+                  new Blob([r().subarray(a, a + o)], {
+                    type: d.decode(r().subarray(n, n + l)),
+                  }),
+                );
+              },
+              () => Date.now(),
+              (t, a, r, o) => {
+                e[t].texParameteri(a >>> 0, r >>> 0, o);
+              },
+              () => window.innerWidth,
+              (t, a) => {
+                e[t].replaceWith(e[a]);
+              },
+              (t, a, r) => {
+                e[t].moveTo(a, r);
+              },
+              () => !!navigator.serviceWorker,
+              (t) => "boolean" == typeof e[t],
             ],
           ],
           y = fetch("./app.wasm"),
@@ -632,7 +1014,7 @@ let FALSE = 0;
               ? WebAssembly.instantiateStreaming(y, b)
               : WebAssembly.instantiate(await (await y).arrayBuffer(), b))
           ).instance.exports,
-          f = h.c;
+          f = h.f;
 window.wasm_exports = h;
 window.wasm_imports = b;
 console.log(h)

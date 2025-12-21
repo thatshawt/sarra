@@ -1,0 +1,16 @@
+
+app.wasm:	file format wasm 0x1
+
+Sections:
+
+     Type start=0x0000000b end=0x00000262 (size=0x00000257) count: 73
+   Import start=0x00000265 end=0x00000816 (size=0x000005b1) count: 196
+ Function start=0x00000819 end=0x00000994 (size=0x0000017b) count: 377
+    Table start=0x00000996 end=0x0000099b (size=0x00000005) count: 1
+   Memory start=0x0000099d end=0x000009a0 (size=0x00000003) count: 1
+   Global start=0x000009a2 end=0x000009aa (size=0x00000008) count: 1
+   Export start=0x000009ac end=0x000009c5 (size=0x00000019) count: 5
+    Start start=0x000009c7 end=0x000009c9 (size=0x00000002) start: 572
+     Elem start=0x000009cc end=0x00000c3c (size=0x00000270) count: 1
+     Code start=0x00000c40 end=0x000ac992 (size=0x000abd52) count: 377
+     Data start=0x000ac996 end=0x001d5f78 (size=0x001295e2) count: 1

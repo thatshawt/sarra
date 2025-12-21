@@ -345,7 +345,7 @@ void _special_bigfunc_chachafinish_2(){
     // );
     memset_i8_to_arras_memory(
         (char*)poopState.bigfunc_chacha_firstaddress+5,
-        '\n',
+        (u8)127,
         10
     );
     // _poopf("right after");
