@@ -1,12 +1,26 @@
 # About
 This is an experimental modding project for arrasio.
 
-# High-Level Goals/Features
-* Provide a mechanism to read/write received and sent decrypted packets.
-* Provide a mechanism for rendering extra gui on the screen like buttons, text, text input box.
-* Provide a mechanism for intercepting keyboard, mouse inputs.
-* Modify game data like FPS, GUI text, images, GUI colors.
-* Easy for users to create mods of their own.
+# Features
+Packet stuff
+- [X] Read incoming packets.
+- [X] Modify incoming packets. cant make packet longer though :(
+- [ ] Send arbritrary packets at any time.
+- [ ] Modify incoming packets "arbritrarily".
+
+Idk stuff
+- [ ] Provide a mechanism for rendering extra gui on the screen like buttons, text, text input box.
+
+Input stuff
+- [ ] Read keyboard/mouse input.
+- [ ] Figure out how to toggle the stuff like minimap, leaderboard, and player bar.
+- [ ] Press M to toggle minimap.
+- [ ] Press L to toggle leaderboard.
+- [ ] Press N to toggle player bar.
+
+QOL dim feature.
+- [ ] Read information about player, like what color you are.
+- [ ] Make tanks of same color as you dimmer.
 
 # Low-Level Goals
 * Figure out how the big function branches works...

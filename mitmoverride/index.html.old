@@ -488,10 +488,7 @@ let FALSE = 0;
                 e[t].style.textAlign = "center";
               },
               (t, a, o, n) => {
-                var theShader = e[a];
-                var source = d.decode(r().subarray(o, o + n));
-                print(theShader, source);
-                e[t].shaderSource(theShader, source);
+                e[t].shaderSource(e[a], d.decode(r().subarray(o, o + n)));
               },
               (t, a, r, o, n, l, s) => {
                 e[t].texImage2D(a >>> 0, r, o >>> 0, n >>> 0, l >>> 0, e[s]);

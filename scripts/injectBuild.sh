@@ -1,3 +1,4 @@
+# you have to run inside the scripts folder.
 cd ../inject
 echo "building inject.wat..."
 sh build.sh || exit 1
