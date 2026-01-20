@@ -2,17 +2,17 @@
 This is an experimental modding project for arrasio.
 
 # Features
-Packet stuff
+Reading/writing packets functionality.
 - [X] Read incoming packets.
 - [X] Modify incoming packets. cant make packet longer though :(
 - [ ] Send arbritrary packets at any time.
 - [ ] Modify incoming packets "arbritrarily".
 
-Idk stuff
+idk
 - [ ] Provide a mechanism for rendering extra gui on the screen like buttons, text, text input box.
 
-Input stuff
-- [ ] Read keyboard/mouse input.
+QOL toggle various gui things feature.
+- [ ] Intercept keyboard/mouse input.
 - [ ] Figure out how to toggle the stuff like minimap, leaderboard, and player bar.
 - [ ] Press M to toggle minimap.
 - [ ] Press L to toggle leaderboard.

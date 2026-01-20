@@ -65375,10 +65375,8 @@ function f_im(a:int, b:int, c:int, d:{ a:byte, b:byte, c:byte }, e:int) { // fun
   }
   d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267556]:int = a;
   if (a <= 65519) {
-    d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267562]:int =
-      d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267556]:int;
-    d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[133780]:long =
-      d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267554]:long@4;
+    d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267562]:int = d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267556]:int;
+    d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[133780]:long = d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267554]:long@4;
     f_io(1135764, 1135776);
     f_wh(d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[76822]:int + 1135744,
          a = d_xuwXJdLa6e_J0d5KSfUsueIoVvqX[267558]:int,

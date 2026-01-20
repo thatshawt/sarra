@@ -4,14 +4,14 @@
 #include "special.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 100
+#define DEBUG_MAX_COUNT 1000
 
-#define STATS_FREQUENCIES_SIZE 600
-#define STATS_MAX_COUNT_CONSIDERED 5000
+#define STATS_FREQUENCIES_SIZE 700
+#define STATS_MAX_COUNT_CONSIDERED 50
 
 #define BIGFUNC_TRACE_MAX_LINES 500
 
-#define CHACHA_MAX_TOTAL 1
+#define CHACHA_MAX_TOTAL 50
 #define CHACHA_BUFFER_SIZE 2000
 
 #define BIGFUNC_INDEX_CALL_MAX 10
@@ -184,6 +184,7 @@ int _special_bigfunc_beforebranch(s32 index){
       _reset_bigfunc_trace();
       _reset_debug();
     }else{
+      //TODO update these as well... they probs changed ngl.
       s32 var_r = special_bigfunc_localget_i32(17);
       s32 var_y = special_bigfunc_localget_i32(24);
       s32 var_fa = special_bigfunc_localget_i32(31);
@@ -240,7 +241,7 @@ int _special_bigfunc_beforebranch(s32 index){
       // poopf("got this far");
       _poopf("bigf %d '%s', y=%d, r=%d, n=%d, y0=%s, *n+fa=%s, fa=%d, *n=%s, g=%d, *g=%s, xd=%l, *xd=%s",
         poopState.bigfunc_trace_count,
-        indexNameMap(index),
+        "",// indexNameMap(index), //TODO gotta update as well indexNameMap, search up nameMap TODO for more info.
         var_y, var_r,
         var_n, initalY, faPlusNPoint,
         var_fa, n_point,
@@ -332,7 +333,10 @@ void _special_bigfunc_chachafinish_2(){
 
   const int firstByte = poopState.bigfunc_chacha_firstbyte;
 
-  //we about to go cra cra now
+  // this is a test to modify a packet's content when it is sent.
+  // it is limited however because you cant increase the packet's length.
+  // so this test makes it so that chat messages of length 10 will be replaced
+  // with another message when you send them.
   if(firstByte == 'M' && poopState.bigfunc_chacha_byte_i == 16){
     const u8 customPacket1[] = {77, 240, 70, 64, 202, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 1};
     const u8 customPacket2[] = {77, 240, 70, 64, 202, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 1};
@@ -356,9 +360,10 @@ void _special_bigfunc_chachafinish_2(){
     // char* result = strstr(poopState.bigfunc_chacha_buffer, "123456789");
 
     if(
-      // (firstByte != 98 && firstByte != 117 && firstByte != 112)
-      (firstByte == poopState.bigfunc_chacha_header)
-      && poopState.bigfunc_chacha_byte_i > 0){
+      (firstByte != 98 && firstByte != 117 && firstByte != 112)
+      // (firstByte == poopState.bigfunc_chacha_header)
+      && (poopState.bigfunc_chacha_byte_i > 0)
+      ){
 
       // hxh_parse_execute();
       // hxh_console_log_literal(poopState.bigfunc_chacha_byte_i);
@@ -398,10 +403,10 @@ void _special_bigfunc_chachafinish_2(){
       strcat(temp_buffer, "]");
       _poopf("buffer: %s", temp_buffer);
 
-      _reset_debug();
-      _reset_bigfunc_trace();
-      poopState.debug_enabled = TRUE;
-      poopState.bigfunc_trace_enabled = TRUE;
+      // _reset_debug();
+      // _reset_bigfunc_trace();
+      // poopState.debug_enabled = TRUE;
+      // poopState.bigfunc_trace_enabled = TRUE;
 
       if(++poopState.bigfunc_chacha_count >= poopState.bigfunc_chacha_count_total){
         _reset_chacha();
@@ -422,6 +427,42 @@ void _special_bigfunc_chachafinish_2(){
 extern struct Params_Struct params_struct;
 //from function_name_map.c
 extern const char* nameMap(int func_num);
+
+typedef struct {
+  int whitelist[1000];
+  int whitelistSize;
+  int whitelist_enabled;
+
+  char last_arg_str[1000];
+  int same_arg_str_counter;
+  int last_func_num;
+} debug_state_t;
+
+debug_state_t debug_state;
+
+void debugstate_whitelist_enable(){
+  debug_state.whitelist_enabled = TRUE;
+}
+
+void debugstate_whitelist_disable(){
+  debug_state.whitelist_enabled = FALSE;
+}
+
+int debugstate_whitelist_check(int funcNum){
+  for(int i=0;i<debug_state.whitelistSize;i++){
+      if(debug_state.whitelist[i] == funcNum)return TRUE;
+  }
+  return FALSE;
+}
+
+int debugstate_whitelist_add(int funcNum){
+  debug_state.whitelist[debug_state.whitelistSize++] = funcNum;
+}
+
+int debugstate_whitelist_zero(){
+  debug_state.whitelistSize = 0;
+}
+
 
 void every_func_preamble(s32 func_num){
   if(func_num == special_start_func_number()){
@@ -451,14 +492,42 @@ void every_func_preamble(s32 func_num){
     }
   }
 
+  if(!poopState.debug_enabled){
+    debugstate_whitelist_zero();
+    debugstate_whitelist_add(398);
+    //TODO how does 398 end up getting called...
+    // what arethe bigfunc indexes before 398 is called?
+    // are they the same every time?
+    // how far until they differ?
+    /// what functions other than bigfunc are called before 398?
+    debugstate_whitelist_enable();
+  }
 
   if(poopState.debug_enabled){
-    if(TRUE){//blacklist check
+    // debugstate_blacklist_zero();
+    // debugstate_blacklist_add(398);
+    // debugstate_blacklist_add(230);
+    // debugstate_blacklist_add(258);
+    // debugstate_blacklist_add(333);
+    // debugstate_blacklist_add(349);
+
+    if(
+      (debug_state.whitelist_enabled && (debugstate_whitelist_check(func_num)))
+      || !debug_state.whitelist_enabled
+    ){
+      debugstate_whitelist_disable();
       if(poopState.debug_count >= poopState.debug_max_count){
         _reset_debug();
         hxh_push_microcode_literal(HXH_WINDOW_POOP_SET_NULL);
         hxh_parse_execute();
       }else{
+        if(
+          func_num == 393
+          || func_num == 264
+          || func_num == 449
+        ){
+          return;
+        }
         // func 274 is the only one that uses import_sendpacket.
         // other than bigfunc.
         // {
@@ -499,12 +568,27 @@ void every_func_preamble(s32 func_num){
             strcat(args_str, ", ");
         }
 
-        const char* func_name = nameMap(func_num);
-        if(func_name != NULL){
-          _poopf("call %d, %d|%s(%s)", poopState.debug_count, func_num, func_name, args_str);
-        }else{
-          _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
+        int differntFuncNumOrArgs = strcmp(args_str, debug_state.last_arg_str) != 0 || func_num != debug_state.last_func_num;
+
+        if(poopState.debug_count == 0){
+          strcpy(debug_state.last_arg_str, args_str);
+          debug_state.last_func_num = func_num;
         }
+
+        if(differntFuncNumOrArgs){
+          _poopf("call %d,%d %d(%s)",
+            poopState.debug_count, debug_state.same_arg_str_counter,
+            debug_state.last_func_num, debug_state.last_arg_str
+          );
+          debug_state.same_arg_str_counter = 0;
+        }else{
+          debug_state.same_arg_str_counter++;
+          poopState.debug_count--; // decrement this so we dont count this one
+        }
+
+        // update last arg str
+        strcpy(debug_state.last_arg_str, args_str);
+        debug_state.last_func_num = func_num;
 
         // _poopf("call %d, %d(%s)", poopState.debug_count, func_num, args_str);
 
@@ -536,7 +620,177 @@ void every_func_preamble(s32 func_num){
           _poopf("%d %d", i, freq);
         }
       }
-    }else{
+    }else if(
+      (func_num != 421) 
+      && (func_num != 512) 
+      && (func_num != 569) 
+      && (func_num != 507) 
+      && (func_num != 466) 
+      && (func_num != 472) 
+      && (func_num != 418) 
+      && (func_num != 264) 
+      && (func_num != 267) 
+      && (func_num != 275) 
+      && (func_num != 288) 
+      && (func_num != 296) 
+      && (func_num != 209) 
+      && (func_num != 210)
+      && (func_num != 385)
+      && (func_num != 400)
+      && (func_num != 409)
+      && (func_num != 430)
+      && (func_num != 449)
+      && (func_num != 464)
+      && (func_num != 496)
+      && (func_num != 508)
+      && (func_num != 560)
+      && (func_num != 271)
+      && (func_num != 274)
+      && (func_num != 292)
+      && (func_num != 293)
+      && (func_num != 328)
+      && (func_num != 357)
+      && (func_num != 411)
+      && (func_num != 502)
+      && (func_num != 517)
+      && (func_num != 529)
+      && (func_num != 533)
+      && (func_num != 540)
+      && (func_num != 546)
+      && (func_num != 205)
+      && (func_num != 214)
+      && (func_num != 216)
+      && (func_num != 217)
+      && (func_num != 220)
+      && (func_num != 225)
+      && (func_num != 229)
+      && (func_num != 236)
+      && (func_num != 250)
+      && (func_num != 325)
+      && (func_num != 341)
+      && (func_num != 440)
+      && (func_num != 453)
+      && (func_num != 470)
+      && (func_num != 506)
+      && (func_num != 519)
+      && (func_num != 532)
+      && (func_num != 555)
+      && (func_num != 219)
+      && (func_num != 245)
+      && (func_num != 280)
+      && (func_num != 302)
+      && (func_num != 315)
+      && (func_num != 326)
+      && (func_num != 335)
+      && (func_num != 354)
+      && (func_num != 353)
+      && (func_num != 356)
+      && (func_num != 358)
+      && (func_num != 369)
+      && (func_num != 378)
+      && (func_num != 387)
+      && (func_num != 396)
+      && (func_num != 405)
+      && (func_num != 410)
+      && (func_num != 414)
+      && (func_num != 435)
+      && (func_num != 437)
+      && (func_num != 446)
+      && (func_num != 516)
+      && (func_num != 531)
+      && (func_num != 218)
+      && (func_num != 221)
+      && (func_num != 222)
+      && (func_num != 237)
+      && (func_num != 239)
+      && (func_num != 243)
+      && (func_num != 257)
+      && (func_num != 260)
+      && (func_num != 415)
+      && (func_num != 416)
+      && (func_num != 426)
+      && (func_num != 427)
+      && (func_num != 441)
+      && (func_num != 452)
+      && (func_num != 499)
+      && (func_num != 505)
+      && (func_num != 511)
+      && (func_num != 518)
+      && (func_num != 526)
+      && (func_num != 551)
+      && (func_num != 557)
+      && (func_num != 570)
+      && (func_num != 316)
+      && (func_num != 391)
+      && (func_num != 393)
+      && (func_num != 408)
+      && (func_num != 423)
+      && (func_num != 438)
+      && (func_num != 442)
+      && (func_num != 456)
+      && (func_num != 468)
+      && (func_num != 509)
+      && (func_num != 536)
+      && (func_num != 537)
+      && (func_num != 539)
+      && (func_num != 554)
+      && (func_num != 558)
+      && (func_num != 563)
+      && (func_num != 206)
+      && (func_num != 238)
+      && (func_num != 254)
+      && (func_num != 255)
+      && (func_num != 270)
+      && (func_num != 295)
+      && (func_num != 313)
+      && (func_num != 329)
+      && (func_num != 360)
+      && (func_num != 361)
+      && (func_num != 367)
+      && (func_num != 368)
+      && (func_num != 384)
+      && (func_num != 394)
+      && (func_num != 420)
+      && (func_num != 428)
+      && (func_num != 433)
+      && (func_num != 460)
+      && (func_num != 477)
+      && (func_num != 482)
+      && (func_num != 493)
+      && (func_num != 553)
+      && (func_num != 425)
+      && (func_num != 375)
+      && (func_num != 364)
+      && (func_num != 343)
+      && (func_num != 330)
+      && (func_num != 310)
+      && (func_num != 281)
+      && (func_num != 248)
+      && (func_num != 279)
+      && (func_num != 504)
+      && (func_num != 451)
+      && (func_num != 332)
+      && (func_num != 351)
+      && (func_num != 352)
+      && (func_num != 321)
+      && (func_num != 306)
+      && (func_num != 397)
+
+      && (func_num != 213)
+      && (func_num != 374)
+      && (func_num != 541)
+
+      && (func_num != 203)
+      && (func_num != 207)
+      && (func_num != 362)
+      && (func_num != 383)
+      && (func_num != 389)
+      && (func_num != 483)
+
+      && (func_num != 246)
+      && (func_num != 491)
+      && (func_num != 547)
+    ){
       poopState.stats_frequencies[func_num]++;
       poopState.stats_total_count++;
       poopState.stats_max_encountered_funcnum = max_i32(poopState.stats_max_encountered_funcnum, func_num);

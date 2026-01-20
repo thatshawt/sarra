@@ -13,6 +13,7 @@ char *strcpy(char *restrict dest, const char *restrict src);
 size_t strcspn(const char *s, const char *c);
 char *strcat(char *restrict dest, const char *restrict src);
 int strncmp(const char *_l, const char *_r, size_t n);
+int strcmp(const char *_l, const char *_r);
 char *strpbrk(const char *s, const char *b);
 char *strchr(const char *s, int c);
 char *strstr(const char *h, const char *n);

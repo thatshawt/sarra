@@ -139,6 +139,13 @@ int strncmp(const char *_l, const char *_r, size_t n)
 	return *l - *r;
 }
 
+int strcmp(const char *_l, const char *_r)
+{
+	int lenl = strlen(_l);
+	int lenr = strlen(_r);
+	return strncmp(_l, _r, MAX(lenl, lenr));
+}
+
 char *strpbrk(const char *s, const char *b)
 {
 	s += strcspn(s, b);
