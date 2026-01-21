@@ -57,7 +57,7 @@ void vspoopf(u8* dest, s32 max, u8* format, __builtin_va_list argp)
     }
 }
 
-// expects one dummy i32 var arg
+
 __attribute__((noinline))
 void _spoopf(u8* dest, s32 max, u8* format, ...)
 {
@@ -65,16 +65,12 @@ void _spoopf(u8* dest, s32 max, u8* format, ...)
     __builtin_va_list argp;
     __builtin_va_start(argp, format);
 
-    // take out the 0 that we put with the macro
-    // __builtin_va_arg(argp, s32);
-
     vspoopf(dest, max, format, argp);
 
     __builtin_va_end(argp);
 }
 
 u8 printf_buffer[5000] = {0};
-// expects one dummy i32 var arg
 __attribute__((noinline))
 void _poopf(u8* format, ...)
 {
@@ -83,9 +79,6 @@ void _poopf(u8* format, ...)
 
     __builtin_va_list argp;
     __builtin_va_start(argp, format);
-
-    // take out the 0 that we put with the macro
-    // __builtin_va_arg(argp, s32);
 
     memset_i8(printf_buffer, sizeof(printf_buffer), 0);
 
@@ -96,8 +89,12 @@ void _poopf(u8* format, ...)
     // hxh_CONSOLE_LOG_CHAR_STRING("after vspoopf call",19);
 
     
-    hxh_reset();
+    // hxh_reset();
+    hxh_clear_microcode();
+    hxh_extended_literals_on();
+
     hxh_console_log_char_string(printf_buffer, strlen(printf_buffer));
+    
     memset_i8(printf_buffer, sizeof(printf_buffer), 0);
 
     __builtin_va_end(argp);

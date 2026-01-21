@@ -16,9 +16,13 @@
     let EXTEND_LITERALS_ON = 9997;
     let EXTEND_LITERALS_OFF = 9996;
     let EXTEND_LITERALS_STATUS = 9995;
+    let CLEAR_MICROCODE = 9994;
     if(t == RESET_NUM){
         hxh_state.reset();
         // console.log("hxh reset");
+    }
+    else if(t == CLEAR_MICROCODE){
+        hxh_state.clear_microcode();
     }
     else if(t == EXTEND_LITERALS_ON){
         hxh_state.extended_literals = true;
@@ -68,7 +72,7 @@
         hxhpush(t);
     }
     else if(t>=MICROCODE_OFFSET){ // note, only supports values >= MICROCODE_OFFSET
-        let val = t-10000;
+        let val = t-MICROCODE_OFFSET;
         hxhpush(val);
     }
 

@@ -619,7 +619,7 @@ for (export_name, export_func_num) in inject_wat_stuff.exports.items():
         inject_body = replace_instruction_with(inject_body,"memory.fill","memory.fill (memory 1)")
         inject_body = replace_instruction_with(inject_body,"memory.size","memory.size (memory 1)")
         inject_body = replace_instruction_with(inject_body,"memory.grow","memory.grow (memory 1)")
-        inject_body = replace_instruction_with(inject_body,"memory.copy","memory.copy (memory 1)")
+        inject_body = replace_instruction_with(inject_body,"memory.copy","memory.copy (memory 1) (memory 1)")
 
         return inject_body
 

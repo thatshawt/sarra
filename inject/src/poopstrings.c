@@ -1,9 +1,6 @@
 #include "poopstrings.h"
 #include "utils.h"
 
-#define MAX(a,b) ((a)>(b)?(a):(b))
-#define MIN(a,b) ((a)<(b)?(a):(b))
-
 #define BITOP(a,b,op) \
  ((a)[(size_t)(b)/(8*sizeof *(a))] op (size_t)1<<((size_t)(b)%(8*sizeof *(a))))
 
@@ -22,34 +19,34 @@
 void *memset(void *dest, int c, size_t n)
 {
 	unsigned char *s = dest;
-	size_t k;
+	// size_t k;
 
-	/* Fill head and tail with minimal branching. Each
-	 * conditional ensures that all the subsequently used
-	 * offsets are well-defined and in the dest region. */
+	// /* Fill head and tail with minimal branching. Each
+	//  * conditional ensures that all the subsequently used
+	//  * offsets are well-defined and in the dest region. */
 
-	if (!n) return dest;
-	s[0] = c;
-	s[n-1] = c;
-	if (n <= 2) return dest;
-	s[1] = c;
-	s[2] = c;
-	s[n-2] = c;
-	s[n-3] = c;
-	if (n <= 6) return dest;
-	s[3] = c;
-	s[n-4] = c;
-	if (n <= 8) return dest;
+	// if (!n) return dest;
+	// s[0] = c;
+	// s[n-1] = c;
+	// if (n <= 2) return dest;
+	// s[1] = c;
+	// s[2] = c;
+	// s[n-2] = c;
+	// s[n-3] = c;
+	// if (n <= 6) return dest;
+	// s[3] = c;
+	// s[n-4] = c;
+	// if (n <= 8) return dest;
 
-	/* Advance pointer to align it at a 4-byte boundary,
-	 * and truncate n to a multiple of 4. The previous code
-	 * already took care of any head/tail that get cut off
-	 * by the alignment. */
+	// /* Advance pointer to align it at a 4-byte boundary,
+	//  * and truncate n to a multiple of 4. The previous code
+	//  * already took care of any head/tail that get cut off
+	//  * by the alignment. */
 
-	k = -(uintptr_t)s & 3;
-	s += k;
-	n -= k;
-	n &= -4;
+	// k = -(uintptr_t)s & 3;
+	// s += k;
+	// n -= k;
+	// n &= -4;
 
 	/* Pure C fallback with no aliasing violations. */
 	for (; n; n--, s++) *s = c;
@@ -94,6 +91,64 @@ char *strcpy(char *restrict dest, const char *restrict src)
 {
 	__stpcpy(dest, src);
 	return dest;
+}
+
+/*
+ * Copyright (c) 2011 Apple, Inc. All rights reserved.
+ *
+ * @APPLE_LICENSE_HEADER_START@
+ *
+ * This file contains Original Code and/or Modifications of Original Code
+ * as defined in and that are subject to the Apple Public Source License
+ * Version 2.0 (the 'License'). You may not use this file except in
+ * compliance with the License. Please obtain a copy of the License at
+ * http://www.opensource.apple.com/apsl/ and read it before using this
+ * file.
+ *
+ * The Original Code and all software distributed under the License are
+ * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
+ * Please see the License for the specific language governing rights and
+ * limitations under the License.
+ *
+ * @APPLE_LICENSE_HEADER_END@
+ */
+
+size_t strnlen(const char* str, size_t maxlen)
+{
+	size_t len = strlen(str);
+
+	return MIN(len, maxlen);
+
+	// const char* cp;
+
+	// for(cp = str; maxlen != 0 && *cp != '\0'; cp++, maxlen--)
+	// 	;
+
+	// return (size_t)(cp - str);
+}
+
+char* strncpy(char* restrict dst, const char* restrict src, size_t maxlen)
+{
+	const size_t srclen = strnlen(src, maxlen);
+	if(srclen < maxlen)
+	{
+		//  The stpncpy() and strncpy() functions copy at most maxlen
+		//  characters from src into dst.
+		memcpy(dst, src, srclen);
+		//  If src is less than maxlen characters long, the remainder
+		//  of dst is filled with '\0' characters.
+		memset(dst + srclen, 0, maxlen - srclen);
+	}
+	else
+	{
+		memcpy(dst, src, maxlen);
+		dst[maxlen-1] = 0; // terminate!!!!!!!!er!!!!!
+	}
+	//  The strcpy() and strncpy() functions return dst.
+	return dst;
 }
 
 size_t strlen(const char *s)

@@ -8,6 +8,10 @@ var hxh_state = {
         hxh_state.memory = new Map();
         hxh_state.extended_literals = false;
     },
+
+    clear_microcode: () => {
+        hxh_state.microcode = [];
+    },
     // currentInstruction: -1,
 };
 

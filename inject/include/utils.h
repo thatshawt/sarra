@@ -22,6 +22,9 @@
 #define FALSE ((s32)0)
 #define NULL ((void*)0)
 
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MIN(a,b) ((a)<(b)?(a):(b))
+
 //a is between inclusive b and c.
 #define BETWEEN_INC(a,b,c) ((a>=b) && (a<=c))
 
@@ -119,6 +122,7 @@ char* memset_i8_to_arras_memory(char* dest, u8 val, int n);
 
 s64 hxh_parse_execute();
 s64 hxh_reset();
+s64 hxh_clear_microcode();
 
 void hxh_extended_literals_on();
 void hxh_extended_literals_off();

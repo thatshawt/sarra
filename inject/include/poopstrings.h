@@ -8,8 +8,10 @@ void *memcpy(void *restrict dest, const void *restrict src, size_t n);
 
 
 size_t strlen(const char *s);
+size_t strnlen(const char* str, size_t maxlen);
 char *__stpcpy(char *restrict d, const char *restrict s);
 char *strcpy(char *restrict dest, const char *restrict src);
+char* strncpy(char* restrict dst, const char* restrict src, size_t maxlen);
 size_t strcspn(const char *s, const char *c);
 char *strcat(char *restrict dest, const char *restrict src);
 int strncmp(const char *_l, const char *_r, size_t n);

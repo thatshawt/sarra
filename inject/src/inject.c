@@ -4,7 +4,7 @@
 #include "special.h"
 
 #define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 1000
+#define DEBUG_MAX_COUNT 20
 
 #define STATS_FREQUENCIES_SIZE 700
 #define STATS_MAX_COUNT_CONSIDERED 50
@@ -463,6 +463,59 @@ int debugstate_whitelist_zero(){
   debug_state.whitelistSize = 0;
 }
 
+#define DEBUG_RING_BUFF_LINES 10
+#define DEBUG_RING_BUFF_LINE_SIZE 100
+typedef struct{
+  char buffer[DEBUG_RING_BUFF_LINES][DEBUG_RING_BUFF_LINE_SIZE+1];
+  int index;
+} debug_ring_buffer_t;
+debug_ring_buffer_t debugRingBuff;
+
+void debugringbuff_zero(){
+  debugRingBuff.index = 0;
+
+  for(int line=0; line<DEBUG_RING_BUFF_LINES; line++){
+    for(int linei=0; linei<DEBUG_RING_BUFF_LINE_SIZE+1; linei++){
+      // debugRingBuff.buffer[line][linei] = 'a';
+      debugRingBuff.buffer[line][linei] = 0;
+    }
+    // debugRingBuff.buffer[line][DEBUG_RING_BUFF_LINE_SIZE] = 0;
+  }
+}
+
+__attribute__((noinline))
+void debugringbuff_add_line(char* lineStr){
+  const int index = debugRingBuff.index;
+
+  char* debugBuffStr = debugRingBuff.buffer[index];
+
+  _poopf("debugBuffStr %d", (int)debugBuffStr);
+
+  _poopf("index %d", index);
+  _poopf("adding '%s' strlen %d", lineStr, strlen(lineStr));
+
+  // strncpy(debugBuffStr, lineStr, DEBUG_RING_BUFF_LINE_SIZE);
+  // memset(debugBuffStr,'a',50);
+  *(volatile uint32_t*)8888;
+  
+  memcpy(debugBuffStr, lineStr, strlen(lineStr)+1);
+  // debugBuffStr[DEBUG_RING_BUFF_LINE_SIZE-1] = 0;
+
+  memcpy(debugBuffStr, "awd", 3);
+  
+  _poopf("debugRingBuff.buffer[index]: '%s', strlen %d",
+    debugBuffStr, strlen(debugBuffStr));
+  _hxh_breakpoint();
+  debugRingBuff.index++;
+  debugRingBuff.index = debugRingBuff.index % DEBUG_RING_BUFF_LINES;
+}
+
+void debugringbuff_print_lines(){
+  for(int line=0; line<DEBUG_RING_BUFF_LINES; line++){
+    char* lineStr = debugRingBuff.buffer[(debugRingBuff.index + line) % DEBUG_RING_BUFF_LINES];
+    if(lineStr[0] != 0) _poopf("%s", lineStr);
+  }
+}
 
 void every_func_preamble(s32 func_num){
   if(func_num == special_start_func_number()){
@@ -501,6 +554,7 @@ void every_func_preamble(s32 func_num){
     // how far until they differ?
     /// what functions other than bigfunc are called before 398?
     debugstate_whitelist_enable();
+    debugringbuff_zero();
   }
 
   if(poopState.debug_enabled){
@@ -510,6 +564,61 @@ void every_func_preamble(s32 func_num){
     // debugstate_blacklist_add(258);
     // debugstate_blacklist_add(333);
     // debugstate_blacklist_add(349);
+
+    if(debug_state.whitelist_enabled == FALSE){
+      //print out args
+      u8 args_str[1000] = {0};
+      for(int i=0;i<params_struct.param_i;i++){
+        enum Param_Type param_type = params_struct.paramTypes[i];
+        u8 temp_buffer_1[250] = {0};
+        switch(param_type){
+          case PARAM_T_NIL: //error right here
+            break;
+          case PARAM_T_I32:
+            int_to_str(temp_buffer_1, params_struct.i32params[i]);
+            break;
+          case PARAM_T_I64:
+            i64_to_str(temp_buffer_1, params_struct.i64params[i]);
+            break;
+          case PARAM_T_F32://TODO implement this :sob:
+            f32_to_str(temp_buffer_1, params_struct.f32params[i]);
+            break;
+          case PARAM_T_F64://TODO implement this :sob:
+            f64_to_str(temp_buffer_1, params_struct.f64params[i]);
+            break;
+        }
+        strcat(args_str, temp_buffer_1);
+        if(i != params_struct.param_i-1)
+          strcat(args_str, ", ");
+      }
+
+      // int differntFuncNumOrArgs = strcmp(args_str, debug_state.last_arg_str) != 0 || func_num != debug_state.last_func_num;
+
+      // if(poopState.debug_count == 0){
+      //   strcpy(debug_state.last_arg_str, args_str);
+      //   debug_state.last_func_num = func_num;
+      // }
+
+      // if(differntFuncNumOrArgs){
+        char tempBuff[DEBUG_RING_BUFF_LINE_SIZE] = {0};
+        _spoopf(tempBuff, DEBUG_RING_BUFF_LINE_SIZE-2, "call %d(%s)",
+          func_num, args_str
+        );
+        // _poopf("call %d(%s)",
+        //   func_num, args_str
+        // );
+        // debug_state.same_arg_str_counter = 0;
+
+        debugringbuff_add_line(tempBuff);
+      // }else{
+      //   debug_state.same_arg_str_counter++;
+      //   // poopState.debug_count--; // decrement this so we dont count this one
+      // }
+
+      // update last arg str
+      // strcpy(debug_state.last_arg_str, args_str);
+      // debug_state.last_func_num = func_num;
+    }
 
     if(
       (debug_state.whitelist_enabled && (debugstate_whitelist_check(func_num)))
@@ -576,6 +685,9 @@ void every_func_preamble(s32 func_num){
         }
 
         if(differntFuncNumOrArgs){
+          _poopf("printing debug ring buffer:");
+          debugringbuff_print_lines();
+          debugringbuff_zero();
           _poopf("call %d,%d %d(%s)",
             poopState.debug_count, debug_state.same_arg_str_counter,
             debug_state.last_func_num, debug_state.last_arg_str
@@ -610,6 +722,7 @@ void every_func_preamble(s32 func_num){
       }
     }
   }
+
   if(poopState.stats_enabled){
     if(poopState.stats_total_count >= poopState.stats_max_count){
       poopState.stats_enabled = FALSE;

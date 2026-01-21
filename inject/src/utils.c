@@ -27,6 +27,11 @@ s64 hxh_reset(){
     return import_e_t_get(9998);
 }
 
+__attribute__((noinline))
+s64 hxh_clear_microcode(){
+    return import_e_t_get(9994);
+}
+
 // __attribute__((optnone))
 __attribute__((noinline))
 s64 hxh_push_microcode_literal(s64 value)
