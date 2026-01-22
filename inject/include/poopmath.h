@@ -17,3 +17,5 @@ s32 int_to_str(u8* dest, s32 num);
 s32 i64_to_str(u8* dest, s64 num);
 s32 f32_to_str(u8* dest, f32 num);
 s32 f64_to_str(u8* dest, f64 num);
+
+int modulo_Euclidean(int a, int b);

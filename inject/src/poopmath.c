@@ -343,4 +343,15 @@ s32 f64_to_str(u8* dest, f64 num)
     return j;
 }
 
+// https://stackoverflow.com/questions/11720656/modulo-operation-with-negative-numbers
+int modulo_Euclidean(int a, int b)
+{
+  int m = a % b;
+  if (m < 0) {
+    // m += (b < 0) ? -b : b; // avoid this form: it is UB when b == INT_MIN
+    m = (b < 0) ? m - b : m + b;
+  }
+  return m;
+}
+
 #pragma clang diagnostic pop

@@ -3,9 +3,6 @@
 #include "poopmath.h"
 #include "special.h"
 
-#define DEBUG_BLACKLIST_SIZE 50
-#define DEBUG_MAX_COUNT 20
-
 #define STATS_FREQUENCIES_SIZE 700
 #define STATS_MAX_COUNT_CONSIDERED 50
 
@@ -15,6 +12,10 @@
 #define CHACHA_BUFFER_SIZE 2000
 
 #define BIGFUNC_INDEX_CALL_MAX 10
+
+#define DEBUG_BLACKLIST_SIZE 50
+
+#define DEBUG_MAX_COUNT 500
 
 struct{
   s32 debug_enabled;
@@ -109,6 +110,7 @@ extern void do_all_tests();
 
 void _init_all_the_things(){
   _poopf("Welcome to Bananan Turd Labs. \nCompiled: '%s'", __DATETIME__);
+  _poopf("bigfunc num is %d", special_bigfunc_num());
 
   // _poopf("here is a float: %f, and a double: %z", (f32)123.456123, (f64)123.4567890123456789);
   
@@ -168,11 +170,114 @@ extern struct LocalsStruct locals_struct;
 
 extern const char* indexNameMap(int index_num);
 
+typedef struct {
+  int whitelist[1000];
+  int whitelistSize;
+  int whitelist_enabled;
+
+  char* whitelistDebugArgStr;
+
+  char last_arg_str[1000];
+  int same_arg_str_counter;
+  int last_func_num;
+} debug_state_t;
+
+debug_state_t debug_state;
+
+void debugstate_whitelist_enable(){
+  debug_state.whitelist_enabled = TRUE;
+}
+
+void debugstate_whitelist_disable(){
+  debug_state.whitelist_enabled = FALSE;
+}
+
+int debugstate_whitelist_check(int funcNum){
+  for(int i=0;i<debug_state.whitelistSize;i++){
+      if(debug_state.whitelist[i] == funcNum)return TRUE;
+  }
+  return FALSE;
+}
+
+int debugstate_whitelist_add(int funcNum){
+  debug_state.whitelist[debug_state.whitelistSize++] = funcNum;
+}
+
+void debugstate_whitelist_setdebugstr(char* debugstr){
+  debug_state.whitelistDebugArgStr = debugstr;
+}
+
+int debugstate_whitelist_checkstr(char* debugstr){
+  if(debug_state.whitelistDebugArgStr == NULL)
+    return FALSE;
+
+  return strcmp(debugstr, debug_state.whitelistDebugArgStr) == 0;
+}
+
+int debugstate_whitelist_zero(){
+  debug_state.whitelistSize = 0;
+  debug_state.whitelistDebugArgStr = 0;
+}
+
+
+#define DEBUG_RING_BUFF_LINES 50
+#define DEBUG_RING_BUFF_LINE_SIZE 100
+typedef struct{
+  char buffer[DEBUG_RING_BUFF_LINES][DEBUG_RING_BUFF_LINE_SIZE+1];
+  int index;
+} debug_ring_buffer_t;
+debug_ring_buffer_t debugRingBuff;
+
+void debugringbuff_zero(){
+  debugRingBuff.index = 0;
+
+  for(int line=0; line<DEBUG_RING_BUFF_LINES; line++){
+    for(int linei=0; linei<DEBUG_RING_BUFF_LINE_SIZE+1; linei++){
+      // debugRingBuff.buffer[line][linei] = 'a';
+      debugRingBuff.buffer[line][linei] = 0;
+    }
+    // debugRingBuff.buffer[line][DEBUG_RING_BUFF_LINE_SIZE] = 0;
+  }
+}
+
+__attribute__((noinline))
+void debugringbuff_add_line(char* lineStr){
+  const int index = debugRingBuff.index;
+
+  char* debugBuffStr = debugRingBuff.buffer[index];
+
+  memcpy(debugBuffStr, lineStr, strlen(lineStr)+1);
+  
+  debugRingBuff.index++;
+  debugRingBuff.index = debugRingBuff.index % DEBUG_RING_BUFF_LINES;
+}
+
+void debugringbuff_print_lines(){
+  for(int line=0; line<DEBUG_RING_BUFF_LINES; line++){
+    char* lineStr = debugRingBuff.buffer[(debugRingBuff.index + line) % DEBUG_RING_BUFF_LINES];
+    if(lineStr[0] != 0) _poopf("%s", lineStr);
+  }
+}
+
+char* debugringbuff_getlast(){
+  int index = modulo_Euclidean(debugRingBuff.index-1, DEBUG_RING_BUFF_LINES);
+  char* lineStr = debugRingBuff.buffer[index];
+  return lineStr;
+}
+
+
 int _special_bigfunc_beforebranch(s32 index){
   UNIQUEIFER;
 
   // hxh_console_log_literal(123);
   // poopf("homie");
+
+  if(index == 586 && poopState.debug_enabled){
+    _poopf("print debugringbuff");
+    debugringbuff_print_lines();
+    _poopf("before bigfunc index 586");
+    debugringbuff_zero();
+  }
 
   if(poopState.bigfunc_index_count_enabled){
     poopState.bigfunc_index_count_counter++;
@@ -428,94 +533,6 @@ extern struct Params_Struct params_struct;
 //from function_name_map.c
 extern const char* nameMap(int func_num);
 
-typedef struct {
-  int whitelist[1000];
-  int whitelistSize;
-  int whitelist_enabled;
-
-  char last_arg_str[1000];
-  int same_arg_str_counter;
-  int last_func_num;
-} debug_state_t;
-
-debug_state_t debug_state;
-
-void debugstate_whitelist_enable(){
-  debug_state.whitelist_enabled = TRUE;
-}
-
-void debugstate_whitelist_disable(){
-  debug_state.whitelist_enabled = FALSE;
-}
-
-int debugstate_whitelist_check(int funcNum){
-  for(int i=0;i<debug_state.whitelistSize;i++){
-      if(debug_state.whitelist[i] == funcNum)return TRUE;
-  }
-  return FALSE;
-}
-
-int debugstate_whitelist_add(int funcNum){
-  debug_state.whitelist[debug_state.whitelistSize++] = funcNum;
-}
-
-int debugstate_whitelist_zero(){
-  debug_state.whitelistSize = 0;
-}
-
-#define DEBUG_RING_BUFF_LINES 10
-#define DEBUG_RING_BUFF_LINE_SIZE 100
-typedef struct{
-  char buffer[DEBUG_RING_BUFF_LINES][DEBUG_RING_BUFF_LINE_SIZE+1];
-  int index;
-} debug_ring_buffer_t;
-debug_ring_buffer_t debugRingBuff;
-
-void debugringbuff_zero(){
-  debugRingBuff.index = 0;
-
-  for(int line=0; line<DEBUG_RING_BUFF_LINES; line++){
-    for(int linei=0; linei<DEBUG_RING_BUFF_LINE_SIZE+1; linei++){
-      // debugRingBuff.buffer[line][linei] = 'a';
-      debugRingBuff.buffer[line][linei] = 0;
-    }
-    // debugRingBuff.buffer[line][DEBUG_RING_BUFF_LINE_SIZE] = 0;
-  }
-}
-
-__attribute__((noinline))
-void debugringbuff_add_line(char* lineStr){
-  const int index = debugRingBuff.index;
-
-  char* debugBuffStr = debugRingBuff.buffer[index];
-
-  _poopf("debugBuffStr %d", (int)debugBuffStr);
-
-  _poopf("index %d", index);
-  _poopf("adding '%s' strlen %d", lineStr, strlen(lineStr));
-
-  // strncpy(debugBuffStr, lineStr, DEBUG_RING_BUFF_LINE_SIZE);
-  // memset(debugBuffStr,'a',50);
-  *(volatile uint32_t*)8888;
-  
-  memcpy(debugBuffStr, lineStr, strlen(lineStr)+1);
-  // debugBuffStr[DEBUG_RING_BUFF_LINE_SIZE-1] = 0;
-
-  memcpy(debugBuffStr, "awd", 3);
-  
-  _poopf("debugRingBuff.buffer[index]: '%s', strlen %d",
-    debugBuffStr, strlen(debugBuffStr));
-  _hxh_breakpoint();
-  debugRingBuff.index++;
-  debugRingBuff.index = debugRingBuff.index % DEBUG_RING_BUFF_LINES;
-}
-
-void debugringbuff_print_lines(){
-  for(int line=0; line<DEBUG_RING_BUFF_LINES; line++){
-    char* lineStr = debugRingBuff.buffer[(debugRingBuff.index + line) % DEBUG_RING_BUFF_LINES];
-    if(lineStr[0] != 0) _poopf("%s", lineStr);
-  }
-}
 
 void every_func_preamble(s32 func_num){
   if(func_num == special_start_func_number()){
@@ -547,12 +564,13 @@ void every_func_preamble(s32 func_num){
 
   if(!poopState.debug_enabled){
     debugstate_whitelist_zero();
-    debugstate_whitelist_add(398);
-    //TODO how does 398 end up getting called...
-    // what arethe bigfunc indexes before 398 is called?
-    // are they the same every time?
-    // how far until they differ?
-    /// what functions other than bigfunc are called before 398?
+  //   debugstate_whitelist_add(398);
+  //   // debugstate_whitelist_setdebugstr("call 421(990892, 226868, 24)");
+  //   //TODO how does 398 end up getting called...
+  //   // what arethe bigfunc indexes before 398 is called?
+  //   // are they the same every time?
+  //   // how far until they differ?
+  //   /// what functions other than bigfunc are called before 398?
     debugstate_whitelist_enable();
     debugringbuff_zero();
   }
@@ -565,7 +583,60 @@ void every_func_preamble(s32 func_num){
     // debugstate_blacklist_add(333);
     // debugstate_blacklist_add(349);
 
-    if(debug_state.whitelist_enabled == FALSE){
+          // && func_num != 421
+      // && func_num != 507
+      // && func_num != 267
+      // && func_num != 264
+      // && func_num != 400
+
+      // && func_num != 449
+      // && func_num != 418
+      // && func_num != 328
+      // && func_num != 357
+      // && func_num != 546
+      // && func_num != 569
+      // && func_num != 472
+      // && func_num != 492
+      // && func_num != 325
+      // && func_num != 285
+    if(debug_state.whitelist_enabled == TRUE
+      // && func_num != 427
+      // && func_num != 335
+      // && func_num != 453
+      // && func_num != 532
+      // && func_num != 508
+      // && func_num != 275
+      // && func_num != 250
+      // && func_num != 209
+      // && func_num != 288
+      // && func_num != 425
+      // && func_num != 326
+      // && func_num != 517
+      // && func_num != 214
+      // && func_num != 512
+      // && func_num != 216
+      // && func_num != 487
+      // && func_num != 513
+      // && func_num != 395
+      // && func_num != 555
+      // && func_num != 421
+
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+      // && func_num != 555
+    ){
       //print out args
       u8 args_str[1000] = {0};
       for(int i=0;i<params_struct.param_i;i++){
@@ -621,7 +692,10 @@ void every_func_preamble(s32 func_num){
     }
 
     if(
-      (debug_state.whitelist_enabled && (debugstate_whitelist_check(func_num)))
+      (debug_state.whitelist_enabled && 
+        (debugstate_whitelist_check(func_num)
+        || debugstate_whitelist_checkstr(debugringbuff_getlast()))
+      )
       || !debug_state.whitelist_enabled
     ){
       debugstate_whitelist_disable();
@@ -685,11 +759,12 @@ void every_func_preamble(s32 func_num){
         }
 
         if(differntFuncNumOrArgs){
-          _poopf("printing debug ring buffer:");
+          // _poopf("printing debug ring buffer:");
           debugringbuff_print_lines();
           debugringbuff_zero();
-          _poopf("call %d,%d %d(%s)",
-            poopState.debug_count, debug_state.same_arg_str_counter,
+          _poopf("call %d %d(%s)",
+            //poopState.debug_count,
+            debug_state.same_arg_str_counter,
             debug_state.last_func_num, debug_state.last_arg_str
           );
           debug_state.same_arg_str_counter = 0;
