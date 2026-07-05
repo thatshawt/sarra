@@ -1,3 +1,6 @@
+# project status
+this is on hold for now because i have been busy lately. if anyone wants to continue this work or has any questions im free to answer questions.
+
 # About
 This is an experimental modding project for arrasio.
 
